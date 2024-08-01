@@ -3,6 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './schemas/user.schema';
 import * as bcrypt from 'bcrypt';
+import { CreateUserDto } from './dto/create-user.dto';
+import { ResponseMenssage, UserResponseDto } from './dto/response-user.dto';
 
 @Injectable()
 export class UserService {
@@ -10,20 +12,20 @@ export class UserService {
     @InjectModel(User.name) private readonly userModel: Model<User>,
   ) {}
 
-  async create(user: User): Promise<User> {
-    const { name, username, password, cpf, address, phone, isAdmin } = user;
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const { name, username, password, cpf, address, phone, isAdmin } =
+      createUserDto;
+    console.log('user:', createUserDto);
 
-    if (!name || !username || !password || !cpf || !address || !phone) {
-      throw new Error('Falta informações necessárias para cadastrar o usuário');
-    }
+    //this.validateFields(createUserDto);
 
     try {
       await this.checkUsernameAvailability(username);
       const hashedPassword = await this.cryptPassword(password);
-      const newId = await this.generateCode();
+      const newCode = await this.generateCode();
 
       const newUser = new this.userModel({
-        code: newId,
+        code: newCode,
         name,
         username,
         password: hashedPassword,
@@ -42,11 +44,11 @@ export class UserService {
     }
   }
 
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<UserResponseDto[]> {
     return this.userModel.find().exec();
   }
 
-  async findOne(code: number): Promise<User> {
+  async findOne(code: number): Promise<UserResponseDto> {
     const user = await this.userModel.findOne({ code }).exec();
     if (!user) {
       throw new Error('Usuário não encontrado');
@@ -54,7 +56,7 @@ export class UserService {
     return user;
   }
 
-  async getByUsername(username: string): Promise<User> {
+  async getByUsername(username: string): Promise<UserResponseDto> {
     const user = await this.userModel.findOne({ username }).exec();
     if (!user) {
       throw new Error('Usuário não encontrado');
@@ -62,7 +64,7 @@ export class UserService {
     return user;
   }
 
-  async update(code: number, user: Partial<User>): Promise<User> {
+  async update(code: number, user: Partial<User>): Promise<UserResponseDto> {
     const userFounded = await this.userModel.findOne({ code }).exec();
     if (!userFounded) {
       throw new Error('Usuário não encontrado');
@@ -98,9 +100,25 @@ export class UserService {
     return lastUser ? lastUser.code + 1 : 1;
   }
 
-  handleException() {
-    return {
-      error: { code: 500, message: 'Erro interno no servidor' },
-    };
+  validateFields(createUserDto: CreateUserDto): ResponseMenssage {
+    if (
+      !createUserDto.name ||
+      !createUserDto.username ||
+      !createUserDto.password ||
+      !createUserDto.cpf ||
+      !createUserDto.address ||
+      !createUserDto.phone
+    ) {
+      return {
+        message: 'Falta informações necessárias para cadastrar o usuário',
+      };
+      throw new Error('Falta informações necessárias para cadastrar o usuário');
+    }
   }
+
+  // handleException() {
+  //   return {
+  //     error: { code: 500, message: 'Erro interno no servidor' },
+  //   };
+  // }
 }

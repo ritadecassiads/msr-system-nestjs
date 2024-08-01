@@ -1,41 +1,35 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+//import { Sale } from '../sale/sale.schema'; // Ajuste o caminho conforme necessário
 
-// gera automaticamente o createdAt e uptadedAt
 @Schema({ timestamps: true })
 export class User extends Document {
-  @Prop({ required: true })
+  @Prop()
   code: number;
 
-  @Prop({ required: true })
+  @Prop()
   name: string;
 
-  @Prop({ required: true, unique: true })
+  @Prop()
   username: string;
 
-  @Prop({ required: true })
+  @Prop()
   password: string;
 
-  @Prop({ required: true })
+  @Prop()
   cpf: string;
 
-  // @Prop()
-  // email: string;
-
-  @Prop({ required: true })
+  @Prop()
   address: string;
 
-  @Prop({ required: true })
+  @Prop()
   phone: string;
 
-  @Prop({ default: Date.now })
+  @Prop()
   admissionDate: Date;
 
   @Prop()
   isAdmin: boolean;
-
-  // @Prop({ type: [SaleSchema] })
-  // sales: Sale[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
