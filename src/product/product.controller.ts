@@ -42,7 +42,7 @@ export class ProductController {
 
   @Delete(':code')
   async remove(@Param('code') code: string): Promise<ResponseMenssage> {
-    this.productService.remove(code);
+    this.productService.delete(code);
     return { message: 'Produto excluído com sucesso' };
   }
 }

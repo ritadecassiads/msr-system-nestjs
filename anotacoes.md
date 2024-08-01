@@ -10,6 +10,9 @@
     - Eles são usados para garantir que os dados recebidos estejam no formato esperado e para aplicar transformações ou validações necessárias.
     - Ao usar ValidationPipe, o NestJS valida automaticamente os dados de entrada contra as regras definidas nos decoradores do DTO (por exemplo, @IsNotEmpty(), @IsString(), etc.)
 
+# Comandos:
+-> nest g resources
+    - cria estrutura completa do CRUD
 
 ## Feito 
 -> OK User está incompleto
@@ -18,12 +21,22 @@
 ## Fazer 
 -> Continuar desenvolvimento:
     - auth
-    - cliente
     - vendedor
     - venda
+    - categoria
+
+-> Lidar com a exceptions e as mensagens de retorno
+-> Fazer testes unitarios
+-> Pesquisar/avaliar se é melhor utilizar o id do mongo para buscar e alterar por ID
+
 # User
 -> Ocultar password do retorno User - findOne e findAll
 -> Ajustar json retorno da exception de User
 
 # Product
 -> Tem necessidade do ResponseProductDto ?
+
+# Client
+-> Ver necessidade de atrelar o objeto User ou apenas o id
+-> Implementar Address
+-> Ver como iniciar os campos de datas do SPC - null ?
