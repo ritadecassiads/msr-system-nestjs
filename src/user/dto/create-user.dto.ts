@@ -1,3 +1,4 @@
+//import { Prop } from '@nestjs/mongoose';
 import { IsNotEmpty, IsString, IsBoolean } from 'class-validator';
 
 export class CreateUserDto {
@@ -7,6 +8,7 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
+  //@Prop({ unique: true })
   username: string;
 
   @IsNotEmpty()

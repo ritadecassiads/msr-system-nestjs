@@ -12,7 +12,6 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ResponseMenssage, UserResponseDto } from './dto/response-user.dto';
-import { UpdateUserDto } from './dto/update-user-dto';
 
 @Controller('users')
 export class UserController {
@@ -44,21 +43,20 @@ export class UserController {
     return user;
   }
 
-  @Get('username/:username')
-  async getByUsername(
-    @Param('username') username: string,
-  ): Promise<UserResponseDto> {
-    const user = await this.userService.getByUsername(username);
-    if (!user) {
-      throw new NotFoundException('Usuário não encontrado');
-    }
-    return user;
-  }
+  // @Get(':username')
+  // // eslint-disable-next-line prettier/prettier
+  // async getByUsername(@Param('username') username: string): Promise<UserResponseDto> {
+  //   const user = await this.userService.getByUsername(username);
+  //   if (!user) {
+  //     throw new NotFoundException('Usuário não encontrado');
+  //   }
+  //   return user;
+  // }
 
   @Put(':code')
   async update(
     @Param('code') code: number,
-    @Body() updateUserDto: Partial<UpdateUserDto>,
+    @Body() updateUserDto: Partial<CreateUserDto>,
   ): Promise<ResponseMenssage> {
     const updatedUser = await this.userService.update(code, updateUserDto);
     if (!updatedUser) {

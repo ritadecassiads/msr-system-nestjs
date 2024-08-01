@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { User } from './schemas/user.schema';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
-import { ResponseMenssage, UserResponseDto } from './dto/response-user.dto';
+import { UserResponseDto } from './dto/response-user.dto';
 
 @Injectable()
 export class UserService {
@@ -13,31 +13,19 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const { name, username, password, cpf, address, phone, isAdmin } =
-      createUserDto;
-    console.log('user:', createUserDto);
-
-    //this.validateFields(createUserDto);
-
     try {
-      await this.checkUsernameAvailability(username);
-      const hashedPassword = await this.cryptPassword(password);
-      const newCode = await this.generateCode();
+      await this.checkUsernameAvailability(createUserDto.username);
+      const hashedPassword = await this.cryptPassword(createUserDto.password);
+      const code = await this.generateCode();
 
-      const newUser = new this.userModel({
-        code: newCode,
-        name,
-        username,
+      const createdUser = new this.userModel({
+        ...createUserDto, // operador de espalhamento
         password: hashedPassword,
-        cpf,
-        address,
-        phone,
-        isAdmin: isAdmin ?? false,
+        code,
       });
 
-      return await newUser.save();
+      return await createdUser.save();
     } catch (error) {
-      console.error('Erro ao cadastrar usuário:', error);
       throw new Error(
         'Não foi possível cadastrar o usuário. Por favor, tente novamente.',
       );
@@ -99,26 +87,4 @@ export class UserService {
     const lastUser = await this.userModel.findOne({}).sort({ code: -1 }).exec();
     return lastUser ? lastUser.code + 1 : 1;
   }
-
-  validateFields(createUserDto: CreateUserDto): ResponseMenssage {
-    if (
-      !createUserDto.name ||
-      !createUserDto.username ||
-      !createUserDto.password ||
-      !createUserDto.cpf ||
-      !createUserDto.address ||
-      !createUserDto.phone
-    ) {
-      return {
-        message: 'Falta informações necessárias para cadastrar o usuário',
-      };
-      throw new Error('Falta informações necessárias para cadastrar o usuário');
-    }
-  }
-
-  // handleException() {
-  //   return {
-  //     error: { code: 500, message: 'Erro interno no servidor' },
-  //   };
-  // }
 }

@@ -10,12 +10,20 @@
     - Eles são usados para garantir que os dados recebidos estejam no formato esperado e para aplicar transformações ou validações necessárias.
     - Ao usar ValidationPipe, o NestJS valida automaticamente os dados de entrada contra as regras definidas nos decoradores do DTO (por exemplo, @IsNotEmpty(), @IsString(), etc.)
 
-## Fazer 
--> User está incompleto
-    - Pegar codigo do meu note pessoal
 
+## Feito 
+-> OK User está incompleto
+
+
+## Fazer 
 -> Continuar desenvolvimento:
-    - produto
+    - auth
     - cliente
     - vendedor
     - venda
+# User
+-> Ocultar password do retorno User - findOne e findAll
+-> Ajustar json retorno da exception de User
+
+# Product
+-> Tem necessidade do ResponseProductDto ?
