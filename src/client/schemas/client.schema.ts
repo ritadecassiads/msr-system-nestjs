@@ -2,10 +2,10 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { User } from 'src/user/schemas/user.schema';
 
-export type ClientDocument = Client & Document;
+//export type ClientDocument = Client & Document;
 
 @Schema({ timestamps: true })
-export class Client {
+export class Client extends Document {
   @Prop({ type: Number })
   code: number;
 

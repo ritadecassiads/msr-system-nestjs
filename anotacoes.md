@@ -14,20 +14,15 @@
 -> nest g resources
     - cria estrutura completa do CRUD
 
-## Feito 
--> OK User está incompleto
-
 
 ## Fazer 
+-> mudar user para employee
 -> Continuar desenvolvimento:
     - auth
-    - vendedor
-    - venda
     - categoria
 
 -> Lidar com a exceptions e as mensagens de retorno
 -> Fazer testes unitarios
--> Pesquisar/avaliar se é melhor utilizar o id do mongo para buscar e alterar por ID
 
 # User
 -> Ocultar password do retorno User - findOne e findAll
@@ -40,3 +35,6 @@
 -> Ver necessidade de atrelar o objeto User ou apenas o id
 -> Implementar Address
 -> Ver como iniciar os campos de datas do SPC - null ?
+
+# Sale
+-> Problema no findAll .populate não está retornando os registros do array de products - possivel problema no mongoose

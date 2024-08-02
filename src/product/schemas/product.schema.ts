@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 @Schema({ timestamps: true }) // cria automaticamente os campos createdAt e updatedAt
 export class Product extends Document {
-  @Prop({ required: true, unique: true })
+  @Prop({ unique: true })
   code: number;
 
   @Prop({ required: true })

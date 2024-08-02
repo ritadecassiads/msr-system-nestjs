@@ -5,6 +5,7 @@ import { UserModule } from './user/user.module';
 import { ClientModule } from './client/client.module';
 import { ProductModule } from './product/product.module';
 import { DatabaseModule } from './database/database.module';
+import { SaleModule } from './sale/sale.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { DatabaseModule } from './database/database.module';
     ClientModule,
     ProductModule,
     DatabaseModule,
+    SaleModule,
   ],
   controllers: [],
   providers: [],

@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-//import { Sale } from '../sale/sale.schema'; // Ajuste o caminho conforme necessário
 
 @Schema({ timestamps: true })
 export class User extends Document {
