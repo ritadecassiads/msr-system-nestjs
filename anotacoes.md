@@ -47,4 +47,4 @@
 -> Problema no findAll .populate não está retornando os registros do array de products - possivel problema no mongoose
 
 # Auth
--> Problema em encontrar a rota auth ?
+-> Problema ao usar o LocalAuthGuard
