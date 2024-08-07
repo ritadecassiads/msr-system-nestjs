@@ -8,16 +8,19 @@ import {
   Body,
   NotFoundException,
   ConflictException,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ResponseMenssage, UserResponseDto } from './dto/response-user.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   async create(@Body() createUserDto: CreateUserDto): Promise<UserResponseDto> {
     try {
       return await this.userService.create(createUserDto);
@@ -34,24 +37,14 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @Get(':code')
-  async findOne(@Param('code') code: number): Promise<UserResponseDto> {
-    const user = await this.userService.findOne(code);
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<UserResponseDto> {
+    const user = await this.userService.findById(id);
     if (!user) {
       throw new NotFoundException('Usuário não encontrado');
     }
     return user;
   }
-
-  // @Get(':username')
-  // // eslint-disable-next-line prettier/prettier
-  // async getByUsername(@Param('username') username: string): Promise<UserResponseDto> {
-  //   const user = await this.userService.getByUsername(username);
-  //   if (!user) {
-  //     throw new NotFoundException('Usuário não encontrado');
-  //   }
-  //   return user;
-  // }
 
   @Put(':code')
   async update(

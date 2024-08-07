@@ -10,6 +10,26 @@
     - Eles são usados para garantir que os dados recebidos estejam no formato esperado e para aplicar transformações ou validações necessárias.
     - Ao usar ValidationPipe, o NestJS valida automaticamente os dados de entrada contra as regras definidas nos decoradores do DTO (por exemplo, @IsNotEmpty(), @IsString(), etc.)
 
+# Funcionamento Auth Login
+1. Login (POST /auth/login):
+    Cliente envia username e password.
+    AuthController chama LocalAuthGuard.
+    LocalAuthGuard chama LocalStrategy.
+    LocalStrategy valida credenciais via AuthService.
+    Se válido, AuthService gera token JWT e retorna ao cliente.
+
+2. Acesso Protegido:
+    Cliente envia requisição com token JWT no cabeçalho.
+    JwtAuthGuard verifica token.
+    JwtStrategy decodifica token e anexa informações do usuário à requisição.
+
+# Strategy (lib Passport)
+-> Passport é uma biblioteca robusta para autenticação em Node.js, e ela usa strategies para suportar diferentes métodos de autenticação de maneira padronizada
+-> Strategies encapsulam a lógica de autenticação em módulos reutilizáveis
+-> Suporte a Múltiplos Métodos de Autenticação
+-> Segurança e Separação de Preocupações
+
+
 # Comandos:
 -> nest g resources nome
     - cria estrutura completa do CRUD
@@ -23,8 +43,11 @@
 
 ## Fazer 
 -> mudar user para employee
+-> ver como fazer o gerenciamento dos usuarios adms
+-> mudar todas os metodos de buscas/alterações para _id
+-> ver quais chamadas devo proteger com JwtAuthGuard
+
 -> Continuar desenvolvimento:
-    - auth
     - categoria
 
 -> Lidar com a exceptions e as mensagens de retorno
@@ -32,14 +55,12 @@
 
 # User
 -> Ocultar password do retorno User - findOne e findAll
--> Ajustar json retorno da exception de User
--> Ajustar UserResponseDto
+-> Ajustar json retorno da exception de User 
+-> Ajustar retorno para criação de username igual
 
 # Product
--> Tem necessidade do ResponseProductDto ?
 
 # Client
--> Ver necessidade de atrelar o objeto User ou apenas o id
 -> Implementar Address
 -> Ver como iniciar os campos de datas do SPC - null ?
 
@@ -47,4 +68,3 @@
 -> Problema no findAll .populate não está retornando os registros do array de products - possivel problema no mongoose
 
 # Auth
--> Problema ao usar o LocalAuthGuard
