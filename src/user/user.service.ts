@@ -32,11 +32,11 @@ export class UserService {
     }
   }
 
-  async findAll(): Promise<UserResponseDto[]> {
+  async findAll(): Promise<User[]> {
     return this.userModel.find().exec();
   }
 
-  async findOne(code: number): Promise<UserResponseDto> {
+  async findOne(code: number): Promise<User> {
     const user = await this.userModel.findOne({ code }).exec();
     if (!user) {
       throw new Error('Usuário não encontrado');
@@ -44,8 +44,10 @@ export class UserService {
     return user;
   }
 
-  async getByUsername(username: string): Promise<UserResponseDto> {
+  async findByUsername(username: string): Promise<User> {
     const user = await this.userModel.findOne({ username }).exec();
+    console.log('teste user: ', user);
+
     if (!user) {
       throw new Error('Usuário não encontrado');
     }

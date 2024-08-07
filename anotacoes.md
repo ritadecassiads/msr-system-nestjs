@@ -11,8 +11,14 @@
     - Ao usar ValidationPipe, o NestJS valida automaticamente os dados de entrada contra as regras definidas nos decoradores do DTO (por exemplo, @IsNotEmpty(), @IsString(), etc.)
 
 # Comandos:
--> nest g resources
+-> nest g resources nome
     - cria estrutura completa do CRUD
+
+-> nest g module nome
+
+-> nest g controller nome
+
+-> nest g service nome
 
 
 ## Fazer 
@@ -27,6 +33,7 @@
 # User
 -> Ocultar password do retorno User - findOne e findAll
 -> Ajustar json retorno da exception de User
+-> Ajustar UserResponseDto
 
 # Product
 -> Tem necessidade do ResponseProductDto ?
@@ -38,3 +45,6 @@
 
 # Sale
 -> Problema no findAll .populate não está retornando os registros do array de products - possivel problema no mongoose
+
+# Auth
+-> Problema em encontrar a rota auth ?
