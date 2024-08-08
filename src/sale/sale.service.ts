@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Sale } from './schemas/sale.schema';
 import { CreateSaleDto } from './dto/create-sale.dto';
+import { CodeGeneratorUtil } from 'src/common/utils/code-generator.util';
 
 @Injectable()
 export class SaleService {
@@ -11,7 +12,7 @@ export class SaleService {
   ) {}
 
   async create(createSaleDto: CreateSaleDto): Promise<Sale> {
-    const code = await this.gereateCode();
+    const code = await CodeGeneratorUtil.generateCode(this.saleModel);
     const createdSale = new this.saleModel({ ...createSaleDto, code });
     return createdSale.save();
   }
@@ -55,10 +56,5 @@ export class SaleService {
     if (result.deletedCount === 0) {
       throw new NotFoundException('Venda não encontrada');
     }
-  }
-
-  async gereateCode(): Promise<number> {
-    const lastSale = await this.saleModel.findOne({}).sort({ code: -1 }).exec();
-    return lastSale ? lastSale.code + 1 : 1;
   }
 }

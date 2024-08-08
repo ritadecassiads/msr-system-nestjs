@@ -5,6 +5,7 @@ import { CreateClientDto } from './dto/create-client.dto';
 import { Client } from './schemas/client.schema';
 import { ResponseMenssage } from './dto/response-client.dto';
 import { User } from 'src/user/schemas/user.schema';
+import { CodeGeneratorUtil } from 'src/common/utils/code-generator.util';
 
 @Injectable()
 export class ClientService {
@@ -24,7 +25,7 @@ export class ClientService {
         throw new NotFoundException('Usuário não encontrado');
       }
 
-      const code = await this.generateCode();
+      const code = await CodeGeneratorUtil.generateCode(this.clientModel);
 
       // Criar o cliente com a referência ao usuário
       const createdClient = new this.clientModel({
@@ -69,13 +70,5 @@ export class ClientService {
   async delete(_id: string): Promise<ResponseMenssage> {
     const result = await this.clientModel.deleteOne({ _id }).exec();
     return result ? { message: 'Cliente deletado com sucesso' } : null;
-  }
-
-  async generateCode(): Promise<number> {
-    const lastClient = await this.clientModel
-      .findOne({})
-      .sort({ code: -1 })
-      .exec();
-    return lastClient ? lastClient.code + 1 : 1;
   }
 }

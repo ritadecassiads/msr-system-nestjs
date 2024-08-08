@@ -5,6 +5,7 @@ import { User } from './schemas/user.schema';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserResponseDto } from './dto/response-user.dto';
+import { CodeGeneratorUtil } from 'src/common/utils/code-generator.util';
 
 @Injectable()
 export class UserService {
@@ -16,7 +17,7 @@ export class UserService {
     try {
       await this.checkUsernameAvailability(createUserDto.username);
       const hashedPassword = await this.cryptPassword(createUserDto.password);
-      const code = await this.generateCode();
+      const code = await CodeGeneratorUtil.generateCode(this.userModel);
 
       const createdUser = new this.userModel({
         ...createUserDto, // operador de espalhamento
@@ -85,10 +86,5 @@ export class UserService {
     if (existingUser) {
       throw new Error('Username já está em uso. Por favor, escolha outro.');
     }
-  }
-
-  async generateCode(): Promise<number> {
-    const lastUser = await this.userModel.findOne({}).sort({ code: -1 }).exec();
-    return lastUser ? lastUser.code + 1 : 1;
   }
 }
