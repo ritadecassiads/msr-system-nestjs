@@ -26,23 +26,23 @@ export class ProductController {
     return this.productService.findAll();
   }
 
-  @Get(':code')
-  async findOne(@Param('code') code: string): Promise<Product> {
-    return this.productService.findOne(code);
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<Product> {
+    return this.productService.findById(id);
   }
 
-  @Put(':code')
+  @Put(':id')
   async update(
-    @Param('code') code: string,
+    @Param('id') id: string,
     @Body() updateProductDto: Partial<CreateProductDto>,
   ): Promise<ResponseMenssage> {
-    this.productService.update(code, updateProductDto);
+    this.productService.update(id, updateProductDto);
     return { message: 'Produto alterado com sucesso' };
   }
 
-  @Delete(':code')
-  async remove(@Param('code') code: string): Promise<ResponseMenssage> {
-    this.productService.delete(code);
+  @Delete(':id')
+  async remove(@Param('id') id: string): Promise<ResponseMenssage> {
+    this.productService.delete(id);
     return { message: 'Produto excluído com sucesso' };
   }
 }

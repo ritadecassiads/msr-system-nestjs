@@ -31,7 +31,7 @@
 
 
 # Comandos:
--> nest g resources nome
+-> nest g resource nome
     - cria estrutura completa do CRUD
 
 -> nest g module nome
@@ -49,16 +49,20 @@
 
 -> Continuar desenvolvimento:
     - categoria
+    - address
+    - duplicatas - contas a pagar
+    - fornecedores
 
 -> Lidar com a exceptions e as mensagens de retorno
 -> Fazer testes unitarios
 
 # User
 -> Ocultar password do retorno User - findOne e findAll
--> Ajustar json retorno da exception de User 
--> Ajustar retorno para criação de username igual
+-> Ajustar response para erro de criação de username igual
+-> Ajustar response para findById de user que nao existe
 
 # Product
+-> Incluir relacionamento com fornecedor
 
 # Client
 -> Implementar Address

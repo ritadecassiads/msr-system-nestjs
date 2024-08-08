@@ -26,17 +26,17 @@ export class ProductService {
     return this.productModel.find().exec();
   }
 
-  async findOne(code: string): Promise<Product> {
-    const product = await this.productModel.findOne({ code }).exec();
+  async findById(_id: string): Promise<Product> {
+    const product = await this.productModel.findById({ _id }).exec();
     if (!product) {
       throw new NotFoundException('Product not found');
     }
     return product;
   }
 
-  async update(code: string, updateProductDto: Partial<CreateProductDto>): Promise<Product> {
+  async update(_id: string, updateProductDto: Partial<CreateProductDto>): Promise<Product> {
     const updatedProduct = await this.productModel.findOneAndUpdate(
-      { code },
+      { _id },
       updateProductDto,
       { new: true },
     ).exec();
@@ -46,8 +46,8 @@ export class ProductService {
     return updatedProduct;
   }
 
-  async delete(code: string): Promise<void> {
-    const result = await this.productModel.deleteOne({ code }).exec();
+  async delete(_id: string): Promise<void> {
+    const result = await this.productModel.deleteOne({ _id }).exec();
     if (result.deletedCount === 0) {
       throw new NotFoundException('Product not found');
     }

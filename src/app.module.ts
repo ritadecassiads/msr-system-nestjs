@@ -6,6 +6,8 @@ import { ProductModule } from './product/product.module';
 import { DatabaseModule } from './database/database.module';
 import { SaleModule } from './sale/sale.module';
 import { AuthModule } from './auth/auth.module';
+import { InvoiceModule } from './invoice/invoice.module';
+import { SupplierModule } from './supplier/supplier.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { AuthModule } from './auth/auth.module';
     ProductModule,
     DatabaseModule,
     SaleModule,
+    InvoiceModule,
+    SupplierModule,
   ],
   controllers: [],
   providers: [],

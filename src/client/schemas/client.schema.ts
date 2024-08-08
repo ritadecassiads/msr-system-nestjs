@@ -6,61 +6,58 @@ import { User } from 'src/user/schemas/user.schema';
 
 @Schema({ timestamps: true })
 export class Client extends Document {
-  @Prop({ type: Number })
+  @Prop({ required: true })
   code: number;
 
-  @Prop({ type: String, required: true })
+  @Prop({ required: true })
   name: string;
 
-  @Prop({ type: Date, required: true })
+  @Prop({ required: true })
   birthDate: Date;
 
-  @Prop({ type: String, required: true })
+  @Prop({ required: true, unique: true })
   cpf: string;
 
-  @Prop({ type: String, required: true })
+  @Prop({ required: true, unique: true })
   rg: string;
 
   //   @Prop({ type: Object, required: true })
   //   address: Record<string, any>;
 
-  @Prop({ type: String, required: true })
+  @Prop({ required: true })
   phone: string;
 
   @Prop({ type: String })
   email: string;
 
-  @Prop({ type: Date, default: Date.now })
-  createdAt: Date;
-
-  @Prop({ type: Number, default: 20000 })
+  @Prop({ default: 20000 })
   purchaseLimit: number;
 
-  @Prop({ type: String })
+  @Prop()
   observations: string;
 
   @Prop({ type: Types.ObjectId, ref: 'User' })
   createdByUser: User;
 
-  @Prop({ type: String })
+  @Prop()
   fathersName: string;
 
-  @Prop({ type: String })
+  @Prop()
   mothersName: string;
 
-  @Prop({ type: String })
+  @Prop()
   peopleAuthorized: string;
 
-  @Prop({ type: Number })
+  @Prop()
   timesCharged: number;
 
-  @Prop({ type: Date })
+  @Prop()
   spcInclusionDate: Date;
 
-  @Prop({ type: Date })
+  @Prop()
   spcExclusionDate: Date;
 
-  @Prop({ type: String })
+  @Prop()
   spcExclusionReason: string;
 }
 

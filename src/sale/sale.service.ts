@@ -27,8 +27,8 @@ export class SaleService {
     return sales;
   }
 
-  async findOne(code: number): Promise<Sale> {
-    const sale = await this.saleModel.findOne({ code }).exec();
+  async findById(_id: string): Promise<Sale> {
+    const sale = await this.saleModel.findOne({ _id }).exec();
     if (!sale) {
       throw new NotFoundException('Venda não encontrada');
     }
@@ -36,11 +36,11 @@ export class SaleService {
   }
 
   async update(
-    code: number,
+    _id: string,
     updateSaleDto: Partial<CreateSaleDto>,
   ): Promise<Sale> {
     const updatedSale = await this.saleModel
-      .findOneAndUpdate({ code }, { $set: updateSaleDto }, { new: true })
+      .findOneAndUpdate({ _id }, { $set: updateSaleDto }, { new: true })
       .exec();
 
     if (!updatedSale) {
@@ -50,8 +50,8 @@ export class SaleService {
     return updatedSale;
   }
 
-  async delete(code: number): Promise<void> {
-    const result = await this.saleModel.deleteOne({ code }).exec();
+  async delete(_id: string): Promise<void> {
+    const result = await this.saleModel.deleteOne({ _id }).exec();
     if (result.deletedCount === 0) {
       throw new NotFoundException('Venda não encontrada');
     }

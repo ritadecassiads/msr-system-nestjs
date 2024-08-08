@@ -7,7 +7,6 @@ import {
   Param,
   Body,
   NotFoundException,
-  ConflictException,
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -22,14 +21,7 @@ export class UserController {
   @Post()
   @UseGuards(JwtAuthGuard)
   async create(@Body() createUserDto: CreateUserDto): Promise<UserResponseDto> {
-    try {
-      return await this.userService.create(createUserDto);
-    } catch (error) {
-      if (error.code === 11000) {
-        throw new ConflictException('Username já está em uso');
-      }
-      throw error;
-    }
+    return await this.userService.create(createUserDto);
   }
 
   @Get()
@@ -46,12 +38,12 @@ export class UserController {
     return user;
   }
 
-  @Put(':code')
+  @Put(':id')
   async update(
-    @Param('code') code: number,
+    @Param('id') id: string,
     @Body() updateUserDto: Partial<CreateUserDto>,
   ): Promise<ResponseMenssage> {
-    const updatedUser = await this.userService.update(code, updateUserDto);
+    const updatedUser = await this.userService.update(id, updateUserDto);
     if (!updatedUser) {
       throw new NotFoundException('Usuário não encontrado');
     }
@@ -60,9 +52,9 @@ export class UserController {
     };
   }
 
-  @Delete(':code')
-  async delete(@Param('code') code: number): Promise<ResponseMenssage> {
-    const deletedUser = await this.userService.delete(code);
+  @Delete(':id')
+  async delete(@Param('id') id: string): Promise<ResponseMenssage> {
+    const deletedUser = await this.userService.delete(id);
     if (!deletedUser) {
       throw new NotFoundException('Usuário não encontrado');
     }

@@ -12,7 +12,7 @@ export class Sale extends Document {
   @Prop({ type: [{ type: Types.ObjectId, ref: 'Product' }], required: true })
   products: Product[];
 
-  @Prop({ type: Types.ObjectId, ref: 'Client', required: false })
+  @Prop({ type: Types.ObjectId, ref: 'Client' })
   clientId: Client;
 
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })

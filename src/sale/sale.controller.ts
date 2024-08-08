@@ -27,27 +27,27 @@ export class SaleController {
     return this.saleService.findAll();
   }
 
-  @Get(':code')
-  async findOne(@Param('code') code: number): Promise<Sale> {
-    const sale = await this.saleService.findOne(code);
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<Sale> {
+    const sale = await this.saleService.findById(id);
     if (!sale) {
       throw new NotFoundException('Venda não encontrada');
     }
     return sale;
   }
 
-  @Put(':code')
+  @Put(':id')
   async update(
-    @Param('code') code: number,
+    @Param('id') id: string,
     @Body() updateSaleDto: Partial<CreateSaleDto>,
   ): Promise<ResponseMenssage> {
-    await this.saleService.update(code, updateSaleDto);
+    await this.saleService.update(id, updateSaleDto);
     return { message: 'Venda atualizada com sucesso' };
   }
 
-  @Delete(':code')
-  async delete(@Param('code') code: number): Promise<ResponseMenssage> {
-    await this.saleService.delete(code);
+  @Delete(':id')
+  async delete(@Param('id') id: string): Promise<ResponseMenssage> {
+    await this.saleService.delete(id);
     return { message: 'Venda deletada com sucesso' };
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './schemas/user.schema';
@@ -26,6 +26,9 @@ export class UserService {
 
       return await createdUser.save();
     } catch (error) {
+      if (error.code === 11000) {
+        throw new ConflictException('Username já está em uso');
+      }
       throw new Error(
         'Não foi possível cadastrar o usuário. Por favor, tente novamente.',
       );
@@ -53,8 +56,8 @@ export class UserService {
     return user;
   }
 
-  async update(code: number, user: Partial<User>): Promise<UserResponseDto> {
-    const userFounded = await this.userModel.findOne({ code }).exec();
+  async update(_id: string, user: Partial<User>): Promise<UserResponseDto> {
+    const userFounded = await this.userModel.findOne({ _id }).exec();
     if (!userFounded) {
       throw new Error('Usuário não encontrado');
     }
@@ -63,8 +66,8 @@ export class UserService {
       .exec();
   }
 
-  async delete(code: number): Promise<User> {
-    const user = await this.userModel.findOne({ code }).exec();
+  async delete(_id: string): Promise<User> {
+    const user = await this.userModel.findOne({ _id }).exec();
     if (!user) {
       throw new Error('Usuário não encontrado');
     }

@@ -20,9 +20,6 @@ export class Product extends Document {
 
   @Prop({ required: true })
   stock: number;
-
-  @Prop({ default: Date.now })
-  createdAt: Date;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);

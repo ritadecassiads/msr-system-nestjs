@@ -5,20 +5,20 @@ import {
   IsString,
   IsDate,
   IsOptional,
-  IsMongoId,
   IsEnum,
   IsArray,
+  IsMongoId,
 } from 'class-validator';
 
 export class CreateSaleDto {
   @IsNotEmpty()
-  @IsMongoId()
   @IsArray()
+  @IsMongoId({ each: true })
   products: string[];
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsMongoId()
-  clientId: string;
+  clientId?: string;
 
   @IsNotEmpty()
   @IsMongoId()
