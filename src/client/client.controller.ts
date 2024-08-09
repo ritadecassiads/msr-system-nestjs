@@ -2,12 +2,12 @@ import {
   Controller,
   Get,
   Post,
-  Put,
   Delete,
   Param,
   Body,
   NotFoundException,
   ConflictException,
+  Patch,
 } from '@nestjs/common';
 import { ClientService } from './client.service';
 import { CreateClientDto } from './dto/create-client.dto';
@@ -44,7 +44,7 @@ export class ClientController {
     return client;
   }
 
-  @Put(':id')
+  @Patch(':id')
   async update(
     @Param('id') id: string,
     @Body() updateClientDto: Partial<CreateClientDto>,

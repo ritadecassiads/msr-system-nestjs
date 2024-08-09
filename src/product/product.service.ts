@@ -38,7 +38,7 @@ export class ProductService {
   async update(_id: string, updateProductDto: Partial<CreateProductDto>): Promise<Product> {
     const updatedProduct = await this.productModel.findOneAndUpdate(
       { _id },
-      updateProductDto,
+      { $set:updateProductDto },
       { new: true },
     ).exec();
     if (!updatedProduct) {

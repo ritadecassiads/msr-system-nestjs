@@ -41,19 +41,20 @@
 -> nest g service nome
 
 
-## Fazer 
+## Fazer
 -> mudar user para employee
--> ver como fazer o gerenciamento dos usuarios adms
--> mudar todas os metodos de buscas/alterações para _id
 -> ver quais chamadas devo proteger com JwtAuthGuard
+-> lidar com a exceptions e as mensagens de retorno para update, delete
+    - padronizar o response message de cada entidade - usar como exemplo o retorno de supplier
 
 -> Continuar desenvolvimento:
-    - categoria
-    - address
-    - duplicatas - contas a pagar
-    - fornecedores
+    - invoice
+    - categoria do produto
+    - address employee e client
 
--> Lidar com a exceptions e as mensagens de retorno
+-> ver como fazer o gerenciamento dos acessos dos usuarios adms no back
+
+
 -> Fazer testes unitarios
 
 # User

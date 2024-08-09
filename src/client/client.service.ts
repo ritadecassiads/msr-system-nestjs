@@ -59,7 +59,7 @@ export class ClientService {
     updateClientDto: Partial<CreateClientDto>,
   ): Promise<ResponseMenssage> {
     const updatedClient = await this.clientModel
-      .findOneAndUpdate({ _id }, updateClientDto, { new: true })
+      .findOneAndUpdate({ _id }, { $set: updateClientDto }, { new: true })
       .exec();
     if (!updatedClient) {
       throw new NotFoundException('Product not found');

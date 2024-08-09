@@ -4,7 +4,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Supplier } from './schemas/supplier.schema';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
-import { UpdateSupplierDto } from './dto/update-supplier.dto';
 import { CodeGeneratorUtil } from '../common/utils/code-generator.util';
 
 @Injectable()
@@ -33,22 +32,22 @@ export class SupplierService {
   }
 
   async update(
-    id: string,
-    updateSupplierDto: UpdateSupplierDto,
+    _id: string,
+    updateSupplierDto: Partial<CreateSupplierDto>,
   ): Promise<Supplier> {
     const supplier = await this.supplierModel
-      .findByIdAndUpdate(id, updateSupplierDto, { new: true })
+      .findByIdAndUpdate({ _id }, { $set: updateSupplierDto }, { new: true })
       .exec();
     if (!supplier) {
-      throw new NotFoundException(`Supplier with ID ${id} not found`);
+      throw new NotFoundException('Fonecedor não encontrado');
     }
     return supplier;
   }
 
-  async remove(id: string): Promise<void> {
-    const result = await this.supplierModel.findByIdAndDelete(id).exec();
+  async delete(_id: string): Promise<void> {
+    const result = await this.supplierModel.findByIdAndDelete(_id).exec();
     if (!result) {
-      throw new NotFoundException(`Supplier with ID ${id} not found`);
+      throw new NotFoundException('Fornecedor não encontrado');
     }
   }
 }

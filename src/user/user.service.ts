@@ -57,14 +57,17 @@ export class UserService {
     return user;
   }
 
-  async update(_id: string, user: Partial<User>): Promise<UserResponseDto> {
-    const userFounded = await this.userModel.findOne({ _id }).exec();
-    if (!userFounded) {
+  async update(
+    _id: string,
+    updateUserDto: Partial<CreateUserDto>,
+  ): Promise<UserResponseDto> {
+    const userUpdated = await this.userModel
+      .findOneAndUpdate({ _id }, { $set: updateUserDto }, { new: true })
+      .exec();
+    if (!userUpdated) {
       throw new Error('Usuário não encontrado');
     }
-    return this.userModel
-      .findByIdAndUpdate(userFounded._id, user, { new: true })
-      .exec();
+    return userUpdated;
   }
 
   async delete(_id: string): Promise<User> {
