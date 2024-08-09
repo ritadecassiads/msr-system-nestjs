@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsNumber,
+  IsOptional,
+  IsMongoId,
+} from 'class-validator';
 
 export class CreateProductDto {
   @IsNotEmpty()
@@ -20,4 +26,8 @@ export class CreateProductDto {
   @IsNotEmpty()
   @IsNumber()
   stock: number;
+
+  @IsOptional()
+  @IsMongoId()
+  supplierId?: string;
 }

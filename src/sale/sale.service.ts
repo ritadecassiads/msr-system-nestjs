@@ -29,7 +29,12 @@ export class SaleService {
   }
 
   async findById(_id: string): Promise<Sale> {
-    const sale = await this.saleModel.findOne({ _id }).exec();
+    const sale = await this.saleModel
+      .findOne({ _id })
+      .populate({ path: 'products', select: 'name' }) // problema ao retornar os objetos de produtos
+      .populate('clientId', 'name')
+      .populate('sellerId', 'name')
+      .exec();
     if (!sale) {
       throw new NotFoundException('Venda não encontrada');
     }
