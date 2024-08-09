@@ -22,7 +22,7 @@ export class AuthService {
     );
     const payload = {
       username: employee.username,
-      sub: employee._id,
+      sub: employee.id,
       code: employee.code,
     }; // dados que desejo incluir no token
     return {

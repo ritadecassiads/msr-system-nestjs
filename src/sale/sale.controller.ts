@@ -11,9 +11,9 @@ import {
 } from '@nestjs/common';
 import { SaleService } from './sale.service';
 import { CreateSaleDto } from './dto/create-sale.dto';
-import { ResponseMenssage } from './dto/response-sale.dto';
 import { Sale } from './schemas/sale.schema';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { ResponseDto } from 'src/common/dto/response.dto';
 
 @Controller('sales')
 export class SaleController {
@@ -21,8 +21,11 @@ export class SaleController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  async create(@Body() createSaleDto: CreateSaleDto): Promise<Sale> {
-    return this.saleService.create(createSaleDto);
+  async create(
+    @Body() createSaleDto: CreateSaleDto,
+  ): Promise<ResponseDto<Sale>> {
+    const createdSale = await this.saleService.create(createSaleDto);
+    return new ResponseDto('Venda criada com sucesso', createdSale);
   }
 
   @Get()
@@ -44,15 +47,18 @@ export class SaleController {
   async update(
     @Param('id') id: string,
     @Body() updateSaleDto: Partial<CreateSaleDto>,
-  ): Promise<ResponseMenssage> {
-    await this.saleService.update(id, updateSaleDto);
-    return { message: 'Venda atualizada com sucesso' };
+  ): Promise<ResponseDto<Sale>> {
+    const updatedSale = await this.saleService.update(id, updateSaleDto);
+    if (!updatedSale) {
+      throw new NotFoundException('Venda não encontrada');
+    }
+    return new ResponseDto('Venda atualizada com sucesso', updatedSale);
   }
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
-  async delete(@Param('id') id: string): Promise<ResponseMenssage> {
-    await this.saleService.delete(id);
-    return { message: 'Venda deletada com sucesso' };
+  async delete(@Param('id') id: string): Promise<ResponseDto<Sale>> {
+    const deletedSale = await this.saleService.delete(id);
+    return new ResponseDto('Venda deletada com sucesso', deletedSale);
   }
 }

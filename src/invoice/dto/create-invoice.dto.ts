@@ -1,26 +1,42 @@
+import { Type } from 'class-transformer';
 import {
-  IsString,
   IsNotEmpty,
   IsNumber,
-  IsDate,
   IsOptional,
+  IsEnum,
+  IsString,
+  IsDate,
+  IsMongoId,
 } from 'class-validator';
 
 export class CreateInvoiceDto {
-  @IsNotEmpty()
-  @IsString()
-  supplier: string;
+  @IsOptional()
+  @IsMongoId()
+  readonly supplierId?: string;
 
-  @IsNumber()
   @IsNotEmpty()
-  value: number;
-
   @IsDate()
+  @Type(() => Date)
+  readonly issueDate: Date;
+
   @IsNotEmpty()
-  dueDate: Date;
+  @IsDate()
+  @Type(() => Date)
+  readonly dueDate: Date;
+
+  @IsNotEmpty()
+  @IsNumber()
+  readonly amount: number;
+
+  @IsOptional()
+  @IsNumber()
+  readonly installments?: number;
+
+  @IsOptional()
+  @IsEnum(['open', 'paid', 'overdue'])
+  readonly status?: 'open' | 'paid' | 'overdue';
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  description?: string;
+  readonly notes?: string;
 }

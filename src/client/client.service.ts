@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateClientDto } from './dto/create-client.dto';
 import { Client } from './schemas/client.schema';
-import { ResponseMenssage } from './dto/response-client.dto';
 import { Employee } from 'src/employee/schemas/employee.schema';
 import { CodeGeneratorUtil } from 'src/common/utils/code-generator.util';
 
@@ -46,29 +45,32 @@ export class ClientService {
     return this.clientModel.find().exec();
   }
 
-  async findOne(_id: string): Promise<Client> {
-    const client = await this.clientModel.findOne({ _id }).exec();
+  async findOne(id: string): Promise<Client> {
+    const client = await this.clientModel.findOne({ id }).exec();
     if (!client) {
-      throw new NotFoundException('Product not found');
+      throw new NotFoundException('Cliente não encontrado');
     }
     return client;
   }
 
   async update(
-    _id: string,
+    id: string,
     updateClientDto: Partial<CreateClientDto>,
-  ): Promise<ResponseMenssage> {
+  ): Promise<Client> {
     const updatedClient = await this.clientModel
-      .findOneAndUpdate({ _id }, { $set: updateClientDto }, { new: true })
+      .findOneAndUpdate({ id }, { $set: updateClientDto }, { new: true })
       .exec();
     if (!updatedClient) {
-      throw new NotFoundException('Product not found');
+      throw new NotFoundException('Cliente não encontrado');
     }
-    return updatedClient ? { message: 'Cliente atualizado com sucesso' } : null;
+    return updatedClient;
   }
 
-  async delete(_id: string): Promise<ResponseMenssage> {
-    const result = await this.clientModel.deleteOne({ _id }).exec();
-    return result ? { message: 'Cliente deletado com sucesso' } : null;
+  async delete(id: string): Promise<Client> {
+    const deletedClient = await this.clientModel.findByIdAndDelete(id).exec();
+    if (!deletedClient) {
+      throw new NotFoundException('Cliente não encontrado');
+    }
+    return deletedClient;
   }
 }

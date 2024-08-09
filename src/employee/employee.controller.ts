@@ -11,11 +11,9 @@ import {
 } from '@nestjs/common';
 import { EmployeeService } from './employee.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
-import {
-  ResponseMenssage,
-  EmployeeResponseDto,
-} from './dto/response-employee.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { ResponseDto } from 'src/common/dto/response.dto';
+import { Employee } from './schemas/employee.schema';
 
 @Controller('employees')
 export class EmployeeController {
@@ -25,17 +23,19 @@ export class EmployeeController {
   @UseGuards(JwtAuthGuard)
   async create(
     @Body() createEmployeeDto: CreateEmployeeDto,
-  ): Promise<EmployeeResponseDto> {
-    return await this.employeeService.create(createEmployeeDto);
+  ): Promise<ResponseDto<Employee>> {
+    const createdEmployee =
+      await this.employeeService.create(createEmployeeDto);
+    return new ResponseDto('Usuário criado com sucesso', createdEmployee);
   }
 
   @Get()
-  async findAll(): Promise<EmployeeResponseDto[]> {
+  async findAll(): Promise<Employee[]> {
     return this.employeeService.findAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<EmployeeResponseDto> {
+  async findOne(@Param('id') id: string): Promise<Employee> {
     const employee = await this.employeeService.findById(id);
     if (!employee) {
       throw new NotFoundException('Usuário não encontrado');
@@ -48,7 +48,7 @@ export class EmployeeController {
   async update(
     @Param('id') id: string,
     @Body() updateEmployeeDto: Partial<CreateEmployeeDto>,
-  ): Promise<ResponseMenssage> {
+  ): Promise<ResponseDto<Employee>> {
     const updatedEmployee = await this.employeeService.update(
       id,
       updateEmployeeDto,
@@ -56,20 +56,16 @@ export class EmployeeController {
     if (!updatedEmployee) {
       throw new NotFoundException('Usuário não encontrado');
     }
-    return {
-      message: 'Usuário atualizado com sucesso',
-    };
+    return new ResponseDto('Usuário atualizado com sucesso', updatedEmployee);
   }
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
-  async delete(@Param('id') id: string): Promise<ResponseMenssage> {
+  async delete(@Param('id') id: string): Promise<ResponseDto<Employee>> {
     const deletedEmployee = await this.employeeService.delete(id);
     if (!deletedEmployee) {
       throw new NotFoundException('Usuário não encontrado');
     }
-    return {
-      message: 'Usuário deletado com sucesso',
-    };
+    return new ResponseDto('Usuário deletado com sucesso', deletedEmployee);
   }
 }

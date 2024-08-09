@@ -15,6 +15,7 @@ import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { UpdateSupplierDto } from './dto/update-supplier.dto';
 import { Supplier } from './schemas/supplier.schema';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { ResponseDto } from 'src/common/dto/response.dto';
 
 @Controller('suppliers')
 export class SupplierController {
@@ -22,8 +23,12 @@ export class SupplierController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  async create(@Body() createSupplierDto: CreateSupplierDto) {
-    return this.supplierService.create(createSupplierDto);
+  async create(
+    @Body() createSupplierDto: CreateSupplierDto,
+  ): Promise<ResponseDto<Supplier>> {
+    const createdSupplier =
+      await this.supplierService.create(createSupplierDto);
+    return new ResponseDto('Fornecedor criado com sucesso', createdSupplier);
   }
 
   @Get()
@@ -41,7 +46,7 @@ export class SupplierController {
   async update(
     @Param('id') id: string,
     @Body() updateSupplierDto: UpdateSupplierDto,
-  ): Promise<{ message: string; supplier?: Supplier }> {
+  ): Promise<ResponseDto<Supplier>> {
     const updatedSupplier = await this.supplierService.update(
       id,
       updateSupplierDto,
@@ -50,16 +55,17 @@ export class SupplierController {
     if (!updatedSupplier) {
       throw new NotFoundException('Fornecedor não encontrado');
     }
-    return {
-      message: 'Fornecedor atualizado com sucesso',
-      supplier: updatedSupplier,
-    };
+
+    return new ResponseDto(
+      'Fornecedor atualizado com sucesso',
+      updatedSupplier,
+    );
   }
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
-  async delete(@Param('id') id: string): Promise<{ message: string }> {
-    await this.supplierService.delete(id);
-    return { message: 'Fornecedor deletado com sucesso' };
+  async delete(@Param('id') id: string): Promise<ResponseDto<Supplier>> {
+    const deletedSupplier = await this.supplierService.delete(id);
+    return new ResponseDto('Fornecedor deletado com sucesso', deletedSupplier);
   }
 }

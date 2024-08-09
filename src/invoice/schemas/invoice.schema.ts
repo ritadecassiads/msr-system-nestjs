@@ -4,28 +4,29 @@ import { Supplier } from '../../supplier/schemas/supplier.schema'; // Assumindo 
 
 @Schema()
 export class Invoice extends Document {
-  @Prop({ required: true, unique: true })
+  @Prop({ unique: true })
   code: number;
 
-  @Prop({ type: Types.ObjectId, ref: 'Supplier', required: true })
-  supplier: Supplier;
+  @Prop({ type: Types.ObjectId, ref: 'Supplier' })
+  supplierId: Supplier;
 
   @Prop({ required: true })
-  issueDate: Date;
+  issueDate: Date; // emissão
 
   @Prop({ required: true })
-  dueDate: Date;
+  dueDate: Date; // vencimento
 
   @Prop({ required: true })
   amount: number;
+
+  @Prop()
+  installments: number; // parcelas
 
   @Prop({ required: true, enum: ['open', 'paid', 'overdue'], default: 'open' })
   status: string;
 
   @Prop()
   notes: string;
-
-  // codigo do funcionario
 }
 
 export const InvoiceSchema = SchemaFactory.createForClass(Invoice);

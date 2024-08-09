@@ -4,7 +4,6 @@ import { Model } from 'mongoose';
 import { Employee } from './schemas/employee.schema';
 import * as bcrypt from 'bcrypt';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
-import { EmployeeResponseDto } from './dto/response-employee.dto';
 import { CodeGeneratorUtil } from 'src/common/utils/code-generator.util';
 
 @Injectable()
@@ -43,8 +42,8 @@ export class EmployeeService {
     return this.employeeModel.find().exec();
   }
 
-  async findById(_id: string): Promise<Employee> {
-    const employee = await this.employeeModel.findById({ _id }).exec();
+  async findById(id: string): Promise<Employee> {
+    const employee = await this.employeeModel.findById({ id }).exec();
     if (!employee) {
       throw new Error('Usuário não encontrado');
     }
@@ -61,11 +60,11 @@ export class EmployeeService {
   }
 
   async update(
-    _id: string,
+    id: string,
     updateEmployeeDto: Partial<CreateEmployeeDto>,
-  ): Promise<EmployeeResponseDto> {
+  ): Promise<Employee> {
     const employeeUpdated = await this.employeeModel
-      .findOneAndUpdate({ _id }, { $set: updateEmployeeDto }, { new: true })
+      .findOneAndUpdate({ id }, { $set: updateEmployeeDto }, { new: true })
       .exec();
     if (!employeeUpdated) {
       throw new Error('Usuário não encontrado');
@@ -73,12 +72,12 @@ export class EmployeeService {
     return employeeUpdated;
   }
 
-  async delete(_id: string): Promise<Employee> {
-    const employee = await this.employeeModel.findOne({ _id }).exec();
+  async delete(id: string): Promise<Employee> {
+    const employee = await this.employeeModel.findOne({ id }).exec();
     if (!employee) {
       throw new Error('Usuário não encontrado');
     }
-    return this.employeeModel.findOneAndDelete({ _id: employee._id }).exec();
+    return this.employeeModel.findOneAndDelete({ id: employee.id }).exec();
   }
 
   async cryptPassword(password: string): Promise<string> {

@@ -1,34 +1,60 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Patch,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { InvoiceService } from './invoice.service';
 import { CreateInvoiceDto } from './dto/create-invoice.dto';
-import { UpdateInvoiceDto } from './dto/update-invoice.dto';
+import { Invoice } from './schemas/invoice.schema';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { ResponseDto } from 'src/common/dto/response.dto';
 
-@Controller('invoice')
+@Controller('invoices')
 export class InvoiceController {
   constructor(private readonly invoiceService: InvoiceService) {}
 
   @Post()
-  create(@Body() createInvoiceDto: CreateInvoiceDto) {
-    return this.invoiceService.create(createInvoiceDto);
+  @UseGuards(JwtAuthGuard)
+  async create(
+    @Body() createInvoiceDto: CreateInvoiceDto,
+  ): Promise<ResponseDto<Invoice>> {
+    const newInvoice = await this.invoiceService.create(createInvoiceDto);
+    return new ResponseDto('Invoice criado com sucesso', newInvoice);
   }
 
   @Get()
-  findAll() {
+  async findAll(): Promise<Invoice[]> {
     return this.invoiceService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.invoiceService.findOne(+id);
+  async findOne(@Param('id') id: string): Promise<Invoice> {
+    return this.invoiceService.findById(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateInvoiceDto: UpdateInvoiceDto) {
-    return this.invoiceService.update(+id, updateInvoiceDto);
+  @UseGuards(JwtAuthGuard)
+  async update(
+    @Param('id') id: string,
+    @Body() updateInvoiceDto: Partial<CreateInvoiceDto>,
+  ): Promise<ResponseDto<Invoice>> {
+    const updatedInvoice = await this.invoiceService.update(
+      id,
+      updateInvoiceDto,
+    );
+
+    return new ResponseDto('Invoice atualizado com sucesso', updatedInvoice);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.invoiceService.remove(+id);
+  @UseGuards(JwtAuthGuard)
+  async remove(@Param('id') id: string): Promise<ResponseDto<Invoice>> {
+    const deletecInvoice = await this.invoiceService.remove(id);
+    return new ResponseDto('Invoice deletado com sucesso', deletecInvoice);
   }
 }

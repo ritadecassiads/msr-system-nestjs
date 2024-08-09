@@ -28,9 +28,9 @@ export class SaleService {
     return sales;
   }
 
-  async findById(_id: string): Promise<Sale> {
+  async findById(id: string): Promise<Sale> {
     const sale = await this.saleModel
-      .findOne({ _id })
+      .findOne({ id })
       .populate({ path: 'products', select: 'name' }) // problema ao retornar os objetos de produtos
       .populate('clientId', 'name')
       .populate('sellerId', 'name')
@@ -42,11 +42,11 @@ export class SaleService {
   }
 
   async update(
-    _id: string,
+    id: string,
     updateSaleDto: Partial<CreateSaleDto>,
   ): Promise<Sale> {
     const updatedSale = await this.saleModel
-      .findOneAndUpdate({ _id }, { $set: updateSaleDto }, { new: true })
+      .findOneAndUpdate({ id }, { $set: updateSaleDto }, { new: true })
       .exec();
 
     if (!updatedSale) {
@@ -56,10 +56,11 @@ export class SaleService {
     return updatedSale;
   }
 
-  async delete(_id: string): Promise<void> {
-    const result = await this.saleModel.deleteOne({ _id }).exec();
-    if (result.deletedCount === 0) {
+  async delete(id: string): Promise<Sale> {
+    const result = await this.saleModel.findByIdAndDelete(id).exec();
+    if (!result) {
       throw new NotFoundException('Venda não encontrada');
     }
+    return result;
   }
 }

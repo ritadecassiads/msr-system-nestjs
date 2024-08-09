@@ -12,9 +12,9 @@ import {
 } from '@nestjs/common';
 import { ClientService } from './client.service';
 import { CreateClientDto } from './dto/create-client.dto';
-import { ResponseMenssage } from './dto/response-client.dto';
 import { Client } from './schemas/client.schema';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { ResponseDto } from 'src/common/dto/response.dto';
 
 @Controller('clients')
 export class ClientController {
@@ -22,9 +22,12 @@ export class ClientController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  async create(@Body() createClientDto: CreateClientDto): Promise<Client> {
+  async create(
+    @Body() createClientDto: CreateClientDto,
+  ): Promise<ResponseDto<Client>> {
     try {
-      return await this.clientService.create(createClientDto);
+      const newClient = await this.clientService.create(createClientDto);
+      return new ResponseDto('Cliente criado com sucesso', newClient);
     } catch (error) {
       if (error.code === 11000) {
         throw new ConflictException('Cliente já está cadastrado');
@@ -52,25 +55,22 @@ export class ClientController {
   async update(
     @Param('id') id: string,
     @Body() updateClientDto: Partial<CreateClientDto>,
-  ): Promise<ResponseMenssage> {
+  ): Promise<ResponseDto<Client>> {
     const updatedClient = await this.clientService.update(id, updateClientDto);
     if (!updatedClient) {
       throw new NotFoundException('Cliente não encontrado');
     }
-    return {
-      message: 'Cliente atualizado com sucesso',
-    };
+
+    return new ResponseDto('Cliente atualizado com sucesso', updatedClient);
   }
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
-  async delete(@Param('id') id: string): Promise<ResponseMenssage> {
+  async delete(@Param('id') id: string): Promise<ResponseDto<Client>> {
     const deletedClient = await this.clientService.delete(id);
     if (!deletedClient) {
       throw new NotFoundException('Cliente não encontrado');
     }
-    return {
-      message: 'Cliente deletado com sucesso',
-    };
+    return new ResponseDto('Cliente deletado com sucesso', deletedClient);
   }
 }

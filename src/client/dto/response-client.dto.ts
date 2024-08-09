@@ -84,8 +84,3 @@ export class ClientResponseDto {
   @IsString()
   spcExclusionReason?: string;
 }
-
-export class ResponseMenssage {
-  @IsString()
-  message: string;
-}

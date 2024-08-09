@@ -7,12 +7,13 @@ import {
   Param,
   Patch,
   UseGuards,
+  NotFoundException,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { Product } from './schemas/product.schema';
-import { ResponseMenssage } from './dto/response-product.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { ResponseDto } from 'src/common/dto/response.dto';
 
 @Controller('products')
 export class ProductController {
@@ -20,8 +21,11 @@ export class ProductController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  async create(@Body() createProductDto: CreateProductDto): Promise<Product> {
-    return this.productService.create(createProductDto);
+  async create(
+    @Body() createProductDto: CreateProductDto,
+  ): Promise<ResponseDto<Product>> {
+    const createdProduct = await this.productService.create(createProductDto);
+    return new ResponseDto('Produto criado com sucesso', createdProduct);
   }
 
   @Get()
@@ -39,15 +43,21 @@ export class ProductController {
   async update(
     @Param('id') id: string,
     @Body() updateProductDto: Partial<CreateProductDto>,
-  ): Promise<ResponseMenssage> {
-    this.productService.update(id, updateProductDto);
-    return { message: 'Produto alterado com sucesso' };
+  ): Promise<ResponseDto<Product>> {
+    const updatedProduct = await this.productService.update(
+      id,
+      updateProductDto,
+    );
+    if (!updatedProduct) {
+      throw new NotFoundException('Produto não encontrado');
+    }
+    return new ResponseDto('Produto atualizado com sucesso', updatedProduct);
   }
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
-  async remove(@Param('id') id: string): Promise<ResponseMenssage> {
-    this.productService.delete(id);
-    return { message: 'Produto excluído com sucesso' };
+  async remove(@Param('id') id: string): Promise<ResponseDto<Product>> {
+    const deletedProduct = await this.productService.delete(id);
+    return new ResponseDto('Produto deletado com sucesso', deletedProduct);
   }
 }

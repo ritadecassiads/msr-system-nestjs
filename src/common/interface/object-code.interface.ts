@@ -1,5 +1,5 @@
 import { Document } from 'mongoose';
 
-export interface WithCode extends Document {
+export interface ObjectCode extends Document {
   code: number;
 }
