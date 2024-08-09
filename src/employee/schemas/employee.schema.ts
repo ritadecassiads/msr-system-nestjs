@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 @Schema({ timestamps: true })
-export class User extends Document {
+export class Employee extends Document {
   @Prop({ unique: true })
   code: number;
 
@@ -31,4 +31,4 @@ export class User extends Document {
   isAdmin: boolean;
 }
 
-export const UserSchema = SchemaFactory.createForClass(User);
+export const EmployeeSchema = SchemaFactory.createForClass(Employee);

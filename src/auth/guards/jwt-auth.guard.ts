@@ -29,12 +29,14 @@ export class JwtAuthGuard implements CanActivate {
         secret: jwtConstants.secret,
       });
 
-      const user = await this.authService.validateUserById(decodedToken.sub);
+      const employee = await this.authService.validateEmployeeById(
+        decodedToken.sub,
+      );
 
-      if (!user) {
-        throw new UnauthorizedException('User not found');
+      if (!employee) {
+        throw new UnauthorizedException('Employee not found');
       }
-      request.user = user;
+      request.employee = employee;
       return true;
     } catch (error) {
       throw new UnauthorizedException('Invalid token');

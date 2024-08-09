@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UserModule } from './user/user.module';
+import { EmployeeModule } from './employee/employee.module';
 import { ClientModule } from './client/client.module';
 import { ProductModule } from './product/product.module';
 import { DatabaseModule } from './database/database.module';
@@ -13,7 +13,7 @@ import { SupplierModule } from './supplier/supplier.module';
   imports: [
     MongooseModule.forRoot('mongodb://127.0.0.1:27017/system_msr'),
     AuthModule,
-    UserModule,
+    EmployeeModule,
     ClientModule,
     ProductModule,
     DatabaseModule,

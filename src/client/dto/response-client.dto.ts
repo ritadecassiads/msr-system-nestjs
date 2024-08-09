@@ -5,7 +5,7 @@ import {
   IsDate,
   IsObject,
 } from 'class-validator';
-import { User } from 'src/user/schemas/user.schema';
+import { Employee } from 'src/employee/schemas/employee.schema';
 
 export class ClientResponseDto {
   @IsOptional()
@@ -54,7 +54,7 @@ export class ClientResponseDto {
 
   @IsOptional()
   @IsObject()
-  createdByUser?: User;
+  createdByEmployee?: Employee;
 
   @IsOptional()
   @IsString()

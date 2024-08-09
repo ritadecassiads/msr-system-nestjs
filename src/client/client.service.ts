@@ -4,24 +4,24 @@ import { Model } from 'mongoose';
 import { CreateClientDto } from './dto/create-client.dto';
 import { Client } from './schemas/client.schema';
 import { ResponseMenssage } from './dto/response-client.dto';
-import { User } from 'src/user/schemas/user.schema';
+import { Employee } from 'src/employee/schemas/employee.schema';
 import { CodeGeneratorUtil } from 'src/common/utils/code-generator.util';
 
 @Injectable()
 export class ClientService {
   constructor(
     @InjectModel(Client.name) private readonly clientModel: Model<Client>,
-    @InjectModel(User.name) private readonly userModel: Model<User>,
+    @InjectModel(Employee.name) private readonly employeeModel: Model<Employee>,
   ) {}
 
   async create(createClientDto: CreateClientDto): Promise<Client> {
     try {
       // Buscar o usuário pelo ID do mongo
-      const user = await this.userModel
-        .findById(createClientDto.createdByUser)
+      const employee = await this.employeeModel
+        .findById(createClientDto.createdByEmployee)
         .exec();
 
-      if (!user) {
+      if (!employee) {
         throw new NotFoundException('Usuário não encontrado');
       }
 
@@ -31,7 +31,7 @@ export class ClientService {
       const createdClient = new this.clientModel({
         ...createClientDto,
         code,
-        createdByUser: user,
+        createdByEmployee: employee,
       });
 
       return createdClient.save();

@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { User } from '../../user/schemas/user.schema';
+import { Employee } from '../../employee/schemas/employee.schema';
 import { Product } from '../../product/schemas/product.schema';
 import { Client } from '../../client/schemas/client.schema';
 
@@ -15,8 +15,8 @@ export class Sale extends Document {
   @Prop({ type: Types.ObjectId, ref: 'Client' })
   clientId: Client;
 
-  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
-  sellerId: User;
+  @Prop({ type: Types.ObjectId, ref: 'Employee', required: true })
+  sellerId: Employee;
 
   @Prop({ required: true })
   quantity: number;

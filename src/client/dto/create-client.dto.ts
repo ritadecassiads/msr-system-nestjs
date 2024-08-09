@@ -48,7 +48,7 @@ export class CreateClientDto {
 
   @IsOptional()
   @IsMongoId()
-  createdByUser: string;
+  createdByEmployee: string;
 
   @IsOptional()
   @IsString()

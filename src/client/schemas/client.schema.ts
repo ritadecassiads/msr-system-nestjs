@@ -1,8 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { User } from 'src/user/schemas/user.schema';
-
-//export type ClientDocument = Client & Document;
+import { Employee } from 'src/employee/schemas/employee.schema';
 
 @Schema({ timestamps: true })
 export class Client extends Document {
@@ -36,8 +34,8 @@ export class Client extends Document {
   @Prop()
   observations: string;
 
-  @Prop({ type: Types.ObjectId, ref: 'User' })
-  createdByUser: User;
+  @Prop({ type: Types.ObjectId, ref: 'Employee' })
+  createdByEmployee: Employee;
 
   @Prop()
   fathersName: string;
