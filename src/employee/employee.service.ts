@@ -15,7 +15,6 @@ export class EmployeeService {
 
   async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
     try {
-      //await this.checkEmployeenameAvailability(createEmployeeDto.username);
       const hashedPassword = await this.cryptPassword(
         createEmployeeDto.password,
       );
@@ -29,7 +28,6 @@ export class EmployeeService {
 
       return await createdEmployee.save();
     } catch (error) {
-      console.log('error ---->', error);
       if (error.code === 11000) {
         throw new ConflictException(
           'Campos como username e cpf devem ser únicos.',
@@ -87,16 +85,5 @@ export class EmployeeService {
     const salt = await bcrypt.genSalt(12);
     const hashedPassword = await bcrypt.hash(password, salt);
     return hashedPassword;
-  }
-
-  async checkEmployeenameAvailability(username: string) {
-    const existingEmployee = await this.employeeModel
-      .findOne({ username })
-      .exec();
-    if (existingEmployee) {
-      throw new ConflictException(
-        'Employeename já está em uso. Por favor, escolha outro.',
-      );
-    }
   }
 }

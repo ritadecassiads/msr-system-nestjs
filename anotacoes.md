@@ -42,9 +42,8 @@
 
 
 ## Fazer
--> mudar user para employee
-
 -> ver quais chamadas devo proteger com JwtAuthGuard
+
 -> lidar com a exceptions e as mensagens de retorno para update, delete
     - padronizar o response message de cada entidade - usar como exemplo o retorno de supplier
 

@@ -44,6 +44,7 @@ export class EmployeeController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   async update(
     @Param('id') id: string,
     @Body() updateEmployeeDto: Partial<CreateEmployeeDto>,
@@ -61,6 +62,7 @@ export class EmployeeController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   async delete(@Param('id') id: string): Promise<ResponseMenssage> {
     const deletedEmployee = await this.employeeService.delete(id);
     if (!deletedEmployee) {

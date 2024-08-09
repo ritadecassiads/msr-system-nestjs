@@ -7,17 +7,20 @@ import {
   Body,
   NotFoundException,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
 import { SaleService } from './sale.service';
 import { CreateSaleDto } from './dto/create-sale.dto';
 import { ResponseMenssage } from './dto/response-sale.dto';
 import { Sale } from './schemas/sale.schema';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('sales')
 export class SaleController {
   constructor(private readonly saleService: SaleService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   async create(@Body() createSaleDto: CreateSaleDto): Promise<Sale> {
     return this.saleService.create(createSaleDto);
   }
@@ -37,6 +40,7 @@ export class SaleController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   async update(
     @Param('id') id: string,
     @Body() updateSaleDto: Partial<CreateSaleDto>,
@@ -46,6 +50,7 @@ export class SaleController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   async delete(@Param('id') id: string): Promise<ResponseMenssage> {
     await this.saleService.delete(id);
     return { message: 'Venda deletada com sucesso' };

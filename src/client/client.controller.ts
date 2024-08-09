@@ -8,17 +8,20 @@ import {
   NotFoundException,
   ConflictException,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
 import { ClientService } from './client.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { ResponseMenssage } from './dto/response-client.dto';
 import { Client } from './schemas/client.schema';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('clients')
 export class ClientController {
   constructor(private readonly clientService: ClientService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   async create(@Body() createClientDto: CreateClientDto): Promise<Client> {
     try {
       return await this.clientService.create(createClientDto);
@@ -45,6 +48,7 @@ export class ClientController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   async update(
     @Param('id') id: string,
     @Body() updateClientDto: Partial<CreateClientDto>,
@@ -59,6 +63,7 @@ export class ClientController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   async delete(@Param('id') id: string): Promise<ResponseMenssage> {
     const deletedClient = await this.clientService.delete(id);
     if (!deletedClient) {

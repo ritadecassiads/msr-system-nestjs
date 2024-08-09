@@ -4,6 +4,8 @@ import { ClientService } from './client.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Client, ClientSchema } from './schemas/client.schema';
 import { Employee, EmployeeSchema } from 'src/employee/schemas/employee.schema';
+import { AuthModule } from 'src/auth/auth.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -11,6 +13,8 @@ import { Employee, EmployeeSchema } from 'src/employee/schemas/employee.schema';
     MongooseModule.forFeature([
       { name: Employee.name, schema: EmployeeSchema },
     ]),
+    AuthModule,
+    JwtModule,
   ],
   controllers: [ClientController],
   providers: [ClientService],

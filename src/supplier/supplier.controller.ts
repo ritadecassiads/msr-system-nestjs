@@ -8,17 +8,20 @@ import {
   Patch,
   Delete,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
 import { SupplierService } from './supplier.service';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { UpdateSupplierDto } from './dto/update-supplier.dto';
 import { Supplier } from './schemas/supplier.schema';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('suppliers')
 export class SupplierController {
   constructor(private readonly supplierService: SupplierService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   async create(@Body() createSupplierDto: CreateSupplierDto) {
     return this.supplierService.create(createSupplierDto);
   }
@@ -34,6 +37,7 @@ export class SupplierController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   async update(
     @Param('id') id: string,
     @Body() updateSupplierDto: UpdateSupplierDto,
@@ -53,6 +57,7 @@ export class SupplierController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   async delete(@Param('id') id: string): Promise<{ message: string }> {
     await this.supplierService.delete(id);
     return { message: 'Fornecedor deletado com sucesso' };

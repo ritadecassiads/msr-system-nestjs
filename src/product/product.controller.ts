@@ -6,17 +6,20 @@ import {
   Body,
   Param,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { Product } from './schemas/product.schema';
 import { ResponseMenssage } from './dto/response-product.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('products')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   async create(@Body() createProductDto: CreateProductDto): Promise<Product> {
     return this.productService.create(createProductDto);
   }
@@ -32,6 +35,7 @@ export class ProductController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   async update(
     @Param('id') id: string,
     @Body() updateProductDto: Partial<CreateProductDto>,
@@ -41,6 +45,7 @@ export class ProductController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   async remove(@Param('id') id: string): Promise<ResponseMenssage> {
     this.productService.delete(id);
     return { message: 'Produto excluído com sucesso' };
