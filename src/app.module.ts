@@ -8,6 +8,7 @@ import { SaleModule } from './sale/sale.module';
 import { AuthModule } from './auth/auth.module';
 import { InvoiceModule } from './invoice/invoice.module';
 import { SupplierModule } from './supplier/supplier.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { SupplierModule } from './supplier/supplier.module';
     SaleModule,
     InvoiceModule,
     SupplierModule,
+    CategoryModule,
   ],
   controllers: [],
   providers: [],

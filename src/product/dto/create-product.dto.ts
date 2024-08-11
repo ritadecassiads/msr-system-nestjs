@@ -4,6 +4,7 @@ import {
   IsNumber,
   IsOptional,
   IsMongoId,
+  IsArray,
 } from 'class-validator';
 
 export class CreateProductDto {
@@ -30,4 +31,9 @@ export class CreateProductDto {
   @IsOptional()
   @IsMongoId()
   supplierId?: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsMongoId({ each: true })
+  categories?: string[];
 }

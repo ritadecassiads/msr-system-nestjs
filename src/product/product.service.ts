@@ -20,7 +20,9 @@ export class ProductService {
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
     try {
-      await this.validationService.validateSupplier(createProductDto.supplierId);
+      await this.validationService.validateSupplier(
+        createProductDto.supplierId,
+      );
 
       const code = await CodeGeneratorUtil.generateCode(this.productModel);
       const createdProduct = new this.productModel({
@@ -38,13 +40,18 @@ export class ProductService {
   }
 
   async findAll(): Promise<Product[]> {
-    return this.productModel.find().populate('supplierId', 'name').exec();
+    return this.productModel
+      .find()
+      .populate('supplierId', 'name')
+      .populate('categories', 'name')
+      .exec();
   }
 
   async findById(_id: string): Promise<Product> {
     const product = await this.productModel
       .findById(_id)
       .populate('supplierId', 'name')
+      .populate('categories', 'name')
       .exec();
     if (!product) {
       throw new NotFoundException('Product not found');
