@@ -9,6 +9,7 @@ import {
   ConflictException,
   Patch,
   UseGuards,
+  BadRequestException,
 } from '@nestjs/common';
 import { ClientService } from './client.service';
 import { CreateClientDto } from './dto/create-client.dto';
@@ -32,7 +33,12 @@ export class ClientController {
       if (error.code === 11000) {
         throw new ConflictException('Cliente já está cadastrado');
       }
-      throw error;
+      if (error instanceof BadRequestException) {
+        throw new BadRequestException('Dados inválidos fornecidos.');
+      }
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException('Vendedor não encontrado.');
+      }
     }
   }
 

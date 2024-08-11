@@ -3,14 +3,14 @@ import { SaleService } from './sale.service';
 import { SaleController } from './sale.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Sale, SaleSchema } from './schemas/sale.schema';
-import { Product, ProductSchema } from 'src/product/schemas/product.schema';
 import { AuthModule } from 'src/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
+import { ValidationModule } from 'src/validation/validation.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Sale.name, schema: SaleSchema }]),
-    MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),
+    ValidationModule,
     AuthModule,
     JwtModule,
   ],

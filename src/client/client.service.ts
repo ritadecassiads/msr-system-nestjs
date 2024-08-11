@@ -1,52 +1,53 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateClientDto } from './dto/create-client.dto';
 import { Client } from './schemas/client.schema';
-import { Employee } from 'src/employee/schemas/employee.schema';
 import { CodeGeneratorUtil } from 'src/common/utils/code-generator.util';
+import { ValidationService } from '../validation/validation.service';
 
 @Injectable()
 export class ClientService {
   constructor(
     @InjectModel(Client.name) private readonly clientModel: Model<Client>,
-    @InjectModel(Employee.name) private readonly employeeModel: Model<Employee>,
+    private readonly validationService: ValidationService,
   ) {}
 
   async create(createClientDto: CreateClientDto): Promise<Client> {
     try {
-      // Buscar o usuário pelo ID do mongo
-      const employee = await this.employeeModel
-        .findById(createClientDto.createdByEmployee)
-        .exec();
-
-      if (!employee) {
-        throw new NotFoundException('Usuário não encontrado');
-      }
+      await this.validationService.validateEmployee(
+        createClientDto.createdByEmployee,
+      );
 
       const code = await CodeGeneratorUtil.generateCode(this.clientModel);
 
-      // Criar o cliente com a referência ao usuário
       const createdClient = new this.clientModel({
         ...createClientDto,
         code,
-        createdByEmployee: employee,
       });
 
       return createdClient.save();
     } catch (error) {
-      throw new Error(
-        'Não foi possível cadastrar o usuário. Por favor, tente novamente.',
-      );
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException();
+      }
+      throw new BadRequestException();
     }
   }
 
   async findAll(): Promise<Client[]> {
-    return this.clientModel.find().exec();
+    return this.clientModel.find().populate('createdByEmployee', 'name').exec();
   }
 
   async findById(_id: string): Promise<Client> {
-    const client = await this.clientModel.findById(_id).exec();
+    const client = await this.clientModel
+      .findById(_id)
+      .populate('createdByEmployee', 'name')
+      .exec();
     if (!client) {
       throw new NotFoundException('Cliente não encontrado');
     }

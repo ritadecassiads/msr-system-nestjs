@@ -9,15 +9,19 @@ import { Model } from 'mongoose';
 import { CreateProductDto } from './dto/create-product.dto';
 import { Product } from './schemas/product.schema';
 import { CodeGeneratorUtil } from 'src/common/utils/code-generator.util';
+import { ValidationService } from '../validation/validation.service';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectModel(Product.name) private productModel: Model<Product>,
+    private readonly validationService: ValidationService,
   ) {}
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
     try {
+      await this.validationService.validateSupplier(createProductDto.supplierId);
+
       const code = await CodeGeneratorUtil.generateCode(this.productModel);
       const createdProduct = new this.productModel({
         ...createProductDto,

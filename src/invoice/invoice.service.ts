@@ -4,14 +4,17 @@ import { Model } from 'mongoose';
 import { Invoice } from './schemas/invoice.schema';
 import { CreateInvoiceDto } from './dto/create-invoice.dto';
 import { CodeGeneratorUtil } from 'src/common/utils/code-generator.util';
+import { ValidationService } from 'src/validation/validation.service';
 
 @Injectable()
 export class InvoiceService {
   constructor(
     @InjectModel(Invoice.name) private readonly invoiceModel: Model<Invoice>,
+    private readonly validationService: ValidationService,
   ) {}
 
   async create(createInvoiceDto: CreateInvoiceDto): Promise<Invoice> {
+    await this.validationService.validateSupplier(createInvoiceDto.supplierId);
     const code = await CodeGeneratorUtil.generateCode(this.invoiceModel);
     const createdInvoice = new this.invoiceModel({ ...createInvoiceDto, code });
     return createdInvoice.save();
