@@ -34,7 +34,7 @@ export class SaleController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Sale> {
+  async findById(@Param('id') id: string): Promise<Sale> {
     const sale = await this.saleService.findById(id);
     if (!sale) {
       throw new NotFoundException('Venda não encontrada');

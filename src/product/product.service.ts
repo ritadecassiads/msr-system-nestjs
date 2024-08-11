@@ -26,7 +26,7 @@ export class ProductService {
       return await createdProduct.save();
     } catch (error) {
       if (error.code === 11000) {
-        // Código de erro para duplicidade no MongoDB
+        // Código de erro para duplic_idade no MongoDB
         throw new ConflictException('Duplicate field value entered');
       }
       throw error;
@@ -37,9 +37,9 @@ export class ProductService {
     return this.productModel.find().populate('supplierId', 'name').exec();
   }
 
-  async findById(id: string): Promise<Product> {
+  async findById(_id: string): Promise<Product> {
     const product = await this.productModel
-      .findById({ id })
+      .findById(_id)
       .populate('supplierId', 'name')
       .exec();
     if (!product) {
@@ -49,11 +49,11 @@ export class ProductService {
   }
 
   async update(
-    id: string,
+    _id: string,
     updateProductDto: Partial<CreateProductDto>,
   ): Promise<Product> {
     const updatedProduct = await this.productModel
-      .findOneAndUpdate({ id }, { $set: updateProductDto }, { new: true })
+      .findByIdAndUpdate(_id, { $set: updateProductDto }, { new: true })
       .exec();
     if (!updatedProduct) {
       throw new NotFoundException('Product not found');
@@ -61,8 +61,8 @@ export class ProductService {
     return updatedProduct;
   }
 
-  async delete(id: string): Promise<Product> {
-    const result = await this.productModel.findByIdAndDelete(id).exec();
+  async delete(_id: string): Promise<Product> {
+    const result = await this.productModel.findByIdAndDelete(_id).exec();
 
     if (!result) {
       throw new NotFoundException('Product not found');

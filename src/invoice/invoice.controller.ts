@@ -33,7 +33,7 @@ export class InvoiceController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Invoice> {
+  async findById(@Param('id') id: string): Promise<Invoice> {
     return this.invoiceService.findById(id);
   }
 
@@ -53,8 +53,8 @@ export class InvoiceController {
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
-  async remove(@Param('id') id: string): Promise<ResponseDto<Invoice>> {
-    const deletecInvoice = await this.invoiceService.remove(id);
+  async delete(@Param('id') id: string): Promise<ResponseDto<Invoice>> {
+    const deletecInvoice = await this.invoiceService.delete(id);
     return new ResponseDto('Invoice deletado com sucesso', deletecInvoice);
   }
 }

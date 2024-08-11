@@ -23,20 +23,20 @@ export class SupplierService {
     return this.supplierModel.find().exec();
   }
 
-  async findById(id: string): Promise<Supplier> {
-    const supplier = await this.supplierModel.findById(id).exec();
+  async findById(_id: string): Promise<Supplier> {
+    const supplier = await this.supplierModel.findById(_id).exec();
     if (!supplier) {
-      throw new NotFoundException(`Supplier with ID ${id} not found`);
+      throw new NotFoundException(`Supplier with ID ${_id} not found`);
     }
     return supplier;
   }
 
   async update(
-    id: string,
+    _id: string,
     updateSupplierDto: Partial<CreateSupplierDto>,
   ): Promise<Supplier> {
     const supplier = await this.supplierModel
-      .findByIdAndUpdate({ id }, { $set: updateSupplierDto }, { new: true })
+      .findByIdAndUpdate(_id, { $set: updateSupplierDto }, { new: true })
       .exec();
     if (!supplier) {
       throw new NotFoundException('Fonecedor não encontrado');
@@ -44,8 +44,8 @@ export class SupplierService {
     return supplier;
   }
 
-  async delete(id: string): Promise<Supplier> {
-    const result = await this.supplierModel.findByIdAndDelete(id).exec();
+  async delete(_id: string): Promise<Supplier> {
+    const result = await this.supplierModel.findByIdAndDelete(_id).exec();
     if (!result) {
       throw new NotFoundException('Fornecedor não encontrado');
     }

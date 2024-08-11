@@ -35,7 +35,10 @@ export class AuthService {
     pass?: string,
   ): Promise<any> {
     const employee = await this.employeeService.findByUsername(username);
-    const isPasswordValid = await bcrypt.compare(pass, employee.password);
+    const isPasswordValid = await this.comparePasswords(
+      pass,
+      employee.password,
+    );
 
     if (employee && isPasswordValid) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -50,9 +53,9 @@ export class AuthService {
   }
 
   async comparePasswords(
-    password: string,
+    inputPassword: string,
     hashedPassword: string,
   ): Promise<boolean> {
-    return bcrypt.compare(password, hashedPassword);
+    return bcrypt.compare(inputPassword, hashedPassword);
   }
 }

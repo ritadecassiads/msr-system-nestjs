@@ -45,8 +45,8 @@ export class ClientService {
     return this.clientModel.find().exec();
   }
 
-  async findOne(id: string): Promise<Client> {
-    const client = await this.clientModel.findOne({ id }).exec();
+  async findById(_id: string): Promise<Client> {
+    const client = await this.clientModel.findById(_id).exec();
     if (!client) {
       throw new NotFoundException('Cliente não encontrado');
     }
@@ -54,11 +54,11 @@ export class ClientService {
   }
 
   async update(
-    id: string,
+    _id: string,
     updateClientDto: Partial<CreateClientDto>,
   ): Promise<Client> {
     const updatedClient = await this.clientModel
-      .findOneAndUpdate({ id }, { $set: updateClientDto }, { new: true })
+      .findByIdAndUpdate(_id, { $set: updateClientDto }, { new: true })
       .exec();
     if (!updatedClient) {
       throw new NotFoundException('Cliente não encontrado');
@@ -66,8 +66,8 @@ export class ClientService {
     return updatedClient;
   }
 
-  async delete(id: string): Promise<Client> {
-    const deletedClient = await this.clientModel.findByIdAndDelete(id).exec();
+  async delete(_id: string): Promise<Client> {
+    const deletedClient = await this.clientModel.findByIdAndDelete(_id).exec();
     if (!deletedClient) {
       throw new NotFoundException('Cliente não encontrado');
     }

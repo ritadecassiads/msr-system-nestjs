@@ -42,10 +42,10 @@ export class EmployeeService {
     return this.employeeModel.find().exec();
   }
 
-  async findById(id: string): Promise<Employee> {
-    const employee = await this.employeeModel.findById({ id }).exec();
+  async findById(_id: string): Promise<Employee> {
+    const employee = await this.employeeModel.findById(_id).exec();
     if (!employee) {
-      throw new Error('Usuário não encontrado');
+      throw new Error('Funcionário não encontrado');
     }
     return employee;
   }
@@ -54,30 +54,30 @@ export class EmployeeService {
     const employee = await this.employeeModel.findOne({ username }).exec();
 
     if (!employee) {
-      throw new Error('Usuário não encontrado');
+      throw new Error('Funcionário não encontrado');
     }
     return employee;
   }
 
   async update(
-    id: string,
+    _id: string,
     updateEmployeeDto: Partial<CreateEmployeeDto>,
   ): Promise<Employee> {
     const employeeUpdated = await this.employeeModel
-      .findOneAndUpdate({ id }, { $set: updateEmployeeDto }, { new: true })
+      .findByIdAndUpdate(_id, updateEmployeeDto, { new: true })
       .exec();
     if (!employeeUpdated) {
-      throw new Error('Usuário não encontrado');
+      throw new Error('Funcionário não encontrado');
     }
     return employeeUpdated;
   }
 
-  async delete(id: string): Promise<Employee> {
-    const employee = await this.employeeModel.findOne({ id }).exec();
+  async delete(_id: string): Promise<Employee> {
+    const employee = await this.employeeModel.findByIdAndDelete(_id).exec();
     if (!employee) {
-      throw new Error('Usuário não encontrado');
+      throw new Error('Funcionário não encontrado');
     }
-    return this.employeeModel.findOneAndDelete({ id: employee.id }).exec();
+    return this.employeeModel.findByIdAndDelete(_id).exec();
   }
 
   async cryptPassword(password: string): Promise<string> {

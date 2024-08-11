@@ -37,7 +37,7 @@ export class SupplierController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findById(@Param('id') id: string) {
     return this.supplierService.findById(id);
   }
 

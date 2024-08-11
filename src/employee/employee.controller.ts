@@ -35,7 +35,7 @@ export class EmployeeController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Employee> {
+  async findById(@Param('id') id: string): Promise<Employee> {
     const employee = await this.employeeService.findById(id);
     if (!employee) {
       throw new NotFoundException('Usuário não encontrado');

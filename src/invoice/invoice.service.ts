@@ -21,34 +21,36 @@ export class InvoiceService {
     return this.invoiceModel.find().populate('supplierId', 'name').exec();
   }
 
-  async findById(id: string): Promise<Invoice> {
+  async findById(_id: string): Promise<Invoice> {
     const invoice = await this.invoiceModel
-      .findById(id)
+      .findById(_id)
       .populate('supplierId', 'name')
       .exec();
     if (!invoice) {
-      throw new NotFoundException(`Invoice with ID ${id} not found`);
+      throw new NotFoundException('Duplicata não encontrada');
     }
     return invoice;
   }
 
   async update(
-    id: string,
+    _id: string,
     updateInvoiceDto: Partial<CreateInvoiceDto>,
   ): Promise<Invoice> {
     const updatedInvoice = await this.invoiceModel
-      .findByIdAndUpdate(id, updateInvoiceDto, { new: true })
+      .findByIdAndUpdate(_id, updateInvoiceDto, { new: true }) // mongoose retorna o item após a atualização
       .exec();
     if (!updatedInvoice) {
-      throw new NotFoundException(`Invoice with ID ${id} not found`);
+      throw new NotFoundException('Duplicata não encontrada');
     }
     return updatedInvoice;
   }
 
-  async remove(id: string): Promise<Invoice> {
-    const deletedInvoice = await this.invoiceModel.findByIdAndDelete(id).exec();
+  async delete(_id: string): Promise<Invoice> {
+    const deletedInvoice = await this.invoiceModel
+      .findByIdAndDelete(_id)
+      .exec();
     if (!deletedInvoice) {
-      throw new NotFoundException(`Invoice with ID ${id} not found`);
+      throw new NotFoundException('Duplicata não encontrada');
     }
     return deletedInvoice;
   }
