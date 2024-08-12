@@ -1,4 +1,13 @@
-import { IsNotEmpty, IsString, IsBoolean, IsEmail } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  IsNotEmpty,
+  IsString,
+  IsBoolean,
+  IsEmail,
+  ValidateNested,
+  IsOptional,
+} from 'class-validator';
+import { AddressDto } from 'src/address/dto/address.dto';
 
 export class CreateEmployeeDto {
   @IsNotEmpty()
@@ -22,13 +31,13 @@ export class CreateEmployeeDto {
 
   @IsNotEmpty()
   @IsString()
-  address: string;
-
-  @IsNotEmpty()
-  @IsString()
   phone: string;
 
-  @IsNotEmpty()
   @IsBoolean()
-  isAdmin: boolean;
+  @IsOptional()
+  isAdmin?: boolean;
+
+  @ValidateNested() // validação aninhada
+  @Type(() => AddressDto)
+  address?: AddressDto;
 }

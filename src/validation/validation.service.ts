@@ -5,6 +5,7 @@ import { Product } from '../product/schemas/product.schema';
 import { Client } from '../client/schemas/client.schema';
 import { Employee } from '../employee/schemas/employee.schema';
 import { Supplier } from 'src/supplier/schemas/supplier.schema';
+import { Category } from 'src/category/schemas/category.schema';
 
 @Injectable()
 export class ValidationService {
@@ -13,6 +14,7 @@ export class ValidationService {
     @InjectModel(Client.name) private readonly clientModel: Model<Client>,
     @InjectModel(Employee.name) private readonly employeeModel: Model<Employee>,
     @InjectModel(Supplier.name) private readonly supplierModel: Model<Supplier>,
+    @InjectModel(Category.name) private readonly categoryModel: Model<Category>,
   ) {}
 
   async validateProducts(productIds: string[]): Promise<void> {
@@ -49,6 +51,15 @@ export class ValidationService {
     const seller = await this.supplierModel.findById(supplierId).exec();
     if (!seller) {
       throw new NotFoundException('Vendedor não encontrado.');
+    }
+  }
+
+  async validateCategories(categoriesIds: string[]): Promise<void> {
+    const categories = await this.categoryModel
+      .find({ _id: { $in: categoriesIds.map((id) => new Types.ObjectId(id)) } })
+      .exec(); // crio um array de objectId com map + busco no .find os _ids validando no $in se o id encontrado está presente no array de categoriesIds
+    if (categories.length !== categoriesIds.length) {
+      throw new NotFoundException('Uma ou mais categorias não encontradas.');
     }
   }
 }

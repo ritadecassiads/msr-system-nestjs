@@ -25,6 +25,8 @@ export class ClientService {
 
       const code = await CodeGeneratorUtil.generateCode(this.clientModel);
 
+      console.log('code ----> ', code);
+
       const createdClient = new this.clientModel({
         ...createClientDto,
         code,

@@ -6,6 +6,7 @@ import { Employee, EmployeeSchema } from 'src/employee/schemas/employee.schema';
 import { ValidationService } from '../validation/validation.service';
 import { Product, ProductSchema } from 'src/product/schemas/product.schema';
 import { Supplier, SupplierSchema } from 'src/supplier/schemas/supplier.schema';
+import { Category, CategorySchema } from 'src/category/schemas/category.schema';
 
 @Module({
   imports: [
@@ -16,6 +17,9 @@ import { Supplier, SupplierSchema } from 'src/supplier/schemas/supplier.schema';
     ]),
     MongooseModule.forFeature([
       { name: Supplier.name, schema: SupplierSchema },
+    ]),
+    MongooseModule.forFeature([
+      { name: Category.name, schema: CategorySchema },
     ]),
   ],
   providers: [ValidationService],

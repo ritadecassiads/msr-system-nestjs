@@ -6,7 +6,9 @@ import {
   IsOptional,
   IsDate,
   IsMongoId,
+  ValidateNested,
 } from 'class-validator';
+import { AddressDto } from 'src/address/dto/address.dto';
 
 export class CreateClientDto {
   @IsNotEmpty()
@@ -25,10 +27,6 @@ export class CreateClientDto {
   @IsNotEmpty()
   @IsString()
   rg: string;
-
-  //   @IsNotEmpty()
-  //   @IsObject()
-  //   address: Record<string, any>;
 
   @IsNotEmpty()
   @IsString()
@@ -79,4 +77,8 @@ export class CreateClientDto {
   @IsOptional()
   @IsString()
   spcExclusionReason?: string;
+
+  @ValidateNested()
+  @Type(() => AddressDto)
+  address?: AddressDto;
 }

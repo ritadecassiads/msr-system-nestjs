@@ -24,6 +24,8 @@ export class ProductService {
         createProductDto.supplierId,
       );
 
+      await this.validationService.validateCategories(createProductDto.categories);
+
       const code = await CodeGeneratorUtil.generateCode(this.productModel);
       const createdProduct = new this.productModel({
         ...createProductDto,
@@ -32,7 +34,6 @@ export class ProductService {
       return await createdProduct.save();
     } catch (error) {
       if (error.code === 11000) {
-        // Código de erro para duplic_idade no MongoDB
         throw new ConflictException('Duplicate field value entered');
       }
       throw error;

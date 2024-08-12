@@ -49,9 +49,8 @@
 
 
 ## Fazer
-
 -> Continuar desenvolvimento:
-    - address employee e client
+    - address employee e client e supplier
 
 -> ver como fazer o gerenciamento dos acessos dos usuarios adms no back
 
@@ -59,7 +58,6 @@
 -> Fazer testes unitarios
 
 # User
--> Ocultar password do retorno User - findOne e findAll
 -> Ajustar response para erro de criação de username igual
 -> Ajustar response para findById de user que nao existe
 

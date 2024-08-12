@@ -25,25 +25,29 @@ export class EmployeeService {
         code,
       });
 
+      console.log('createdEmployee ----> ', createdEmployee);
+
       return await createdEmployee.save();
     } catch (error) {
+      console.log('error ----> ', error);
       if (error.code === 11000) {
         throw new ConflictException(
           'Campos como username e cpf devem ser únicos.',
         );
       }
-      throw new Error(
-        'Não foi possível cadastrar o usuário. Por favor, tente novamente.',
-      );
+      throw new Error('Não foi possível cadastrar o usuário.');
     }
   }
 
   async findAll(): Promise<Employee[]> {
-    return this.employeeModel.find().exec();
+    return this.employeeModel.find().select('-password').exec();
   }
 
   async findById(_id: string): Promise<Employee> {
-    const employee = await this.employeeModel.findById(_id).exec();
+    const employee = await this.employeeModel
+      .findById(_id)
+      .select('-password')
+      .exec();
     if (!employee) {
       throw new Error('Funcionário não encontrado');
     }

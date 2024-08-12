@@ -1,10 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
+import { Address } from 'src/address/schemas/address.schema';
 import { Employee } from 'src/employee/schemas/employee.schema';
 
 @Schema({ timestamps: true })
 export class Client extends Document {
-  @Prop({ required: true })
+  @Prop({ unique: true })
   code: number;
 
   @Prop({ required: true })
@@ -18,9 +19,6 @@ export class Client extends Document {
 
   @Prop({ required: true, unique: true })
   rg: string;
-
-  //   @Prop({ type: Object, required: true })
-  //   address: Record<string, any>;
 
   @Prop({ required: true })
   phone: string;
@@ -57,6 +55,9 @@ export class Client extends Document {
 
   @Prop()
   spcExclusionReason: string;
+
+  @Prop({ type: Address, _id: false })
+  address: Address;
 }
 
 export const ClientSchema = SchemaFactory.createForClass(Client);

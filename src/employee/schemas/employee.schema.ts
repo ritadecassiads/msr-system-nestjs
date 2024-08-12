@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { Address } from 'src/address/schemas/address.schema';
 
 @Schema({ timestamps: true })
 export class Employee extends Document {
@@ -19,16 +20,16 @@ export class Employee extends Document {
   cpf: string;
 
   @Prop()
-  address: string;
-
-  @Prop()
   phone: string;
 
   @Prop()
   admissionDate: Date;
 
-  @Prop()
+  @Prop({ type: Boolean, default: false })
   isAdmin: boolean;
+
+  @Prop({ type: Address, _id: false })
+  address: Address;
 }
 
 export const EmployeeSchema = SchemaFactory.createForClass(Employee);

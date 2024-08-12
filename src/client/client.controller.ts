@@ -30,6 +30,8 @@ export class ClientController {
       const newClient = await this.clientService.create(createClientDto);
       return new ResponseDto('Cliente criado com sucesso', newClient);
     } catch (error) {
+      console.log('error ----> ', error);
+
       if (error.code === 11000) {
         throw new ConflictException('Cliente já está cadastrado');
       }

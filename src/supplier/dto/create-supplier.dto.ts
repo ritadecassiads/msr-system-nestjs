@@ -1,4 +1,12 @@
-import { IsString, IsNotEmpty, IsOptional, IsEmail } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  IsEmail,
+  ValidateNested,
+} from 'class-validator';
+import { AddressDto } from 'src/address/dto/address.dto';
 
 export class CreateSupplierDto {
   @IsString()
@@ -8,10 +16,6 @@ export class CreateSupplierDto {
   @IsString()
   @IsNotEmpty()
   readonly cnpj: string;
-
-  @IsString()
-  @IsNotEmpty()
-  readonly address: string;
 
   @IsString()
   @IsOptional()
@@ -28,4 +32,8 @@ export class CreateSupplierDto {
   @IsString()
   @IsOptional()
   readonly observations?: string;
+
+  @ValidateNested()
+  @Type(() => AddressDto)
+  address?: AddressDto;
 }

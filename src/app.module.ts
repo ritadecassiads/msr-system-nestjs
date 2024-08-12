@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { InvoiceModule } from './invoice/invoice.module';
 import { SupplierModule } from './supplier/supplier.module';
 import { CategoryModule } from './category/category.module';
+// import { AddressModule } from './address/address.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { CategoryModule } from './category/category.module';
     InvoiceModule,
     SupplierModule,
     CategoryModule,
+    // AddressModule,
   ],
   controllers: [],
   providers: [],
