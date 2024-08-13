@@ -58,15 +58,5 @@
 -> ver como fazer o gerenciamento dos acessos dos usuarios adms no back
 -> Fazer testes unitarios
 
-# User
--> Ajustar response para erro de criação de username igual
--> Ajustar response para findById de user que nao existe
-
-# Product
-
-# Client
--> Implementar Address
--> Ver como iniciar os campos de datas do SPC - null ?
-
 # Sale
 -> Problema no findAll .populate não está retornando os registros do array de products - possivel problema no mongoose

@@ -1,21 +1,37 @@
 // src/supplier/supplier.service.ts
-import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Supplier } from './schemas/supplier.schema';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { CodeGeneratorUtil } from '../common/utils/code-generator.util';
+import { ValidationService } from 'src/validation/validation.service';
 
 @Injectable()
 export class SupplierService {
   constructor(
     @InjectModel(Supplier.name)
     private readonly supplierModel: Model<Supplier>,
+    private readonly validationService: ValidationService,
   ) {}
 
   async create(createSupplierDto: CreateSupplierDto): Promise<Supplier> {
     try {
       const code = await CodeGeneratorUtil.generateCode(this.supplierModel);
+
+      const isCnpjValid = await this.validationService.validateCnpj(
+        createSupplierDto.cnpj,
+      );
+
+      if (!isCnpjValid) {
+        throw new BadRequestException('CNPJ inválido');
+      }
+
       const newSupplier = new this.supplierModel({
         ...createSupplierDto,
         code,

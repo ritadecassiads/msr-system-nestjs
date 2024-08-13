@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Supplier, SupplierSchema } from './schemas/supplier.schema';
 import { AuthModule } from 'src/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
+import { ValidationModule } from 'src/validation/validation.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { JwtModule } from '@nestjs/jwt';
     ]),
     AuthModule,
     JwtModule,
+    ValidationModule,
   ],
   controllers: [SupplierController],
   providers: [SupplierService],

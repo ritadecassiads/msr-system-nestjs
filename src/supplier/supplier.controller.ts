@@ -1,4 +1,3 @@
-// src/supplier/supplier.controller.ts
 import {
   Controller,
   Get,
@@ -7,7 +6,6 @@ import {
   Param,
   Patch,
   Delete,
-  NotFoundException,
   UseGuards,
 } from '@nestjs/common';
 import { SupplierService } from './supplier.service';

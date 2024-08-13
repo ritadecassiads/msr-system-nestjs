@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { IsEmail } from 'class-validator';
 import { Document } from 'mongoose';
 import { Address } from 'src/address/schemas/address.schema';
 
@@ -17,6 +18,7 @@ export class Supplier extends Document {
   phone: string;
 
   @Prop()
+  @IsEmail()
   email: string;
 
   @Prop()
