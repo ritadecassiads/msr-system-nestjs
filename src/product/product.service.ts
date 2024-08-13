@@ -55,7 +55,7 @@ export class ProductService {
       .populate('categories', 'name')
       .exec();
     if (!product) {
-      throw new NotFoundException('Product not found');
+      throw new NotFoundException('Produto não encontrado');
     }
     return product;
   }
@@ -68,7 +68,7 @@ export class ProductService {
       .findByIdAndUpdate(_id, { $set: updateProductDto }, { new: true })
       .exec();
     if (!updatedProduct) {
-      throw new NotFoundException('Product not found');
+      throw new NotFoundException('Produto não encontrado');
     }
     return updatedProduct;
   }
@@ -77,7 +77,7 @@ export class ProductService {
     const result = await this.productModel.findByIdAndDelete(_id).exec();
 
     if (!result) {
-      throw new NotFoundException('Product not found');
+      throw new NotFoundException('Produto não encontrado');
     }
 
     return result;

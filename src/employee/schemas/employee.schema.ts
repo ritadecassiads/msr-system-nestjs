@@ -4,23 +4,26 @@ import { Address } from 'src/address/schemas/address.schema';
 
 @Schema({ timestamps: true })
 export class Employee extends Document {
-  @Prop({ unique: true })
+  @Prop({ required: true, unique: true })
   code: number;
 
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true }) // unique: true
   username: string;
 
   @Prop({ required: true })
   password: string;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true }) // unique: true
   cpf: string;
 
   @Prop()
   phone: string;
+
+  @Prop()
+  email: string;
 
   @Prop()
   admissionDate: Date;

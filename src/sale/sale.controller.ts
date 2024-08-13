@@ -5,7 +5,6 @@ import {
   Delete,
   Param,
   Body,
-  NotFoundException,
   Patch,
   UseGuards,
 } from '@nestjs/common';
@@ -36,9 +35,6 @@ export class SaleController {
   @Get(':id')
   async findById(@Param('id') id: string): Promise<Sale> {
     const sale = await this.saleService.findById(id);
-    if (!sale) {
-      throw new NotFoundException('Venda não encontrada');
-    }
     return sale;
   }
 
@@ -49,9 +45,6 @@ export class SaleController {
     @Body() updateSaleDto: Partial<CreateSaleDto>,
   ): Promise<ResponseDto<Sale>> {
     const updatedSale = await this.saleService.update(id, updateSaleDto);
-    if (!updatedSale) {
-      throw new NotFoundException('Venda não encontrada');
-    }
     return new ResponseDto('Venda atualizada com sucesso', updatedSale);
   }
 

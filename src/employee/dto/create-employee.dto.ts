@@ -22,9 +22,6 @@ export class CreateEmployeeDto {
   @IsString()
   password: string;
 
-  @IsEmail()
-  email: string;
-
   @IsNotEmpty()
   @IsString()
   cpf: string;
@@ -32,6 +29,10 @@ export class CreateEmployeeDto {
   @IsNotEmpty()
   @IsString()
   phone: string;
+
+  @IsOptional()
+  @IsEmail()
+  email?: string;
 
   @IsBoolean()
   @IsOptional()

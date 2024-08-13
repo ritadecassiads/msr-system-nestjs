@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -23,9 +24,15 @@ export class ClientService {
         createClientDto.createdByEmployee,
       );
 
-      const code = await CodeGeneratorUtil.generateCode(this.clientModel);
+      const isCpfValid = await this.validationService.validateCpf(
+        createClientDto.cpf,
+      );
 
-      console.log('code ----> ', code);
+      if (!isCpfValid) {
+        throw new BadRequestException('CPF inválido');
+      }
+
+      const code = await CodeGeneratorUtil.generateCode(this.clientModel);
 
       const createdClient = new this.clientModel({
         ...createClientDto,
@@ -35,9 +42,16 @@ export class ClientService {
       return createdClient.save();
     } catch (error) {
       if (error instanceof NotFoundException) {
-        throw new NotFoundException();
+        throw error;
       }
-      throw new BadRequestException();
+
+      if (error instanceof BadRequestException) {
+        throw error;
+      }
+
+      throw new InternalServerErrorException(
+        'Não foi possível cadastrar o usuário.',
+      );
     }
   }
 

@@ -5,11 +5,8 @@ import {
   Delete,
   Param,
   Body,
-  NotFoundException,
-  ConflictException,
   Patch,
   UseGuards,
-  BadRequestException,
 } from '@nestjs/common';
 import { ClientService } from './client.service';
 import { CreateClientDto } from './dto/create-client.dto';
@@ -26,22 +23,8 @@ export class ClientController {
   async create(
     @Body() createClientDto: CreateClientDto,
   ): Promise<ResponseDto<Client>> {
-    try {
-      const newClient = await this.clientService.create(createClientDto);
-      return new ResponseDto('Cliente criado com sucesso', newClient);
-    } catch (error) {
-      console.log('error ----> ', error);
-
-      if (error.code === 11000) {
-        throw new ConflictException('Cliente já está cadastrado');
-      }
-      if (error instanceof BadRequestException) {
-        throw new BadRequestException('Dados inválidos fornecidos.');
-      }
-      if (error instanceof NotFoundException) {
-        throw new NotFoundException('Vendedor não encontrado.');
-      }
-    }
+    const newClient = await this.clientService.create(createClientDto);
+    return new ResponseDto('Cliente criado com sucesso', newClient);
   }
 
   @Get()
@@ -52,9 +35,6 @@ export class ClientController {
   @Get(':id')
   async findById(@Param('id') id: string): Promise<Client> {
     const client = await this.clientService.findById(id);
-    if (!client) {
-      throw new NotFoundException('Cliente não encontrado');
-    }
     return client;
   }
 
@@ -65,10 +45,6 @@ export class ClientController {
     @Body() updateClientDto: Partial<CreateClientDto>,
   ): Promise<ResponseDto<Client>> {
     const updatedClient = await this.clientService.update(id, updateClientDto);
-    if (!updatedClient) {
-      throw new NotFoundException('Cliente não encontrado');
-    }
-
     return new ResponseDto('Cliente atualizado com sucesso', updatedClient);
   }
 
@@ -76,9 +52,6 @@ export class ClientController {
   @UseGuards(JwtAuthGuard)
   async delete(@Param('id') id: string): Promise<ResponseDto<Client>> {
     const deletedClient = await this.clientService.delete(id);
-    if (!deletedClient) {
-      throw new NotFoundException('Cliente não encontrado');
-    }
     return new ResponseDto('Cliente deletado com sucesso', deletedClient);
   }
 }

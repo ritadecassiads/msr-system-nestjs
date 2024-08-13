@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Employee, EmployeeSchema } from './schemas/employee.schema';
 import { AuthModule } from 'src/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
+import { ValidationModule } from 'src/validation/validation.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { JwtModule } from '@nestjs/jwt';
     ]),
     forwardRef(() => AuthModule), // quebra o ciclo de dependecia circular entre dois modulos dependentes
     JwtModule,
+    ValidationModule,
   ],
   controllers: [EmployeeController],
   providers: [EmployeeService],

@@ -5,7 +5,6 @@ import {
   Delete,
   Param,
   Body,
-  NotFoundException,
   UseGuards,
   Patch,
 } from '@nestjs/common';
@@ -37,9 +36,6 @@ export class EmployeeController {
   @Get(':id')
   async findById(@Param('id') id: string): Promise<Employee> {
     const employee = await this.employeeService.findById(id);
-    if (!employee) {
-      throw new NotFoundException('Usuário não encontrado');
-    }
     return employee;
   }
 
@@ -53,9 +49,6 @@ export class EmployeeController {
       id,
       updateEmployeeDto,
     );
-    if (!updatedEmployee) {
-      throw new NotFoundException('Usuário não encontrado');
-    }
     return new ResponseDto('Usuário atualizado com sucesso', updatedEmployee);
   }
 
@@ -63,9 +56,6 @@ export class EmployeeController {
   @UseGuards(JwtAuthGuard)
   async delete(@Param('id') id: string): Promise<ResponseDto<Employee>> {
     const deletedEmployee = await this.employeeService.delete(id);
-    if (!deletedEmployee) {
-      throw new NotFoundException('Usuário não encontrado');
-    }
     return new ResponseDto('Usuário deletado com sucesso', deletedEmployee);
   }
 }

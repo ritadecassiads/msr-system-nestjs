@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Invoice } from './schemas/invoice.schema';
@@ -14,14 +18,36 @@ export class InvoiceService {
   ) {}
 
   async create(createInvoiceDto: CreateInvoiceDto): Promise<Invoice> {
-    await this.validationService.validateSupplier(createInvoiceDto.supplierId);
-    const code = await CodeGeneratorUtil.generateCode(this.invoiceModel);
-    const createdInvoice = new this.invoiceModel({ ...createInvoiceDto, code });
-    return createdInvoice.save();
+    try {
+      await this.validationService.validateSupplier(
+        createInvoiceDto.supplierId,
+      );
+      const code = await CodeGeneratorUtil.generateCode(this.invoiceModel);
+      const createdInvoice = new this.invoiceModel({
+        ...createInvoiceDto,
+        code,
+      });
+      return createdInvoice.save();
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      throw new InternalServerErrorException(
+        'Não foi possível cadastrar a duplicata',
+      );
+    }
   }
 
   async findAll(): Promise<Invoice[]> {
-    return this.invoiceModel.find().populate('supplierId', 'name').exec();
+    const invoces = await this.invoiceModel
+      .find()
+      .populate('supplierId', 'name')
+      .exec();
+    if (!invoces) {
+      throw new NotFoundException('Duplicatas não encontradas');
+    }
+    return invoces;
   }
 
   async findById(_id: string): Promise<Invoice> {

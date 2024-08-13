@@ -51,11 +51,6 @@ export class SupplierController {
       id,
       updateSupplierDto,
     );
-
-    if (!updatedSupplier) {
-      throw new NotFoundException('Fornecedor não encontrado');
-    }
-
     return new ResponseDto(
       'Fornecedor atualizado com sucesso',
       updatedSupplier,

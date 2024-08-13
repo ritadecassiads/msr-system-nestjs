@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Sale } from './schemas/sale.schema';
@@ -14,14 +19,28 @@ export class SaleService {
   ) {}
 
   async create(createSaleDto: CreateSaleDto): Promise<Sale> {
-    const code = await CodeGeneratorUtil.generateCode(this.saleModel);
+    try {
+      const code = await CodeGeneratorUtil.generateCode(this.saleModel);
 
-    await this.validationService.validateProducts(createSaleDto.products);
-    await this.validationService.validateClient(createSaleDto.clientId);
-    await this.validationService.validateEmployee(createSaleDto.sellerId);
+      await this.validationService.validateProducts(createSaleDto.products);
+      await this.validationService.validateClient(createSaleDto.clientId);
+      await this.validationService.validateEmployee(createSaleDto.sellerId);
 
-    const createdSale = new this.saleModel({ ...createSaleDto, code });
-    return createdSale.save();
+      const createdSale = new this.saleModel({ ...createSaleDto, code });
+      return createdSale.save();
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      if (error instanceof BadRequestException) {
+        throw error;
+      }
+
+      throw new InternalServerErrorException(
+        'Não foi possível cadastrar a venda',
+      );
+    }
   }
 
   async findAll(): Promise<Sale[]> {
@@ -70,29 +89,4 @@ export class SaleService {
     }
     return result;
   }
-
-  // private async validateProducts(saleProductIds: string[]): Promise<void> {
-  //   const productsIds = saleProductIds.map((id) => new Types.ObjectId(id)); // convertendo para ObjectId
-
-  //   const products = await this.productModel.find({
-  //     _id: { $in: productsIds },
-  //   }); // buscando os produtos e validando no $in se o id encontrado está presente no array de productIds
-  //   if (products.length !== productsIds.length) {
-  //     throw new NotFoundException('Um ou mais produtos não encontrados.');
-  //   }
-  // }
-
-  // private async validateClient(clientId: string): Promise<void> {
-  //   const client = await this.clientModel.findById(clientId).exec();
-  //   if (!client) {
-  //     throw new NotFoundException('Cliente não encontrado.');
-  //   }
-  // }
-
-  // private async validateSeller(sellerId: string): Promise<void> {
-  //   const seller = await this.employeeModel.findById(sellerId).exec();
-  //   if (!seller) {
-  //     throw new NotFoundException('Vendedor não encontrado.');
-  //   }
-  // }
 }

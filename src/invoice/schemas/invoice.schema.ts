@@ -4,7 +4,7 @@ import { Supplier } from '../../supplier/schemas/supplier.schema'; // Assumindo 
 
 @Schema()
 export class Invoice extends Document {
-  @Prop({ unique: true })
+  @Prop({ required: true, unique: true })
   code: number;
 
   @Prop({ type: Types.ObjectId, ref: 'Supplier' })

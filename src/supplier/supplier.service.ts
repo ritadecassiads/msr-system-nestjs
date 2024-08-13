@@ -1,5 +1,5 @@
 // src/supplier/supplier.service.ts
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Supplier } from './schemas/supplier.schema';
@@ -14,9 +14,26 @@ export class SupplierService {
   ) {}
 
   async create(createSupplierDto: CreateSupplierDto): Promise<Supplier> {
-    const code = await CodeGeneratorUtil.generateCode(this.supplierModel);
-    const newSupplier = new this.supplierModel({ ...createSupplierDto, code });
-    return newSupplier.save();
+    try {
+      const code = await CodeGeneratorUtil.generateCode(this.supplierModel);
+      const newSupplier = new this.supplierModel({
+        ...createSupplierDto,
+        code,
+      });
+      return newSupplier.save();
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      if (error instanceof BadRequestException) {
+        throw error;
+      }
+
+      throw new InternalServerErrorException(
+        'Não foi possível cadastrar o fornecedor',
+      );
+    }
   }
 
   async findAll(): Promise<Supplier[]> {
@@ -26,7 +43,7 @@ export class SupplierService {
   async findById(_id: string): Promise<Supplier> {
     const supplier = await this.supplierModel.findById(_id).exec();
     if (!supplier) {
-      throw new NotFoundException(`Supplier with ID ${_id} not found`);
+      throw new NotFoundException('Fonecedor não encontrado');
     }
     return supplier;
   }

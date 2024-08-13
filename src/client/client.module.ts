@@ -5,7 +5,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Client, ClientSchema } from './schemas/client.schema';
 import { AuthModule } from 'src/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
-import { ValidationService } from '../validation/validation.service';
 import { ValidationModule } from 'src/validation/validation.module';
 
 @Module({

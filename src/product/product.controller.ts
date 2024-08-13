@@ -7,7 +7,6 @@ import {
   Param,
   Patch,
   UseGuards,
-  NotFoundException,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -48,9 +47,6 @@ export class ProductController {
       id,
       updateProductDto,
     );
-    if (!updatedProduct) {
-      throw new NotFoundException('Produto não encontrado');
-    }
     return new ResponseDto('Produto atualizado com sucesso', updatedProduct);
   }
 

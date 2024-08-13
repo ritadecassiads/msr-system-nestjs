@@ -10,6 +10,12 @@
     - Eles são usados para garantir que os dados recebidos estejam no formato esperado e para aplicar transformações ou validações necessárias.
     - Ao usar ValidationPipe, o NestJS valida automaticamente os dados de entrada contra as regras definidas nos decoradores do DTO (por exemplo, @IsNotEmpty(), @IsString(), etc.)
 
+# Funcionamento do ValidationPipe
+1. Recepção de Dados: Quando um cliente faz uma requisição à API, os dados enviados no corpo da requisição são validados automaticamente pelo ValidationPipe antes de chegar ao controlador.
+2. Erros de Validação: Se os dados não atenderem aos critérios de validação definidos nos DTOs (como tamanho máximo, formato de e-mail, etc.), o ValidationPipe capturará esses erros.
+3. Exceção Personalizada: O ValidationPipe então usa a exceptionFactory para criar uma instância de ValidationException, passando os erros de validação.
+4. Resposta HTTP: A ValidationException formatada é lançada e o NestJS automaticamente transforma essa exceção em uma resposta HTTP com código de status 400 Bad Request, retornando um corpo de resposta que contém a mensagem "Erro de validação" e uma lista dos erros formatados.
+
 # Funcionamento Auth Login
 1. Login (POST /auth/login):
     Cliente envia username e password.
@@ -49,12 +55,7 @@
 
 
 ## Fazer
--> Continuar desenvolvimento:
-    - address employee e client e supplier
-
 -> ver como fazer o gerenciamento dos acessos dos usuarios adms no back
-
-
 -> Fazer testes unitarios
 
 # User

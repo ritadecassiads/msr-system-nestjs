@@ -6,7 +6,7 @@ import { Client } from '../../client/schemas/client.schema';
 
 @Schema()
 export class Sale extends Document {
-  @Prop({ unique: true })
+  @Prop({ required: true, unique: true })
   code: number;
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'Product' }], required: true })

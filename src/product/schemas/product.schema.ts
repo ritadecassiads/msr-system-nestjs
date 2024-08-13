@@ -6,7 +6,7 @@ import { Supplier } from 'src/supplier/schemas/supplier.schema';
 
 @Schema({ timestamps: true }) // cria automaticamente os campos createdAt e updatedAt
 export class Product extends Document {
-  @Prop({ unique: true })
+  @Prop({ required: true, unique: true })
   code: number;
 
   @Prop({ required: true })

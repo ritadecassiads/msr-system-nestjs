@@ -4,13 +4,13 @@ import { Address } from 'src/address/schemas/address.schema';
 
 @Schema({ timestamps: true })
 export class Supplier extends Document {
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   code: number;
 
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true }) // unique: true
   cnpj: string;
 
   @Prop()

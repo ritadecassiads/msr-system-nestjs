@@ -1,15 +1,23 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Employee } from './schemas/employee.schema';
 import * as bcrypt from 'bcrypt';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { CodeGeneratorUtil } from 'src/common/utils/code-generator.util';
+import { ValidationService } from 'src/validation/validation.service';
 
 @Injectable()
 export class EmployeeService {
   constructor(
     @InjectModel(Employee.name) private readonly employeeModel: Model<Employee>,
+    private readonly validationService: ValidationService,
   ) {}
 
   async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
@@ -17,6 +25,14 @@ export class EmployeeService {
       const hashedPassword = await this.cryptPassword(
         createEmployeeDto.password,
       );
+
+      const isCpfValid = await this.validationService.validateCpf(
+        createEmployeeDto.cpf,
+      );
+
+      if (!isCpfValid) {
+        throw new BadRequestException('CPF inválido');
+      }
       const code = await CodeGeneratorUtil.generateCode(this.employeeModel);
 
       const createdEmployee = new this.employeeModel({
@@ -25,17 +41,21 @@ export class EmployeeService {
         code,
       });
 
-      console.log('createdEmployee ----> ', createdEmployee);
-
       return await createdEmployee.save();
     } catch (error) {
-      console.log('error ----> ', error);
+      if (error instanceof BadRequestException) {
+        throw error;
+      }
+
       if (error.code === 11000) {
         throw new ConflictException(
           'Campos como username e cpf devem ser únicos.',
         );
       }
-      throw new Error('Não foi possível cadastrar o usuário.');
+
+      throw new InternalServerErrorException(
+        'Não foi possível cadastrar o usuário.',
+      );
     }
   }
 
@@ -71,7 +91,7 @@ export class EmployeeService {
       .findByIdAndUpdate(_id, updateEmployeeDto, { new: true })
       .exec();
     if (!employeeUpdated) {
-      throw new Error('Funcionário não encontrado');
+      throw new NotFoundException('Funcionário não encontrado');
     }
     return employeeUpdated;
   }
@@ -79,7 +99,7 @@ export class EmployeeService {
   async delete(_id: string): Promise<Employee> {
     const employee = await this.employeeModel.findByIdAndDelete(_id).exec();
     if (!employee) {
-      throw new Error('Funcionário não encontrado');
+      throw new NotFoundException('Funcionário não encontrado');
     }
     return this.employeeModel.findByIdAndDelete(_id).exec();
   }

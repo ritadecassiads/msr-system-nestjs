@@ -5,7 +5,7 @@ import { Employee } from 'src/employee/schemas/employee.schema';
 
 @Schema({ timestamps: true })
 export class Client extends Document {
-  @Prop({ unique: true })
+  @Prop({ required: true, unique: true })
   code: number;
 
   @Prop({ required: true })
@@ -14,16 +14,16 @@ export class Client extends Document {
   @Prop({ required: true })
   birthDate: Date;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true }) // unique: true
   cpf: string;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true }) // unique: true
   rg: string;
 
   @Prop({ required: true })
   phone: string;
 
-  @Prop({ type: String })
+  @Prop({ type: String }) // unique: true
   email: string;
 
   @Prop({ default: 20000 })
