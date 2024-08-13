@@ -13,13 +13,14 @@ import { CreateClientDto } from './dto/create-client.dto';
 import { Client } from './schemas/client.schema';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { ResponseDto } from 'src/common/dto/response.dto';
+import { RolesGuard } from 'src/common/guards/roles.guard';
 
 @Controller('clients')
 export class ClientController {
   constructor(private readonly clientService: ClientService) {}
 
-  @Post()
   @UseGuards(JwtAuthGuard)
+  @Post()
   async create(
     @Body() createClientDto: CreateClientDto,
   ): Promise<ResponseDto<Client>> {

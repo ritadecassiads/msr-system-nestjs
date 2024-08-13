@@ -24,7 +24,9 @@ export class AuthService {
       username: employee.username,
       sub: employee.id,
       code: employee.code,
+      isAdmin: employee.isAdmin,
     }; // dados que desejo incluir no token
+
     return {
       access_token: this.jwtService.sign(payload), // retorna o token JWT como uma string
     };

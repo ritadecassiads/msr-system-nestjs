@@ -13,13 +13,14 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { ResponseDto } from 'src/common/dto/response.dto';
 import { Employee } from './schemas/employee.schema';
+import { RolesGuard } from 'src/common/guards/roles.guard';
 
 @Controller('employees')
 export class EmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   async create(
     @Body() createEmployeeDto: CreateEmployeeDto,
   ): Promise<ResponseDto<Employee>> {

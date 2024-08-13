@@ -36,7 +36,8 @@ export class JwtAuthGuard implements CanActivate {
       if (!employee) {
         throw new UnauthorizedException('Employee not found');
       }
-      request.employee = employee;
+
+      request.user = employee;
       return true;
     } catch (error) {
       throw new UnauthorizedException('Invalid token');

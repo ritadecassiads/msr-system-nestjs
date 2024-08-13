@@ -24,13 +24,14 @@ export class ClientService {
         createClientDto.createdByEmployee,
       );
 
-      const isCpfValid = await this.validationService.validateCpf(
-        createClientDto.cpf,
-      );
+      // const isCpfValid = await this.validationService.validateCpf(
+      //   createClientDto.cpf,
+      // );
 
-      if (!isCpfValid) {
-        throw new BadRequestException('CPF inválido');
-      }
+      // if (!isCpfValid) {
+      //   throw new BadRequestException('CPF inválido');
+      // }
+      // DESCOMENTAR DEPOIS
 
       const code = await CodeGeneratorUtil.generateCode(this.clientModel);
 

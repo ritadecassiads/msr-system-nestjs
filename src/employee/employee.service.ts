@@ -26,13 +26,15 @@ export class EmployeeService {
         createEmployeeDto.password,
       );
 
-      const isCpfValid = await this.validationService.validateCpf(
-        createEmployeeDto.cpf,
-      );
+      // const isCpfValid = await this.validationService.validateCpf(
+      //   createEmployeeDto.cpf,
+      // );
 
-      if (!isCpfValid) {
-        throw new BadRequestException('CPF inválido');
-      }
+      // if (!isCpfValid) {
+      //   throw new BadRequestException('CPF inválido');
+      // }
+      // DESCOMENTAR DEPOIS
+
       const code = await CodeGeneratorUtil.generateCode(this.employeeModel);
 
       const createdEmployee = new this.employeeModel({
@@ -41,7 +43,12 @@ export class EmployeeService {
         code,
       });
 
-      return await createdEmployee.save();
+      const savedEmployee = await createdEmployee.save();
+
+      const employeeObj = savedEmployee.toObject();
+      delete employeeObj.password;
+
+      return employeeObj as Employee;
     } catch (error) {
       if (error instanceof BadRequestException) {
         throw error;
@@ -78,7 +85,7 @@ export class EmployeeService {
     const employee = await this.employeeModel.findOne({ username }).exec();
 
     if (!employee) {
-      throw new Error('Funcionário não encontrado');
+      throw new NotFoundException('Funcionário não encontrado');
     }
     return employee;
   }
