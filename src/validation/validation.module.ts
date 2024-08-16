@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Client, ClientSchema } from '../client/schemas/client.schema';
-import { Employee, EmployeeSchema } from 'src/employee/schemas/employee.schema';
+import { Employee, EmployeeSchema } from '../employee/schemas/employee.schema';
 
 import { ValidationService } from '../validation/validation.service';
-import { Product, ProductSchema } from 'src/product/schemas/product.schema';
-import { Supplier, SupplierSchema } from 'src/supplier/schemas/supplier.schema';
-import { Category, CategorySchema } from 'src/category/schemas/category.schema';
+import { Product, ProductSchema } from '../product/schemas/product.schema';
+import { Supplier, SupplierSchema } from '../supplier/schemas/supplier.schema';
+import { Category, CategorySchema } from '../category/schemas/category.schema';
 
 @Module({
   imports: [

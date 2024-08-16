@@ -8,7 +8,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Sale } from './schemas/sale.schema';
 import { CreateSaleDto } from './dto/create-sale.dto';
-import { CodeGeneratorUtil } from 'src/common/utils/code-generator.util';
+import { CodeGeneratorUtil } from '../common/utils/code-generator.util';
 import { ValidationService } from '../validation/validation.service';
 
 @Injectable()

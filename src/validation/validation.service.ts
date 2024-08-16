@@ -4,8 +4,8 @@ import { Model, Types } from 'mongoose';
 import { Product } from '../product/schemas/product.schema';
 import { Client } from '../client/schemas/client.schema';
 import { Employee } from '../employee/schemas/employee.schema';
-import { Supplier } from 'src/supplier/schemas/supplier.schema';
-import { Category } from 'src/category/schemas/category.schema';
+import { Supplier } from '../supplier/schemas/supplier.schema';
+import { Category } from '../category/schemas/category.schema';
 
 @Injectable()
 export class ValidationService {

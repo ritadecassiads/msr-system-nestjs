@@ -3,9 +3,9 @@ import { SaleService } from './sale.service';
 import { SaleController } from './sale.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Sale, SaleSchema } from './schemas/sale.schema';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
-import { ValidationModule } from 'src/validation/validation.module';
+import { ValidationModule } from '../validation/validation.module';
 
 @Module({
   imports: [

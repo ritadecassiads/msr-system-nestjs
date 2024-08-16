@@ -3,9 +3,9 @@ import { InvoiceService } from './invoice.service';
 import { InvoiceController } from './invoice.controller';
 import { Invoice, InvoiceSchema } from './schemas/invoice.schema';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
-import { ValidationModule } from 'src/validation/validation.module';
+import { ValidationModule } from '../validation/validation.module';
 
 @Module({
   imports: [

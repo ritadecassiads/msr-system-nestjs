@@ -10,8 +10,8 @@ import { Model } from 'mongoose';
 import { Employee } from './schemas/employee.schema';
 import * as bcrypt from 'bcrypt';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
-import { CodeGeneratorUtil } from 'src/common/utils/code-generator.util';
-import { ValidationService } from 'src/validation/validation.service';
+import { CodeGeneratorUtil } from '../common/utils/code-generator.util';
+import { ValidationService } from '../validation/validation.service';
 
 @Injectable()
 export class EmployeeService {
@@ -50,6 +50,7 @@ export class EmployeeService {
 
       return employeeObj as Employee;
     } catch (error) {
+      console.log('error create service --->', error);
       if (error instanceof BadRequestException) {
         throw error;
       }
@@ -76,7 +77,7 @@ export class EmployeeService {
       .select('-password')
       .exec();
     if (!employee) {
-      throw new Error('Funcionário não encontrado');
+      throw new NotFoundException('Funcionário não encontrado');
     }
     return employee;
   }

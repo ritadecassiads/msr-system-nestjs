@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Address } from 'src/address/schemas/address.schema';
+import { Address } from '../../address/schemas/address.schema';
 
 @Schema({ timestamps: true })
 export class Employee extends Document {

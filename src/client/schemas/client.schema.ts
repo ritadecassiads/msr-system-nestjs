@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { Address } from 'src/address/schemas/address.schema';
-import { Employee } from 'src/employee/schemas/employee.schema';
+import { Address } from '../../address/schemas/address.schema';
+import { Employee } from '../../employee/schemas/employee.schema';
 
 @Schema({ timestamps: true })
 export class Client extends Document {

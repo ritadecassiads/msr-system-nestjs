@@ -11,8 +11,8 @@ import {
 import { InvoiceService } from './invoice.service';
 import { CreateInvoiceDto } from './dto/create-invoice.dto';
 import { Invoice } from './schemas/invoice.schema';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { ResponseDto } from 'src/common/dto/response.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { ResponseDto } from '../common/dto/response.dto';
 
 @Controller('invoices')
 export class InvoiceController {

@@ -1,4 +1,4 @@
-// src/supplier/supplier.service.ts
+// ../supplier/supplier.service.ts
 import {
   BadRequestException,
   Injectable,
@@ -10,7 +10,7 @@ import { Model } from 'mongoose';
 import { Supplier } from './schemas/supplier.schema';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { CodeGeneratorUtil } from '../common/utils/code-generator.util';
-import { ValidationService } from 'src/validation/validation.service';
+import { ValidationService } from '../validation/validation.service';
 
 @Injectable()
 export class SupplierService {

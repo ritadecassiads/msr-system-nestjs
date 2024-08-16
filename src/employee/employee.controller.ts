@@ -10,10 +10,10 @@ import {
 } from '@nestjs/common';
 import { EmployeeService } from './employee.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { ResponseDto } from 'src/common/dto/response.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { ResponseDto } from '../common/dto/response.dto';
 import { Employee } from './schemas/employee.schema';
-import { RolesGuard } from 'src/common/guards/roles.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
 
 @Controller('employees')
 export class EmployeeController {

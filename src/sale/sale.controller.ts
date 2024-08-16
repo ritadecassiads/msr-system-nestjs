@@ -11,8 +11,8 @@ import {
 import { SaleService } from './sale.service';
 import { CreateSaleDto } from './dto/create-sale.dto';
 import { Sale } from './schemas/sale.schema';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { ResponseDto } from 'src/common/dto/response.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { ResponseDto } from '../common/dto/response.dto';
 
 @Controller('sales')
 export class SaleController {

@@ -12,8 +12,8 @@ import { SupplierService } from './supplier.service';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { UpdateSupplierDto } from './dto/update-supplier.dto';
 import { Supplier } from './schemas/supplier.schema';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { ResponseDto } from 'src/common/dto/response.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { ResponseDto } from '../common/dto/response.dto';
 
 @Controller('suppliers')
 export class SupplierController {

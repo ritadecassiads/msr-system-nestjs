@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IsEmail } from 'class-validator';
 import { Document } from 'mongoose';
-import { Address } from 'src/address/schemas/address.schema';
+import { Address } from '../../address/schemas/address.schema';
 
 @Schema({ timestamps: true })
 export class Supplier extends Document {

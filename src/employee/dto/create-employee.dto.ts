@@ -7,7 +7,7 @@ import {
   ValidateNested,
   IsOptional,
 } from 'class-validator';
-import { AddressDto } from 'src/address/dto/address.dto';
+import { AddressDto } from '../../address/dto/address.dto';
 
 export class CreateEmployeeDto {
   @IsNotEmpty()

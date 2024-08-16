@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Category } from './schemas/category.schema';
 import { CreateCategoryDto } from './dto/create-category.dto';
-import { CodeGeneratorUtil } from 'src/common/utils/code-generator.util';
+import { CodeGeneratorUtil } from '../common/utils/code-generator.util';
 
 @Injectable()
 export class CategoryService {
