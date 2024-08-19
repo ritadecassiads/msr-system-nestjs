@@ -6,7 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { isValidObjectId, Model } from 'mongoose';
 import { Employee } from './schemas/employee.schema';
 import * as bcrypt from 'bcrypt';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
@@ -26,13 +26,13 @@ export class EmployeeService {
         createEmployeeDto.password,
       );
 
-      // const isCpfValid = await this.validationService.validateCpf(
-      //   createEmployeeDto.cpf,
-      // );
+      const isCpfValid = await this.validationService.validateCpf(
+        createEmployeeDto.cpf,
+      );
 
-      // if (!isCpfValid) {
-      //   throw new BadRequestException('CPF inválido');
-      // }
+      if (!isCpfValid) {
+        throw new BadRequestException('CPF inválido');
+      }
       // DESCOMENTAR DEPOIS
 
       const code = await CodeGeneratorUtil.generateCode(this.employeeModel);
@@ -50,7 +50,6 @@ export class EmployeeService {
 
       return employeeObj as Employee;
     } catch (error) {
-      console.log('error create service --->', error);
       if (error instanceof BadRequestException) {
         throw error;
       }
@@ -72,6 +71,10 @@ export class EmployeeService {
   }
 
   async findById(_id: string): Promise<Employee> {
+    if (!isValidObjectId(_id)) {
+      throw new BadRequestException('Invalid ID format');
+    }
+
     const employee = await this.employeeModel
       .findById(_id)
       .select('-password')
