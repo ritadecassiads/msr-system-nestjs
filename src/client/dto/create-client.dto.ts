@@ -38,7 +38,7 @@ export class CreateClientDto {
 
   @IsOptional()
   @IsNumber()
-  purchaseLimit?: number = 20000;
+  purchaseLimit?: number = 10000;
 
   @IsOptional()
   @IsString()

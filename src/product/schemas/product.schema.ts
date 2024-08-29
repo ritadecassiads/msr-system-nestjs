@@ -19,9 +19,6 @@ export class Product extends Document {
   price: number;
 
   @Prop({ required: true })
-  category: string;
-
-  @Prop({ required: true })
   stock: number;
 
   @Prop({ type: Types.ObjectId, ref: 'Supplier' })

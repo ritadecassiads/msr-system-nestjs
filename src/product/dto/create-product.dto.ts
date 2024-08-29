@@ -21,10 +21,6 @@ export class CreateProductDto {
   price: number;
 
   @IsNotEmpty()
-  @IsString()
-  category: string;
-
-  @IsNotEmpty()
   @IsNumber()
   stock: number;
 

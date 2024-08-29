@@ -1,16 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { EmployeeService } from './employee.service';
+import { EmployeeService } from '../employee.service';
 import { getModelToken } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
-import { Employee } from './schemas/employee.schema';
-import { ValidationService } from '../validation/validation.service';
+import { Employee } from '../schemas/employee.schema';
+import { ValidationService } from '../../validation/validation.service';
 import * as bcrypt from 'bcrypt';
 import {
   BadRequestException,
   ConflictException,
   NotFoundException,
 } from '@nestjs/common';
-import { CodeGeneratorUtil } from '../common/utils/code-generator.util';
+import { CodeGeneratorUtil } from '../../common/utils/code-generator.util';
 
 describe('EmployeeService', () => {
   let service: EmployeeService;

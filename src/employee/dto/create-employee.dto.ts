@@ -41,4 +41,6 @@ export class CreateEmployeeDto {
   @ValidateNested() // validação aninhada
   @Type(() => AddressDto)
   address?: AddressDto;
+
+  //admissionDate
 }

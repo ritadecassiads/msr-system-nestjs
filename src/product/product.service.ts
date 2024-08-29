@@ -24,7 +24,9 @@ export class ProductService {
         createProductDto.supplierId,
       );
 
-      await this.validationService.validateCategories(createProductDto.categories);
+      await this.validationService.validateCategories(
+        createProductDto.categories,
+      );
 
       const code = await CodeGeneratorUtil.generateCode(this.productModel);
       const createdProduct = new this.productModel({
@@ -44,7 +46,7 @@ export class ProductService {
     return this.productModel
       .find()
       .populate('supplierId', 'name')
-      .populate('categories', 'name')
+      .populate({path: 'categories', select: 'name'})
       .exec();
   }
 

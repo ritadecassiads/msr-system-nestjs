@@ -12,6 +12,12 @@ async function bootstrap() {
     }),
   );
 
+  app.enableCors({
+    origin: 'http://localhost:4200', // URL do seu frontend Angular
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type, Authorization',
+  });
+
   await app.listen(3000);
   console.log('Servidor rodando na porta 3000');
 }
