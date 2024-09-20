@@ -1,9 +1,7 @@
-import { Type } from 'class-transformer';
 import {
   IsNotEmpty,
   IsNumber,
   IsString,
-  IsDate,
   IsOptional,
   IsEnum,
   IsArray,
@@ -16,11 +14,11 @@ export class CreateSaleDto {
   @IsMongoId({ each: true })
   products: string[];
 
+  //@IsMongoId()
   @IsOptional()
-  @IsMongoId()
   clientId?: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'sellerId is required' })
   @IsMongoId()
   sellerId: string;
 
@@ -33,15 +31,14 @@ export class CreateSaleDto {
   totalPrice: number;
 
   @IsOptional()
-  @IsDate()
-  @Type(() => Date)
-  saleDate?: Date;
-
-  @IsOptional()
   @IsString()
-  observations?: string;
+  notes?: string;
 
   @IsOptional()
   @IsEnum(['open', 'close'])
   status?: 'open' | 'close';
+
+  @IsOptional()
+  @IsEnum(['credit', 'debit', 'cash', 'pix', 'bankTransfer'])
+  paymentMethod?: string;
 }

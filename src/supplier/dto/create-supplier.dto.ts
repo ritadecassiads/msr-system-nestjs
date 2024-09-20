@@ -31,7 +31,7 @@ export class CreateSupplierDto {
 
   @IsString()
   @IsOptional()
-  readonly observations?: string;
+  readonly notes?: string;
 
   @ValidateNested()
   @Type(() => AddressDto)

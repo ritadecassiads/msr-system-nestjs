@@ -30,7 +30,7 @@ export class Client extends Document {
   purchaseLimit: number;
 
   @Prop()
-  observations: string;
+  notes: string;
 
   @Prop({ type: Types.ObjectId, ref: 'Employee' })
   createdByEmployee: Employee;

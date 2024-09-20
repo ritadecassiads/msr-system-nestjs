@@ -7,6 +7,7 @@ import {
   IsDate,
   IsMongoId,
   ValidateNested,
+  MaxLength,
 } from 'class-validator';
 import { AddressDto } from '../../address/dto/address.dto';
 
@@ -30,6 +31,7 @@ export class CreateClientDto {
 
   @IsNotEmpty()
   @IsString()
+  @MaxLength(11, { message: 'O Telefone não pode ter mais que 11 caracteres.' })
   phone: string;
 
   @IsOptional()
@@ -42,7 +44,7 @@ export class CreateClientDto {
 
   @IsOptional()
   @IsString()
-  observations?: string;
+  notes?: string;
 
   @IsOptional()
   @IsMongoId()

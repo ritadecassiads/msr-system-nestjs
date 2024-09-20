@@ -40,6 +40,12 @@ export class EmployeeController {
     return employee;
   }
 
+  @Get('username/:username')
+  async findByUsername(@Param('username') username: string): Promise<Employee> {
+    const employee = await this.employeeService.findByUsername(username);
+    return employee;
+  }
+
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
   async update(

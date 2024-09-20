@@ -25,7 +25,7 @@ export class Supplier extends Document {
   contactPerson: string;
 
   @Prop()
-  observations: string;
+  notes: string;
 
   @Prop({ type: Address, _id: false })
   address: Address;

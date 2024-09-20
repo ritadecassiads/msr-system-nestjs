@@ -50,7 +50,7 @@ export class ValidationService {
   async validateSupplier(supplierId: string): Promise<void> {
     const seller = await this.supplierModel.findById(supplierId).exec();
     if (!seller) {
-      throw new NotFoundException('Vendedor não encontrado.');
+      throw new NotFoundException('Fornecedor não encontrado.');
     }
   }
 

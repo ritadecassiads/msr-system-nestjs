@@ -21,10 +21,12 @@ export class SaleService {
   async create(createSaleDto: CreateSaleDto): Promise<Sale> {
     try {
       const code = await CodeGeneratorUtil.generateCode(this.saleModel);
-
       await this.validationService.validateProducts(createSaleDto.products);
-      await this.validationService.validateClient(createSaleDto.clientId);
       await this.validationService.validateEmployee(createSaleDto.sellerId);
+
+      if (createSaleDto.clientId) {
+        await this.validationService.validateClient(createSaleDto.clientId);
+      }
 
       const createdSale = new this.saleModel({ ...createSaleDto, code });
       return createdSale.save();

@@ -1,10 +1,4 @@
-import {
-  IsOptional,
-  IsString,
-  IsNumber,
-  IsDate,
-  IsArray,
-} from 'class-validator';
+import { IsOptional, IsString, IsNumber, IsArray } from 'class-validator';
 
 export class ResponseSaleDto {
   @IsOptional()
@@ -33,12 +27,8 @@ export class ResponseSaleDto {
   totalPrice?: number;
 
   @IsOptional()
-  @IsDate()
-  saleDate?: Date;
-
-  @IsOptional()
   @IsString()
-  observations?: string;
+  notes?: string;
 }
 
 export class ResponseMenssage {

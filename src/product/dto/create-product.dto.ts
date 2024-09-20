@@ -8,7 +8,7 @@ import {
 } from 'class-validator';
 
 export class CreateProductDto {
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Nome deve ser preenchido.' })
   @IsString()
   name: string;
 

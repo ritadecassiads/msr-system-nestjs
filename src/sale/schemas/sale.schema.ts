@@ -24,14 +24,17 @@ export class Sale extends Document {
   @Prop({ required: true })
   totalPrice: number;
 
-  @Prop({ default: Date.now })
-  saleDate: Date;
-
   @Prop()
-  observations: string;
+  notes: string;
 
   @Prop({ type: String, enum: ['open', 'close'], default: 'open' })
   status: 'open' | 'close';
+
+  @Prop({
+    type: String,
+    enum: ['credit', 'debit', 'cash', 'pix', 'bankTransfer'],
+  })
+  paymentMethod: string;
 }
 
 export const SaleSchema = SchemaFactory.createForClass(Sale);
