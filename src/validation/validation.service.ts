@@ -40,8 +40,8 @@ export class ValidationService {
     }
   }
 
-  async validateEmployee(sellerId: string): Promise<void> {
-    const seller = await this.employeeModel.findById(sellerId).exec();
+  async validateEmployee(openedByEmployee: string): Promise<void> {
+    const seller = await this.employeeModel.findById(openedByEmployee).exec();
     if (!seller) {
       throw new NotFoundException('Vendedor não encontrado.');
     }

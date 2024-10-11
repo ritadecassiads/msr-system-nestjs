@@ -16,7 +16,10 @@ export class Sale extends Document {
   clientId: Client;
 
   @Prop({ type: Types.ObjectId, ref: 'Employee', required: true })
-  sellerId: Employee;
+  openedByEmployee: Employee;
+
+  @Prop({ type: Types.ObjectId, ref: 'Employee' }) // incluri required depois
+  closedByEmployee: Employee;
 
   @Prop({ required: true })
   quantity: number;

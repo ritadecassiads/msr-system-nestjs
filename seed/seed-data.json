@@ -1,0 +1,111 @@
+{
+  "clients": [
+    {
+      "code": 1,
+      "name": "Fulano de Beltrano",
+      "birthDate": "1990-01-01T00:00:00.000Z",
+      "cpf": "216.068.090-75",
+      "rg": "MG-12.119.279",
+      "phone": "(11) 1234-5678",
+      "email": "johndoe@example.com",
+      "purchaseLimit": 20000,
+      "notes": "Cliente VIP",
+      "createdByEmployee": "66bbb4c2684282ba8e26494b",
+      "fathersName": "John Doe Sr.",
+      "mothersName": "Jane Doe",
+      "peopleAuthorized": "Jane Doe Jr.",
+      "address": {
+        "street": "123 Main Sta",
+        "number": "4536",
+        "complement": "Apt 7899",
+        "city": "São Paulo",
+        "state": "SP",
+        "postalCode": "01001-000"
+      }
+    }
+  ],
+  "employees": [
+    {
+      "code": 1,
+      "name": "Rita de Cássia",
+      "username": "ritinha",
+      "password": "123456",
+      "cpf": "076.031.634-12",
+      "email": "rita@gmail.com",
+      "phone": "41997317647",
+      "isAdmin": true,
+      "address": {
+        "street": "Franciso Derosso",
+        "number": "5391",
+        "complement": "Apt 48",
+        "city": "Curitiba",
+        "state": "PR",
+        "postalCode": "01001-000"
+      }
+    },
+    {
+      "code": 2,
+      "name": "Letícia Aleixo",
+      "username": "lele",
+      "password": "123456",
+      "cpf": "076.031.634-12",
+      "email": "rita@gmail.com",
+      "phone": "41997317647",
+      "isAdmin": true,
+      "address": {
+        "street": "123 Main St",
+        "number": "456",
+        "complement": "Apt 789",
+        "city": "São Paulo",
+        "state": "SP",
+        "postalCode": "01001-000"
+      }
+    }
+  ],
+  "suppliers": [
+    {
+      "code": 1,
+      "name": "Fornecedor Calçados",
+      "cnpj": "48.184.088/0001-75",
+      "phone": "+55 11 98765-4321",
+      "email": "contato@fornecedor.com.br",
+      "contactPerson": "João Silva",
+      "observations": "Fornecedor confiável com bom histórico de entregas",
+      "address": {
+        "street": "123 Main Sta",
+        "number": "4536",
+        "complement": "Apt 7899",
+        "city": "São Paulo",
+        "state": "SP",
+        "postalCode": "01001-000"
+      }
+    }
+  ],
+  "products": [
+    {
+      "code": 1,
+      "name": "Sandalia Feminina",
+      "description": "Sandalia da modare",
+      "price": 99.9,
+      "category": "Calçados",
+      "stock": 10
+    }
+  ],
+  "categories": [
+    {
+      "code": 1,
+      "name": "Aviamento",
+      "description": "Categoria para aviamento"
+    }
+  ],
+  "invoices": [
+    {
+      "code": 1,
+      "issueDate": "2024-08-09T12:00:00.000Z",
+      "dueDate": "2024-12-12T12:00:00.000Z",
+      "amount": 1500.75,
+      "installments": 3,
+      "notes": "This is a test invoice"
+    }
+  ]
+}

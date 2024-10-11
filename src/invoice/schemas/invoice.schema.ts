@@ -22,6 +22,9 @@ export class Invoice extends Document {
   @Prop()
   installments: number; // parcelas
 
+  @Prop()
+  installmentAmounts: number[];
+
   @Prop({ required: true, enum: ['open', 'paid', 'overdue'], default: 'open' })
   status: string;
 

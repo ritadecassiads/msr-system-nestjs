@@ -22,9 +22,15 @@ export class InvoiceService {
       await this.validationService.validateSupplier(
         createInvoiceDto.supplierId,
       );
+      // Calcular os valores das parcelas
+      const installmentAmounts = Array(createInvoiceDto.installments).fill(
+        createInvoiceDto.amount / createInvoiceDto.installments,
+      );
+
       const code = await CodeGeneratorUtil.generateCode(this.invoiceModel);
       const createdInvoice = new this.invoiceModel({
         ...createInvoiceDto,
+        installmentAmounts,
         code,
       });
       return createdInvoice.save();

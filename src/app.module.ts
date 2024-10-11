@@ -9,11 +9,12 @@ import { AuthModule } from './auth/auth.module';
 import { InvoiceModule } from './invoice/invoice.module';
 import { SupplierModule } from './supplier/supplier.module';
 import { CategoryModule } from './category/category.module';
+import { SeedService } from 'seed/seed.service';
 // import { AddressModule } from './address/address.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/system_msr'),
+    MongooseModule.forRoot('mongodb://127.0.0.1:27017/msr-system'),
     AuthModule,
     EmployeeModule,
     ClientModule,
@@ -26,6 +27,6 @@ import { CategoryModule } from './category/category.module';
     // AddressModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [SeedService],
 })
 export class AppModule {}

@@ -22,7 +22,9 @@ export class SaleService {
     try {
       const code = await CodeGeneratorUtil.generateCode(this.saleModel);
       await this.validationService.validateProducts(createSaleDto.products);
-      await this.validationService.validateEmployee(createSaleDto.sellerId);
+      await this.validationService.validateEmployee(
+        createSaleDto.openedByEmployee,
+      );
 
       if (createSaleDto.clientId) {
         await this.validationService.validateClient(createSaleDto.clientId);
@@ -49,8 +51,8 @@ export class SaleService {
     const sales = await this.saleModel
       .find()
       .populate({ path: 'products', select: 'name' }) // problema ao retornar os objetos de produtos
-      .populate('clientId', 'name')
-      .populate('sellerId', 'name')
+      //.populate('clientId', 'name') implementar depois
+      .populate('openedByEmployee', 'name')
       .exec();
 
     return sales;
@@ -60,8 +62,8 @@ export class SaleService {
     const sale = await this.saleModel
       .findById(_id)
       .populate({ path: 'products', select: 'name' }) // problema ao retornar os objetos de produtos
-      .populate('clientId', 'name')
-      .populate('sellerId', 'name')
+      //.populate('clientId', 'name') implementar depois
+      .populate('openedByEmployee', 'name')
       .exec();
     if (!sale) {
       throw new NotFoundException('Venda não encontrada');

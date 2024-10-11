@@ -16,7 +16,7 @@ export class ResponseSaleDto {
 
   @IsOptional()
   @IsString()
-  sellerId?: string;
+  openedByEmployee?: string;
 
   @IsOptional()
   @IsNumber()

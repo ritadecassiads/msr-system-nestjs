@@ -26,13 +26,13 @@ export class EmployeeService {
         createEmployeeDto.password,
       );
 
-      const isCpfValid = await this.validationService.validateCpf(
-        createEmployeeDto.cpf,
-      );
+      // const isCpfValid = await this.validationService.validateCpf(
+      //   createEmployeeDto.cpf,
+      // );
 
-      if (!isCpfValid) {
-        throw new BadRequestException('CPF inválido');
-      }
+      // if (!isCpfValid) {
+      //   throw new BadRequestException('CPF inválido');
+      // }
       // DESCOMENTAR DEPOIS
 
       const code = await CodeGeneratorUtil.generateCode(this.employeeModel);

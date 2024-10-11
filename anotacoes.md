@@ -50,7 +50,7 @@
 # Mapeamento relacionamentos
 1. Client -> 1x1 Employee (createdByEmployee)
 2. Product -> 1x1 Supplier (supplierId) + 1xn Category (categories)
-3. Sale -> 1x1 Employee (sellerId) + 1x1 Client (clientId) + 1xn Products (products)
+3. Sale -> 1x1 Employee (openedByEmployee) + 1x1 Client (clientId) + 1xn Products (products)
 4. Invoice -> 1x1 Supplier (supplierId)
 
 

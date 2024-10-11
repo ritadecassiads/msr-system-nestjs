@@ -18,9 +18,9 @@ export class CreateSaleDto {
   @IsOptional()
   clientId?: string;
 
-  @IsNotEmpty({ message: 'sellerId is required' })
+  @IsNotEmpty({ message: 'openedByEmployee is required' })
   @IsMongoId()
-  sellerId: string;
+  openedByEmployee: string;
 
   @IsNotEmpty()
   @IsNumber()

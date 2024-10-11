@@ -20,7 +20,7 @@ export class EmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
   async create(
     @Body() createEmployeeDto: CreateEmployeeDto,
   ): Promise<ResponseDto<Employee>> {
