@@ -10,28 +10,42 @@ import { Sale } from './schemas/sale.schema';
 import { CreateSaleDto } from './dto/create-sale.dto';
 import { CodeGeneratorUtil } from '../common/utils/code-generator.util';
 import { ValidationService } from '../validation/validation.service';
+import { Product } from 'src/product/schemas/product.schema';
 
 @Injectable()
 export class SaleService {
   constructor(
     @InjectModel(Sale.name) private readonly saleModel: Model<Sale>,
+    @InjectModel(Product.name) private productModel: Model<Product>,
     private readonly validationService: ValidationService,
   ) {}
 
   async create(createSaleDto: CreateSaleDto): Promise<Sale> {
+    // const session = await this.saleModel.db.startSession();
+    // session.startTransaction();
+
     try {
       const code = await CodeGeneratorUtil.generateCode(this.saleModel);
-      await this.validationService.validateProducts(createSaleDto.products);
-      await this.validationService.validateEmployee(
-        createSaleDto.openedByEmployee,
-      );
 
       if (createSaleDto.clientId) {
         await this.validationService.validateClient(createSaleDto.clientId);
       }
 
+      await this.validationService.validateEmployee(
+        createSaleDto.openedByEmployee,
+      );
+
+      const productIds = createSaleDto.products.map((product) => product._id);
+      await this.validationService.validateProducts(productIds);
+
+      await this.updateStockProducts(createSaleDto);
+
       const createdSale = new this.saleModel({ ...createSaleDto, code });
       return createdSale.save();
+
+      // await createdSale.save({ session });
+      // await session.commitTransaction();
+      // return createdSale;
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw error;
@@ -92,5 +106,24 @@ export class SaleService {
       throw new NotFoundException('Venda não encontrada');
     }
     return result;
+  }
+
+  async updateStockProducts(sale: CreateSaleDto): Promise<void> {
+    console.log('updateStockProducts: ', sale.products);
+
+    for (const item of sale.products) {
+      const product = await this.productModel.findById(item._id).exec();
+
+      if (!product) {
+        throw new NotFoundException(`Product with ID ${item._id} not found`);
+      }
+      if (product.stock < item.quantity) {
+        throw new Error(`Insufficient stock for product ${product.name}`);
+      }
+      product.stock -= item.quantity;
+      console.log('updateStockProducts sucesso: ', product);
+
+      await product.save();
+    }
   }
 }

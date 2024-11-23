@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   IsNotEmpty,
   IsNumber,
@@ -6,13 +7,15 @@ import {
   IsEnum,
   IsArray,
   IsMongoId,
+  ValidateNested,
 } from 'class-validator';
+import { SaleProductDto } from './sale-product-dto';
 
 export class CreateSaleDto {
-  @IsNotEmpty()
   @IsArray()
-  @IsMongoId({ each: true })
-  products: string[];
+  @ValidateNested({ each: true })
+  @Type(() => SaleProductDto)
+  products: SaleProductDto[];
 
   //@IsMongoId()
   @IsOptional()
@@ -24,19 +27,15 @@ export class CreateSaleDto {
 
   @IsNotEmpty()
   @IsNumber()
-  quantity: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  totalPrice: number;
+  total: number;
 
   @IsOptional()
   @IsString()
   notes?: string;
 
   @IsOptional()
-  @IsEnum(['open', 'close'])
-  status?: 'open' | 'close';
+  @IsEnum(['open', 'closed'])
+  status?: 'open' | 'closed';
 
   @IsOptional()
   @IsEnum(['credit', 'debit', 'cash', 'pix', 'bankTransfer'])

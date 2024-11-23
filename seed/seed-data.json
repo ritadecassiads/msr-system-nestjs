@@ -29,7 +29,7 @@
       "code": 1,
       "name": "Rita de Cássia",
       "username": "ritinha",
-      "password": "123456",
+      "password": "$2b$12$ZSkiaEX8ZCZeDiMMmnWqmut9AybaW0IKcaG5SLwr4Ci7ec4kOF4y6",
       "cpf": "076.031.634-12",
       "email": "rita@gmail.com",
       "phone": "41997317647",
@@ -47,7 +47,7 @@
       "code": 2,
       "name": "Letícia Aleixo",
       "username": "lele",
-      "password": "123456",
+      "password": "$2b$12$ZSkiaEX8ZCZeDiMMmnWqmut9AybaW0IKcaG5SLwr4Ci7ec4kOF4y6",
       "cpf": "076.031.634-12",
       "email": "rita@gmail.com",
       "phone": "41997317647",
@@ -89,6 +89,37 @@
       "price": 99.9,
       "category": "Calçados",
       "stock": 10
+    },
+    {
+      "name": "Tênis Esportivo",
+      "description": "Tênis para corrida",
+      "price": 199.9,
+      "category": "Calçados",
+      "stock": 15
+    },
+    {
+      "code": 3,
+      "name": "Camiseta Básica",
+      "description": "Camiseta de algodão",
+      "price": 49.9,
+      "category": "Roupas",
+      "stock": 50
+    },
+    {
+      "code": 4,
+      "name": "Calça Jeans",
+      "description": "Calça jeans azul",
+      "price": 129.9,
+      "category": "Roupas",
+      "stock": 20
+    },
+    {
+      "code": 5,
+      "name": "Jaqueta de Couro",
+      "description": "Jaqueta de couro sintético",
+      "price": 299.9,
+      "category": "Roupas",
+      "stock": 5
     }
   ],
   "categories": [
@@ -96,6 +127,16 @@
       "code": 1,
       "name": "Aviamento",
       "description": "Categoria para aviamento"
+    },
+    {
+      "code": 2,
+      "name": "Calçados",
+      "description": "Categoria para calçados"
+    },
+    {
+      "code": 3,
+      "name": "Roupas",
+      "description": "Categoria para roupas"
     }
   ],
   "invoices": [
@@ -109,3 +150,8 @@
     }
   ]
 }
+
+
+
+
+

@@ -27,8 +27,10 @@ export class AuthService {
       isAdmin: employee.isAdmin,
     }; // dados que desejo incluir no token
 
+    const expiresIn = '2h';
+
     return {
-      access_token: this.jwtService.sign(payload), // retorna o token JWT como uma string
+      access_token: this.jwtService.sign(payload, { expiresIn }), // retorna o token JWT como uma string
     };
   }
 

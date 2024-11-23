@@ -46,7 +46,7 @@ export class ProductService {
     return this.productModel
       .find()
       .populate('supplierId', 'name')
-      .populate({path: 'categories', select: 'name'})
+      .populate({ path: 'categories', select: 'name' })
       .exec();
   }
 

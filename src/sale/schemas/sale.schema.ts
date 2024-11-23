@@ -1,16 +1,16 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { Employee } from '../../employee/schemas/employee.schema';
-import { Product } from '../../product/schemas/product.schema';
 import { Client } from '../../client/schemas/client.schema';
+import { SaleProduct, SaleProductSchema } from './sale-product.schema';
 
-@Schema()
+@Schema({ timestamps: true })
 export class Sale extends Document {
   @Prop({ required: true, unique: true })
   code: number;
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'Product' }], required: true })
-  products: Product[];
+  @Prop({ type: [SaleProductSchema], required: true })
+  products: SaleProduct[];
 
   @Prop({ type: Types.ObjectId, ref: 'Client' })
   clientId: Client;
@@ -22,22 +22,24 @@ export class Sale extends Document {
   closedByEmployee: Employee;
 
   @Prop({ required: true })
-  quantity: number;
+  itensQuantity: number;
 
   @Prop({ required: true })
-  totalPrice: number;
+  total: number;
 
   @Prop()
   notes: string;
 
-  @Prop({ type: String, enum: ['open', 'close'], default: 'open' })
-  status: 'open' | 'close';
+  @Prop({ type: String, enum: ['open', 'closed'], default: 'open' })
+  status: 'open' | 'closed' | 'canceled';
 
   @Prop({
     type: String,
-    enum: ['credit', 'debit', 'cash', 'pix', 'bankTransfer'],
+    enum: ['credit', 'debit', 'cash', 'pix', 'bankTransfer', 'other'],
   })
   paymentMethod: string;
+
+  discount: number;
 }
 
 export const SaleSchema = SchemaFactory.createForClass(Sale);
