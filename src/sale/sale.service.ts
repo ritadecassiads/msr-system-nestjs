@@ -21,9 +21,6 @@ export class SaleService {
   ) {}
 
   async create(createSaleDto: CreateSaleDto): Promise<Sale> {
-    // const session = await this.saleModel.db.startSession();
-    // session.startTransaction();
-
     try {
       const code = await CodeGeneratorUtil.generateCode(this.saleModel);
 
@@ -38,14 +35,17 @@ export class SaleService {
       const productIds = createSaleDto.products.map((product) => product._id);
       await this.validationService.validateProducts(productIds);
 
-      await this.updateStockProducts(createSaleDto);
-
       const createdSale = new this.saleModel({ ...createSaleDto, code });
-      return createdSale.save();
 
-      // await createdSale.save({ session });
-      // await session.commitTransaction();
-      // return createdSale;
+      const result = await this.updateStockProducts(createSaleDto);
+
+      if (result) {
+        return await createdSale.save();
+      } else {
+        throw new InternalServerErrorException(
+          'Não foi possível atualizar o estoque dos produtos',
+        );
+      }
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw error;
@@ -108,22 +108,27 @@ export class SaleService {
     return result;
   }
 
-  async updateStockProducts(sale: CreateSaleDto): Promise<void> {
-    console.log('updateStockProducts: ', sale.products);
-
+  async updateStockProducts(sale: CreateSaleDto): Promise<boolean> {
+    let result = true;
     for (const item of sale.products) {
       const product = await this.productModel.findById(item._id).exec();
 
       if (!product) {
+        result = false;
         throw new NotFoundException(`Product with ID ${item._id} not found`);
       }
+      if (product.stock === 0) {
+        result = false;
+        throw new BadRequestException(`Product ${product.name} out of stock`);
+      }
       if (product.stock < item.quantity) {
+        result = false;
         throw new Error(`Insufficient stock for product ${product.name}`);
       }
       product.stock -= item.quantity;
-      console.log('updateStockProducts sucesso: ', product);
 
       await product.save();
+      return result;
     }
   }
 }
