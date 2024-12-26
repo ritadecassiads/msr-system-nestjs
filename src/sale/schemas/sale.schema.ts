@@ -24,7 +24,7 @@ export class Sale extends Document {
   @Prop({ required: true })
   itensQuantity: number;
 
-  @Prop({ required: true })
+  @Prop({ required: true, set: (val: number) => parseFloat(val.toFixed(2)) })
   total: number;
 
   @Prop()
@@ -35,11 +35,28 @@ export class Sale extends Document {
 
   @Prop({
     type: String,
-    enum: ['credit', 'debit', 'cash', 'pix', 'bankTransfer', 'other'],
+    enum: [
+      'credit-card',
+      'debit-card',
+      'cash',
+      'cash',
+      'pix',
+      'bank-transfer',
+      'client-account',
+    ],
   })
   paymentMethod: string;
 
   discount: number;
+
+  @Prop()
+  installments: number;
+
+  @Prop({ set: (val: number) => parseFloat(val.toFixed(2)) })
+  installmentValue: number;
+
+  @Prop()
+  dueDates: Date[];
 }
 
 export const SaleSchema = SchemaFactory.createForClass(Sale);

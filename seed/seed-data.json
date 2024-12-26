@@ -7,20 +7,112 @@
       "cpf": "216.068.090-75",
       "rg": "MG-12.119.279",
       "phone": "(11) 1234-5678",
-      "email": "johndoe@example.com",
+      "email": "fulano@example.com",
       "purchaseLimit": 20000,
       "notes": "Cliente VIP",
-      "createdByEmployee": "66bbb4c2684282ba8e26494b",
-      "fathersName": "John Doe Sr.",
-      "mothersName": "Jane Doe",
-      "peopleAuthorized": "Jane Doe Jr.",
+      "createdByEmployee": "675d9f6420670c153e3e3904",
+      "fathersName": "João Beltrano",
+      "mothersName": "Maria Beltrano",
+      "peopleAuthorized": "Carlos Beltrano",
       "address": {
-        "street": "123 Main Sta",
-        "number": "4536",
-        "complement": "Apt 7899",
+        "street": "Rua A",
+        "number": "100",
+        "complement": "Casa",
         "city": "São Paulo",
         "state": "SP",
         "postalCode": "01001-000"
+      }
+    },
+    {
+      "code": 2,
+      "name": "Maria da Silva",
+      "birthDate": "1985-05-15T00:00:00.000Z",
+      "cpf": "123.456.789-00",
+      "rg": "RJ-22.334.556",
+      "phone": "(21) 98765-4321",
+      "email": "maria@example.com",
+      "purchaseLimit": 15000,
+      "notes": "Preferência por cartão",
+      "createdByEmployee": "675d9f6420670c153e3e3904",
+      "fathersName": "José da Silva",
+      "mothersName": "Ana da Silva",
+      "peopleAuthorized": "Pedro da Silva",
+      "address": {
+        "street": "Rua B",
+        "number": "200",
+        "complement": "Apartamento 5",
+        "city": "Rio de Janeiro",
+        "state": "RJ",
+        "postalCode": "22050-000"
+      }
+    },
+    {
+      "code": 3,
+      "name": "Carlos Eduardo",
+      "birthDate": "1992-07-22T00:00:00.000Z",
+      "cpf": "789.654.321-12",
+      "rg": "SP-33.445.667",
+      "phone": "(11) 99988-7766",
+      "email": "carlos@example.com",
+      "purchaseLimit": 25000,
+      "notes": "Cliente novo",
+      "createdByEmployee": "675d9f6420670c153e3e3904",
+      "fathersName": "Eduardo Carlos",
+      "mothersName": "Clara Eduardo",
+      "peopleAuthorized": "Lucas Eduardo",
+      "address": {
+        "street": "Rua C",
+        "number": "300",
+        "complement": "Sobrado",
+        "city": "Campinas",
+        "state": "SP",
+        "postalCode": "13010-000"
+      }
+    },
+    {
+      "code": 4,
+      "name": "Ana Paula Santos",
+      "birthDate": "1980-12-11T00:00:00.000Z",
+      "cpf": "111.222.333-44",
+      "rg": "MG-44.556.778",
+      "phone": "(31) 99887-6655",
+      "email": "ana@example.com",
+      "purchaseLimit": 12000,
+      "notes": "Cliente regular",
+      "createdByEmployee": "675d9f6420670c153e3e3904",
+      "fathersName": "Sérgio Santos",
+      "mothersName": "Paula Santos",
+      "peopleAuthorized": "Beatriz Santos",
+      "address": {
+        "street": "Rua D",
+        "number": "400",
+        "complement": "Sala 2",
+        "city": "Belo Horizonte",
+        "state": "MG",
+        "postalCode": "30110-000"
+      }
+    },
+    {
+      "code": 5,
+      "name": "João Pedro Lima",
+      "birthDate": "1988-03-18T00:00:00.000Z",
+      "cpf": "555.666.777-88",
+      "rg": "RS-55.667.889",
+      "phone": "(51) 91234-5678",
+      "email": "joao@example.com",
+      "purchaseLimit": 10000,
+      "notes": "Aguardando atualização cadastral",
+      "createdByEmployee": "675d9f6420670c153e3e3904",
+      "fathersName": "Pedro Lima",
+      "mothersName": "Joana Lima",
+      "peopleAuthorized": "Marcos Lima",
+      "address": {
+        "street": "Rua E",
+        "number": "500",
+        "complement": "Loja",
+        "city": "Porto Alegre",
+        "state": "RS",
+        "postalCode": "90010-000"
       }
     }
   ],
@@ -79,6 +171,57 @@
         "state": "SP",
         "postalCode": "01001-000"
       }
+    },
+    {
+      "code": 2,
+      "name": "Fornecedor Aviamento LTDA",
+      "cnpj": "12.345.678/0001-90",
+      "phone": "+55 21 98765-4321",
+      "email": "contato@eletronicos.com.br",
+      "contactPerson": "Maria Oliveira",
+      "observations": "Fornecedor com ampla variedade de produtos eletrônicos",
+      "address": {
+        "street": "456 Another St",
+        "number": "789",
+        "complement": "Sala 101",
+        "city": "Rio de Janeiro",
+        "state": "RJ",
+        "postalCode": "22000-000"
+      }
+    },
+    {
+      "code": 3,
+      "name": "Classe Couro",
+      "cnpj": "98.765.432/0001-12",
+      "phone": "+55 31 98765-4321",
+      "email": "contato@roupas.com.br",
+      "contactPerson": "Carlos Pereira",
+      "observations": "Fornecedor especializado em roupas de alta qualidade",
+      "address": {
+        "street": "789 Different St",
+        "number": "123",
+        "complement": "Loja 202",
+        "city": "Belo Horizonte",
+        "state": "MG",
+        "postalCode": "31000-000"
+      }
+    },
+    {
+      "code": 4,
+      "name": "Moleca Calçados LTDA",
+      "cnpj": "23.456.789/0001-34",
+      "phone": "+55 41 98765-4321",
+      "email": "contato@alimentos.com.br",
+      "contactPerson": "Ana Costa",
+      "observations": "Fornecedor com produtos alimentícios frescos e de qualidade",
+      "address": {
+        "street": "101 Main St",
+        "number": "202",
+        "complement": "Galpão 303",
+        "city": "Curitiba",
+        "state": "PR",
+        "postalCode": "80000-000"
+      }
     }
   ],
   "products": [
@@ -87,14 +230,15 @@
       "name": "Sandalia Feminina",
       "description": "Sandalia da modare",
       "price": 99.9,
-      "category": "Calçados",
+      "category": 2,
       "stock": 10
     },
     {
+      "code": 2,
       "name": "Tênis Esportivo",
       "description": "Tênis para corrida",
       "price": 199.9,
-      "category": "Calçados",
+      "category": 2,
       "stock": 15
     },
     {
@@ -102,15 +246,15 @@
       "name": "Camiseta Básica",
       "description": "Camiseta de algodão",
       "price": 49.9,
-      "category": "Roupas",
-      "stock": 50
+      "category": 3,
+      "stock": 30
     },
     {
       "code": 4,
       "name": "Calça Jeans",
       "description": "Calça jeans azul",
       "price": 129.9,
-      "category": "Roupas",
+      "category": 3,
       "stock": 20
     },
     {
@@ -118,8 +262,32 @@
       "name": "Jaqueta de Couro",
       "description": "Jaqueta de couro sintético",
       "price": 299.9,
-      "category": "Roupas",
+      "category": 3,
       "stock": 5
+    },
+    {
+      "code": 6,
+      "name": "Botão enfeitado",
+      "description": "Botão para costura",
+      "price": 0.9,
+      "category": 1,
+      "stock": 50
+    },
+    {
+      "code": 7,
+      "name": "Botão pequeno",
+      "description": "Botão para costura",
+      "price": 0.5,
+      "category": 1,
+      "stock": 50
+    },
+    {
+      "code": 8,
+      "name": "Fita de cetim",
+      "description": "",
+      "price": 5.99,
+      "category": 1,
+      "stock": 50
     }
   ],
   "categories": [
@@ -147,11 +315,105 @@
       "amount": 1500.75,
       "installments": 3,
       "notes": "This is a test invoice"
+    },
+    {
+      "supplierId": "675da0b1a7b3414b1f12773c",
+      "issueDate": "2024-12-01T00:00:00.000Z",
+      "dueDate": "2024-12-31T00:00:00.000Z",
+      "totalAmount": 1500.0,
+      "installments": [
+        {
+          "dueDate": "2025-01-10T00:00:00.000Z",
+          "amount": 500.0,
+          "status": "unpaid"
+        },
+        {
+          "dueDate": "2025-02-10T00:00:00.000Z",
+          "amount": 500.0,
+          "status": "unpaid"
+        },
+        {
+          "dueDate": "2025-03-30T00:00:00.000Z",
+          "amount": 500.0,
+          "status": "unpaid"
+        }
+      ],
+      "status": "unpaid",
+      "notes": "Conta referente ao fornecimento de materiais de aviamento",
+      "description": "Compra para estoque de aviamento"
+    },
+    {
+      "dueDate": "2025-01-31T00:00:00.000Z",
+      "totalAmount": 423.0,
+      "description": "Conta de água"
+    }
+  ],
+  "sales": [
+    {
+      "code": 1,
+      "products": [
+        {
+          "code": 3,
+          "name": "Camiseta Básica",
+          "unitPrice": 49.9,
+          "totalPrice": 49.9,
+          "quantity": 1,
+          "_id": {
+            "$oid": "675da0b1a7b3414b1f127742"
+          }
+        },
+        {
+          "code": 4,
+          "name": "Calça Jeans",
+          "unitPrice": 129.9,
+          "totalPrice": 129.9,
+          "quantity": 1,
+          "_id": {
+            "$oid": "675da0b1a7b3414b1f127743"
+          }
+        },
+        {
+          "code": 6,
+          "name": "Botão enfeitado",
+          "unitPrice": 0.9,
+          "totalPrice": 1.8,
+          "quantity": 2,
+          "_id": {
+            "$oid": "675da0b1a7b3414b1f127745"
+          }
+        },
+        {
+          "code": 7,
+          "name": "Botão pequeno",
+          "unitPrice": 0.5,
+          "totalPrice": 4,
+          "quantity": 8,
+          "_id": {
+            "$oid": "675da0b1a7b3414b1f127746"
+          }
+        },
+        {
+          "code": 8,
+          "name": "Fita de cetim",
+          "unitPrice": 5.99,
+          "totalPrice": 29.950000000000003,
+          "quantity": 5,
+          "_id": {
+            "$oid": "675da0b1a7b3414b1f127747"
+          }
+        }
+      ],
+      "openedByEmployee": "675da0b1a7b3414b1f127738",
+      "itensQuantity": 17,
+      "total": 215.55,
+      "status": "open",
+      "createdAt": {
+        "$date": "2024-12-14T15:15:09.932Z"
+      },
+      "updatedAt": {
+        "$date": "2024-12-14T15:15:09.932Z"
+      },
+      "__v": 0
     }
   ]
 }
-
-
-
-
-

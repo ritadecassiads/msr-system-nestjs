@@ -40,4 +40,15 @@ export class CreateSaleDto {
   @IsOptional()
   @IsEnum(['credit', 'debit', 'cash', 'pix', 'bankTransfer'])
   paymentMethod?: string;
+
+  @IsOptional()
+  @IsNumber()
+  installments?: number;
+
+  @IsOptional()
+  @IsNumber()
+  installmentsValue?: number;
+
+  @IsOptional()
+  dueDates?: Date[];
 }

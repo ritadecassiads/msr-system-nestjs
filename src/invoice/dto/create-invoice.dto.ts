@@ -7,36 +7,42 @@ import {
   IsString,
   IsDate,
   IsMongoId,
+  ValidateNested,
 } from 'class-validator';
+import { InstallmentDto } from './installment.dto';
 
 export class CreateInvoiceDto {
   @IsOptional()
   @IsMongoId()
   readonly supplierId?: string;
 
-  @IsNotEmpty()
   @IsDate()
+  @IsOptional()
   @Type(() => Date)
   readonly issueDate: Date;
 
-  @IsNotEmpty()
   @IsDate()
   @Type(() => Date)
   readonly dueDate: Date;
 
   @IsNotEmpty()
   @IsNumber()
-  readonly amount: number;
+  readonly totalAmount: number;
+
+  @ValidateNested()
+  @IsOptional()
+  @Type(() => InstallmentDto)
+  readonly installments?: InstallmentDto[];
 
   @IsOptional()
-  @IsNumber()
-  readonly installments?: number;
-
-  @IsOptional()
-  @IsEnum(['open', 'paid', 'overdue'])
-  readonly status?: 'open' | 'paid' | 'overdue';
+  @IsEnum(['unpaid', 'paid', 'overdue'])
+  readonly status?: 'unpaid' | 'paid' | 'overdue';
 
   @IsOptional()
   @IsString()
   readonly notes?: string;
+
+  @IsOptional()
+  @IsString()
+  readonly description?: string;
 }

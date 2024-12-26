@@ -37,26 +37,32 @@ export class SaleService {
 
       const createdSale = new this.saleModel({ ...createSaleDto, code });
 
+      // Salva a venda antes de atualizar o estoque
+      const savedSale = await createdSale.save();
+
+      // Atualiza o estoque dos produtos
       const result = await this.updateStockProducts(createSaleDto);
 
       if (result) {
-        return await createdSale.save();
+        return savedSale;
       } else {
+        // Se a atualização do estoque falhar, desfaz a venda
+        await this.saleModel.findByIdAndDelete(savedSale._id);
         throw new InternalServerErrorException(
           'Não foi possível atualizar o estoque dos produtos',
         );
       }
     } catch (error) {
-      if (error instanceof NotFoundException) {
-        throw error;
-      }
-
-      if (error instanceof BadRequestException) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof BadRequestException
+      ) {
         throw error;
       }
 
       throw new InternalServerErrorException(
         'Não foi possível cadastrar a venda',
+        error.message,
       );
     }
   }
@@ -65,7 +71,7 @@ export class SaleService {
     const sales = await this.saleModel
       .find()
       .populate({ path: 'products', select: 'name' }) // problema ao retornar os objetos de produtos
-      //.populate('clientId', 'name') implementar depois
+      .populate('clientId', 'name')
       .populate('openedByEmployee', 'name')
       .exec();
 
@@ -89,6 +95,9 @@ export class SaleService {
     _id: string,
     updateSaleDto: Partial<CreateSaleDto>,
   ): Promise<Sale> {
+    if (updateSaleDto.clientId) {
+      await this.validationService.validateClient(updateSaleDto.clientId);
+    }
     const updatedSale = await this.saleModel
       .findByIdAndUpdate(_id, { $set: updateSaleDto }, { new: true })
       .exec();
@@ -109,7 +118,7 @@ export class SaleService {
   }
 
   async updateStockProducts(sale: CreateSaleDto): Promise<boolean> {
-    let result = true;
+    let result = false;
     for (const item of sale.products) {
       const product = await this.productModel.findById(item._id).exec();
 
@@ -126,9 +135,9 @@ export class SaleService {
         throw new Error(`Insufficient stock for product ${product.name}`);
       }
       product.stock -= item.quantity;
-
       await product.save();
-      return result;
+      result = true;
     }
+    return result;
   }
 }

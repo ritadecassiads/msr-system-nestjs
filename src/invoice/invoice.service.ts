@@ -19,18 +19,21 @@ export class InvoiceService {
 
   async create(createInvoiceDto: CreateInvoiceDto): Promise<Invoice> {
     try {
-      await this.validationService.validateSupplier(
-        createInvoiceDto.supplierId,
-      );
+      if (createInvoiceDto.supplierId) {
+        await this.validationService.validateSupplier(
+          createInvoiceDto.supplierId,
+        );
+      }
+
       // Calcular os valores das parcelas
-      const installmentAmounts = Array(createInvoiceDto.installments).fill(
-        createInvoiceDto.amount / createInvoiceDto.installments,
-      );
+      // const installmentAmounts = Array(createInvoiceDto.installments).fill(
+      //   createInvoiceDto.amount / createInvoiceDto.installments,
+      // );
 
       const code = await CodeGeneratorUtil.generateCode(this.invoiceModel);
       const createdInvoice = new this.invoiceModel({
         ...createInvoiceDto,
-        installmentAmounts,
+        // installmentAmounts,
         code,
       });
       return createdInvoice.save();

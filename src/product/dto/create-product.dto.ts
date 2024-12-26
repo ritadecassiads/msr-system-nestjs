@@ -24,8 +24,8 @@ export class CreateProductDto {
   @IsNumber()
   stock: number;
 
-  @IsOptional()
   @IsMongoId()
+  @IsOptional()
   supplierId?: string;
 
   @IsOptional()

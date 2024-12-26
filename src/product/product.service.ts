@@ -20,13 +20,17 @@ export class ProductService {
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
     try {
-      await this.validationService.validateSupplier(
-        createProductDto.supplierId,
-      );
+      if (createProductDto.supplierId){
+        await this.validationService.validateSupplier(
+          createProductDto.supplierId,
+        );
+      }
 
-      await this.validationService.validateCategories(
-        createProductDto.categories,
-      );
+      if(createProductDto.categories){
+        await this.validationService.validateCategories(
+          createProductDto.categories,
+        );
+      }
 
       const code = await CodeGeneratorUtil.generateCode(this.productModel);
       const createdProduct = new this.productModel({

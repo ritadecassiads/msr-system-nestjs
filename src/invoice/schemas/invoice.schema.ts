@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { Supplier } from '../../supplier/schemas/supplier.schema'; // Assumindo que a entidade fornecedor é chamada Supplier
+import { Installment, InstallmentSchema } from './installment.schema';
 
 @Schema({ timestamps: true })
 export class Invoice extends Document {
@@ -10,26 +11,29 @@ export class Invoice extends Document {
   @Prop({ type: Types.ObjectId, ref: 'Supplier' })
   supplierId: Supplier;
 
-  @Prop({ required: true })
+  @Prop()
   issueDate: Date; // emissão
 
-  @Prop({ required: true })
+  @Prop()
   dueDate: Date; // vencimento
 
   @Prop({ required: true })
-  amount: number;
+  totalAmount: number;
 
-  @Prop()
-  installments: number; // parcelas
+  @Prop({ type: [InstallmentSchema], _id: false })
+  installments: Installment[];
 
-  @Prop()
-  installmentAmounts: number[];
-
-  @Prop({ required: true, enum: ['open', 'paid', 'overdue'], default: 'open' })
+  @Prop({
+    enum: ['unpaid', 'paid', 'overdue'],
+    default: 'unpaid',
+  })
   status: string;
 
   @Prop()
   notes: string;
+
+  @Prop()
+  description: string;
 }
 
 export const InvoiceSchema = SchemaFactory.createForClass(Invoice);

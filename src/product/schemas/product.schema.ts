@@ -15,7 +15,7 @@ export class Product extends Document {
   @Prop({})
   description: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, set: (val: number) => parseFloat(val.toFixed(2)) })
   price: number;
 
   @Prop({ required: true })

@@ -12,7 +12,7 @@ export class SaleProduct extends Document {
   @Prop({ required: true })
   unitPrice: number;
 
-  @Prop({ required: true })
+  @Prop({ required: true, set: (val: number) => parseFloat(val.toFixed(2)) })
   totalPrice: number;
 
   @Prop({ required: true })
