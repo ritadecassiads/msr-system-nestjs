@@ -230,7 +230,6 @@
       "name": "Sandalia Feminina",
       "description": "Sandalia da modare",
       "price": 99.9,
-      "category": 2,
       "stock": 10
     },
     {
@@ -238,7 +237,6 @@
       "name": "Tênis Esportivo",
       "description": "Tênis para corrida",
       "price": 199.9,
-      "category": 2,
       "stock": 15
     },
     {
@@ -246,7 +244,6 @@
       "name": "Camiseta Básica",
       "description": "Camiseta de algodão",
       "price": 49.9,
-      "category": 3,
       "stock": 30
     },
     {
@@ -254,7 +251,6 @@
       "name": "Calça Jeans",
       "description": "Calça jeans azul",
       "price": 129.9,
-      "category": 3,
       "stock": 20
     },
     {
@@ -262,7 +258,6 @@
       "name": "Jaqueta de Couro",
       "description": "Jaqueta de couro sintético",
       "price": 299.9,
-      "category": 3,
       "stock": 5
     },
     {
@@ -270,7 +265,6 @@
       "name": "Botão enfeitado",
       "description": "Botão para costura",
       "price": 0.9,
-      "category": 1,
       "stock": 50
     },
     {
@@ -278,7 +272,6 @@
       "name": "Botão pequeno",
       "description": "Botão para costura",
       "price": 0.5,
-      "category": 1,
       "stock": 50
     },
     {

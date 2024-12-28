@@ -1,15 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { Supplier } from '../../supplier/schemas/supplier.schema'; // Assumindo que a entidade fornecedor é chamada Supplier
 import { Installment, InstallmentSchema } from './installment.schema';
+import { Schema as MongooseSchema } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class Invoice extends Document {
   @Prop({ required: true, unique: true })
   code: number;
 
-  @Prop({ type: Types.ObjectId, ref: 'Supplier' })
-  supplierId: Supplier;
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Supplier' })
+  supplierId: Types.ObjectId;
 
   @Prop()
   issueDate: Date; // emissão

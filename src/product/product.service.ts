@@ -20,13 +20,13 @@ export class ProductService {
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
     try {
-      if (createProductDto.supplierId){
+      if (createProductDto.supplierId) {
         await this.validationService.validateSupplier(
           createProductDto.supplierId,
         );
       }
 
-      if(createProductDto.categories){
+      if (createProductDto.categories) {
         await this.validationService.validateCategories(
           createProductDto.categories,
         );
@@ -37,7 +37,11 @@ export class ProductService {
         ...createProductDto,
         code,
       });
-      return await createdProduct.save();
+      console.log('antes de salvar: ', createdProduct);
+      await createdProduct.save();
+      console.log('depois de salvar: ', createdProduct);
+
+      return createdProduct;
     } catch (error) {
       if (error.code === 11000) {
         throw new ConflictException('Duplicate field value entered');
@@ -51,6 +55,7 @@ export class ProductService {
       .find()
       .populate('supplierId', 'name')
       .populate({ path: 'categories', select: 'name' })
+      // .populate('categories', 'name')
       .exec();
   }
 
@@ -58,7 +63,8 @@ export class ProductService {
     const product = await this.productModel
       .findById(_id)
       .populate('supplierId', 'name')
-      .populate('categories', 'name')
+      .populate({ path: 'categories', select: 'name' })
+      // .populate('categories')
       .exec();
     if (!product) {
       throw new NotFoundException('Produto não encontrado');

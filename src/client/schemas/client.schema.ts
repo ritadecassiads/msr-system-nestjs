@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { Address } from '../../address/schemas/address.schema';
-import { Employee } from '../../employee/schemas/employee.schema';
+import { Schema as MongooseSchema } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class Client extends Document {
@@ -32,8 +32,8 @@ export class Client extends Document {
   @Prop()
   notes: string;
 
-  @Prop({ type: Types.ObjectId, ref: 'Employee' })
-  createdByEmployee: Employee;
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Employee' })
+  createdByEmployee: Types.ObjectId;
 
   @Prop()
   fathersName: string;

@@ -1,8 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { Employee } from '../../employee/schemas/employee.schema';
-import { Client } from '../../client/schemas/client.schema';
 import { SaleProduct, SaleProductSchema } from './sale-product.schema';
+import { Schema as MongooseSchema } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class Sale extends Document {
@@ -12,14 +11,18 @@ export class Sale extends Document {
   @Prop({ type: [SaleProductSchema], required: true })
   products: SaleProduct[];
 
-  @Prop({ type: Types.ObjectId, ref: 'Client' })
-  clientId: Client;
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Client' })
+  clientId: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: 'Employee', required: true })
-  openedByEmployee: Employee;
+  @Prop({
+    type: MongooseSchema.Types.ObjectId,
+    ref: 'Employee',
+    required: true,
+  })
+  openedByEmployee: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: 'Employee' }) // incluri required depois
-  closedByEmployee: Employee;
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Employee' }) // incluri required depois
+  closedByEmployee: Types.ObjectId;
 
   @Prop({ required: true })
   itensQuantity: number;
