@@ -94,6 +94,16 @@ export class EmployeeService {
     return employee;
   }
 
+  findByCode(code: number): Promise<Employee> {
+    const employee = this.employeeModel.findOne({ code }).exec();
+
+    if (!employee) {
+      throw new NotFoundException('Funcionário não encontrado');
+    }
+
+    return employee;
+  }
+
   async update(
     _id: string,
     updateEmployeeDto: Partial<CreateEmployeeDto>,

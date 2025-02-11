@@ -37,10 +37,8 @@ export class SaleService {
 
       const createdSale = new this.saleModel({ ...createSaleDto, code });
 
-      // Salva a venda antes de atualizar o estoque
       const savedSale = await createdSale.save();
 
-      // Atualiza o estoque dos produtos
       const result = await this.updateStockProducts(createSaleDto);
 
       if (result) {

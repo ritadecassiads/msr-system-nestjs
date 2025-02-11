@@ -46,6 +46,12 @@ export class EmployeeController {
     return employee;
   }
 
+  @Get('code/:code')
+  async findByCode(@Param('code') code: number): Promise<Employee> {
+    const employee = await this.employeeService.findByCode(code);
+    return employee;
+  }
+
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
   async update(
