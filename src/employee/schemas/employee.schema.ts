@@ -33,6 +33,9 @@ export class Employee extends Document {
 
   @Prop({ type: Address, _id: false })
   address: Address;
+
+  @Prop({ required: true })
+  birthDate: Date;
 }
 
 export const EmployeeSchema = SchemaFactory.createForClass(Employee);
