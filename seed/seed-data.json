@@ -310,6 +310,7 @@
       "notes": "This is a test invoice"
     },
     {
+      "code": 2,
       "supplierId": "675da0b1a7b3414b1f12773c",
       "issueDate": "2024-12-01T00:00:00.000Z",
       "dueDate": "2024-12-31T00:00:00.000Z",
