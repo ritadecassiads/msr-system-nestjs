@@ -8,7 +8,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('DATABASE_URI'), // Pega a URI do banco do .env
+        uri: configService.get<string>('MONGO_URI'), // Pega a URI do banco do .env
         connectionFactory: (connection) => {
           connection.on('connected', () => {
             console.log('Conectado com o MongoDB!');

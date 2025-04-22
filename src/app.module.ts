@@ -10,11 +10,12 @@ import { InvoiceModule } from './invoice/invoice.module';
 import { SupplierModule } from './supplier/supplier.module';
 import { CategoryModule } from './category/category.module';
 import { SeedService } from 'seed/seed.service';
-// import { AddressModule } from './address/address.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/msr-system'),
+    ConfigModule.forRoot({ isGlobal: true }),
+    MongooseModule.forRoot(process.env.MONGO_URI),
     AuthModule,
     EmployeeModule,
     ClientModule,
