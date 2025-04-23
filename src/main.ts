@@ -19,14 +19,10 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type, Authorization',
   });
 
-  // Execute o script de seed
-  const seedService = app.get(SeedService);
-  await seedService.seed();
-
-  // if (process.env.NODE_ENV !== 'production') {
-  //   const seedService = app.get(SeedService);
-  //   await seedService.seed();
-  // }
+  if (process.env.NODE_ENV !== 'production') {
+    const seedService = app.get(SeedService);
+    await seedService.seed();
+  }
 
   await app.listen(process.env.PORT || 3000);
   console.log('Servidor rodando na porta 3000');
