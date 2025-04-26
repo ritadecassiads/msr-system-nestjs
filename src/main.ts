@@ -3,6 +3,8 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { ValidationException } from './common/exceptions/validation.exception';
 import { SeedService } from '../seed/seed.service';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as fs from 'fs';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,7 +16,7 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: 'http://localhost:4200', // URL do seu frontend Angular
+    origin: 'http://localhost:4200', // mapear o domínio do frontend 
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type, Authorization',
   });
@@ -23,6 +25,19 @@ async function bootstrap() {
     const seedService = app.get(SeedService);
     await seedService.seed();
   }
+
+  const config = new DocumentBuilder()
+    .setTitle('Documentação API MSR')
+    .setDescription('Bem-vindo à documentação da API do sistema de gestão MSR. Aqui você encontrará informações detalhadas sobre os endpoints disponíveis, incluindo métodos, parâmetros, e exemplos de uso. Esta API é projetada para gerenciar recursos do sistema MSR de forma eficiente e segura.')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+    
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api-docs', app, document);
+
+  fs.writeFileSync('./swagger.json', JSON.stringify(document)); // exporta a documentação para um arquivo JSON
+
 
   await app.listen(process.env.PORT || 3000);
   console.log('Servidor rodando na porta 3000');
