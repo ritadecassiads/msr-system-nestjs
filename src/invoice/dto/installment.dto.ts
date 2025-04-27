@@ -4,6 +4,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class InstallmentDto {
   @IsDate()
+  @IsOptional()
   @Type(() => Date)
   @ApiProperty({
     example: '2025-05-01',

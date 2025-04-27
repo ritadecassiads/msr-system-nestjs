@@ -8,6 +8,6 @@ export class CodeGeneratorUtil {
     model: Model<T>,
   ): Promise<number> {
     const lastRecord = await model.findOne({}).sort({ code: -1 }).exec();
-    return lastRecord ? lastRecord.code + 1 : 1;
+    return lastRecord.code ? lastRecord.code + 1 : 1;
   }
 }

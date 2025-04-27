@@ -32,6 +32,7 @@ export class CreateInvoiceDto {
 
   @IsDate()
   @Type(() => Date)
+  @IsOptional()
   @ApiProperty({
     example: '2025-05-01',
     description: 'Data de vencimento da fatura',
