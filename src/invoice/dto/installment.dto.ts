@@ -20,11 +20,30 @@ export class InstallmentDto {
   readonly amount: number;
 
   @IsOptional()
-  @IsEnum(['unpaid', 'paid', 'overdue'])
+  @IsEnum(['pending', 'paid', 'overdue'])
   @ApiPropertyOptional({
-    example: 'unpaid',
+    example: 'pending',
     description: 'Status da parcela',
-    enum: ['unpaid', 'paid', 'overdue'],
+    enum: ['pending', 'paid', 'overdue'],
   })
-  readonly status?: 'unpaid' | 'paid' | 'overdue';
+  readonly status?: 'pending' | 'paid' | 'overdue';
+
+  @IsDate()
+  @IsOptional()
+  @Type(() => Date)
+  @ApiProperty({
+    example: '2025-05-01',
+    description: 'Data que a parcela foi paga',
+    required: false,
+  })
+  readonly paymentDate?: Date;
+
+  @IsOptional()
+  @IsEnum(['credit', 'debit', 'cash', 'pix', 'bankTransfer'])
+  @ApiPropertyOptional({
+    example: 'credit',
+    description: 'Método de pagamento utilizado na venda',
+    enum: ['credit', 'debit', 'cash', 'pix', 'bankTransfer'],
+  })
+  readonly paymentMethod?: string;
 }

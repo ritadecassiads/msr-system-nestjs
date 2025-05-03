@@ -10,10 +10,26 @@ export class Installment extends Document {
   amount: number;
 
   @Prop({
-    enum: ['unpaid', 'paid', 'overdue'],
-    default: 'unpaid',
+    enum: ['pending', 'paid', 'overdue'],
+    default: 'pending',
   })
   status: string;
+
+  @Prop()
+  paymentDate: Date;
+
+  @Prop({
+    type: String,
+    enum: [
+      'credit-card',
+      'debit-card',
+      'cash',
+      'cash',
+      'pix',
+      'bank-transfer'
+    ],
+  })
+  paymentMethod: string;
 }
 
 export const InstallmentSchema = SchemaFactory.createForClass(Installment);

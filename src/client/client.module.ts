@@ -6,6 +6,7 @@ import { Client, ClientSchema } from './schemas/client.schema';
 import { AuthModule } from '../auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ValidationModule } from '../validation/validation.module';
+import { SaleModule } from 'src/sale/sale.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { ValidationModule } from '../validation/validation.module';
     ValidationModule,
     AuthModule,
     JwtModule,
+    SaleModule
   ],
   controllers: [ClientController],
   providers: [ClientService],

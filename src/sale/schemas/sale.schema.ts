@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { SaleProduct, SaleProductSchema } from './sale-product.schema';
 import { Schema as MongooseSchema } from 'mongoose';
+import { Installment, InstallmentSchema } from 'src/invoice/schemas/installment.schema';
 
 @Schema({ timestamps: true })
 export class Sale extends Document {
@@ -52,14 +53,8 @@ export class Sale extends Document {
 
   discount: number;
 
-  @Prop()
-  installments: number;
-
-  @Prop({ set: (val: number) => parseFloat(val.toFixed(2)) })
-  installmentValue: number;
-
-  @Prop()
-  dueDates: Date[];
+  @Prop({ type: [InstallmentSchema] })
+  installments: Installment[];
 }
 
 export const SaleSchema = SchemaFactory.createForClass(Sale);

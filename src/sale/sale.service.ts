@@ -138,4 +138,17 @@ export class SaleService {
     }
     return result;
   }
+
+  async findSalesByClient(clientId: string): Promise<Sale[]> {
+    const sales = await this.saleModel
+    .find({ clientId }) // Filtro para o clientId
+    .populate({ path: 'products', select: 'name' }) // Populate dos produtos, selecionando apenas o campo 'name'
+    .populate({ path: 'clientId', select: 'name' }) // Populate do clientId, selecionando apenas o campo 'name'
+    .populate({ path: 'openedByEmployee', select: 'name' }) // Populate do funcionário que abriu a venda, selecionando o 'name'
+    .sort({ createdAt: -1 }) // Ordenando as vendas pela data de criação, do mais recente para o mais antigo
+    .exec();
+
+    console.log(sales);
+    return sales;
+  }
 }

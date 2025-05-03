@@ -24,8 +24,8 @@ export class Invoice extends Document {
   installments: Installment[];
 
   @Prop({
-    enum: ['unpaid', 'paid', 'overdue'],
-    default: 'unpaid',
+    enum: ['pending', 'paid', 'overdue'],
+    default: 'pending',
   })
   status: string;
 

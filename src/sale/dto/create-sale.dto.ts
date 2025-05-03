@@ -11,6 +11,7 @@ import {
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { SaleProductDto } from './sale-product-dto';
+import { Installment } from 'src/invoice/schemas/installment.schema';
 
 export class CreateSaleDto {
   @IsArray()
@@ -64,35 +65,20 @@ export class CreateSaleDto {
   status?: 'open' | 'closed';
 
   @IsOptional()
-  @IsEnum(['credit', 'debit', 'cash', 'pix', 'bankTransfer'])
+  @IsEnum(['credit', 'debit', 'cash', 'pix', 'bankTransfer', 'client-account'])
   @ApiPropertyOptional({
     example: 'credit',
     description: 'Método de pagamento utilizado na venda',
-    enum: ['credit', 'debit', 'cash', 'pix', 'bankTransfer'],
+    enum: ['credit', 'debit', 'cash', 'pix', 'bankTransfer', 'client-account'],
   })
   paymentMethod?: string;
 
   @IsOptional()
-  @IsNumber()
   @ApiPropertyOptional({
-    example: 3,
-    description: 'Número de parcelas (opcional)',
+    example: [],
+    description: 'Parcelas associadas à venda (opcional)',
+    type: [Installment],
   })
-  installments?: number;
+  installments: Installment[];
 
-  @IsOptional()
-  @IsNumber()
-  @ApiPropertyOptional({
-    example: 50.25,
-    description: 'Valor de cada parcela (opcional)',
-  })
-  installmentsValue?: number;
-
-  @IsOptional()
-  @ApiPropertyOptional({
-    example: ['2025-05-01', '2025-06-01', '2025-07-01'],
-    description: 'Datas de vencimento das parcelas (opcional)',
-    type: [String],
-  })
-  dueDates?: Date[];
 }

@@ -57,13 +57,13 @@ export class CreateInvoiceDto {
   readonly installments?: InstallmentDto[];
 
   @IsOptional()
-  @IsEnum(['unpaid', 'paid', 'overdue'])
+  @IsEnum(['pending', 'paid', 'overdue'])
   @ApiPropertyOptional({
-    example: 'unpaid',
+    example: 'pending',
     description: 'Status da fatura (opcional)',
-    enum: ['unpaid', 'paid', 'overdue'],
+    enum: ['pending', 'paid', 'overdue'],
   })
-  readonly status?: 'unpaid' | 'paid' | 'overdue';
+  readonly status?: 'pending' | 'paid' | 'overdue';
 
   @IsOptional()
   @IsString()
