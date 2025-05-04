@@ -8,13 +8,13 @@ export class SeedService {
   constructor(@InjectConnection() private readonly connection: Connection) {}
 
   async seed() {
-    const collections = Object.keys(seedData);
-    const isDatabaseEmpty = await this.isDatabaseEmpty(collections);
+    // const collections = Object.keys(seedData);
+    // const isDatabaseEmpty = await this.isDatabaseEmpty(collections);
 
-    if (!isDatabaseEmpty) {
-      console.log('Database is not empty, skipping seed');
-      return;
-    }
+    // if (!isDatabaseEmpty) {
+    //   console.log('Database is not empty, skipping seed');
+    //   return;
+    // }
 
     // limpa as coleções existentes
     await this.connection.dropDatabase();
