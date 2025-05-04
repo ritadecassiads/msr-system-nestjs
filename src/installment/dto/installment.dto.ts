@@ -1,8 +1,13 @@
 import { Type } from 'class-transformer';
-import { IsNumber, IsOptional, IsEnum, IsDate } from 'class-validator';
+import { IsNumber, IsOptional, IsEnum, IsDate, IsString, IsNotEmpty, IsMongoId } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class InstallmentDto {
+  @IsMongoId()
+  @IsOptional()
+  @ApiProperty({ example: '644a1f4e5f1b2c3d4e5f6a7b', description: 'ID da parcela da venda' })
+  readonly _id: string;
+
   @IsDate()
   @IsOptional()
   @Type(() => Date)

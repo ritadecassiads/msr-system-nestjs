@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { SaleProduct, SaleProductSchema } from './sale-product.schema';
 import { Schema as MongooseSchema } from 'mongoose';
-import { Installment, InstallmentSchema } from 'src/invoice/schemas/installment.schema';
+import { Installment, InstallmentSchema } from '../../installment/schemas/installment.schema';
 
 @Schema({ timestamps: true })
 export class Sale extends Document {

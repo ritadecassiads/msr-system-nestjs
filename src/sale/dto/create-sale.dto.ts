@@ -11,7 +11,7 @@ import {
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { SaleProductDto } from './sale-product-dto';
-import { Installment } from 'src/invoice/schemas/installment.schema';
+import { Installment } from '../../installment/schemas/installment.schema';
 
 export class CreateSaleDto {
   @IsArray()

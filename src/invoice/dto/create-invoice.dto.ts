@@ -10,7 +10,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { InstallmentDto } from './installment.dto';
+import { InstallmentDto } from '../../installment/dto/installment.dto';
 
 export class CreateInvoiceDto {
   @IsOptional()

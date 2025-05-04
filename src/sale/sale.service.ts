@@ -11,6 +11,7 @@ import { CreateSaleDto } from './dto/create-sale.dto';
 import { CodeGeneratorUtil } from '../common/utils/code-generator.util';
 import { ValidationService } from '../validation/validation.service';
 import { Product } from 'src/product/schemas/product.schema';
+import { InstallmentDto } from 'src/installment/dto/installment.dto';
 
 @Injectable()
 export class SaleService {
@@ -18,7 +19,7 @@ export class SaleService {
     @InjectModel(Sale.name) private readonly saleModel: Model<Sale>,
     @InjectModel(Product.name) private productModel: Model<Product>,
     private readonly validationService: ValidationService,
-  ) {}
+  ) { }
 
   async create(createSaleDto: CreateSaleDto): Promise<Sale> {
     try {
@@ -141,14 +142,37 @@ export class SaleService {
 
   async findSalesByClient(clientId: string): Promise<Sale[]> {
     const sales = await this.saleModel
-    .find({ clientId }) // Filtro para o clientId
-    .populate({ path: 'products', select: 'name' }) // Populate dos produtos, selecionando apenas o campo 'name'
-    .populate({ path: 'clientId', select: 'name' }) // Populate do clientId, selecionando apenas o campo 'name'
-    .populate({ path: 'openedByEmployee', select: 'name' }) // Populate do funcionário que abriu a venda, selecionando o 'name'
-    .sort({ createdAt: -1 }) // Ordenando as vendas pela data de criação, do mais recente para o mais antigo
-    .exec();
+      .find({ clientId }) // Filtro para o clientId
+      .populate({ path: 'products', select: 'name' }) // Populate dos produtos, selecionando apenas o campo 'name'
+      .populate({ path: 'clientId', select: 'name' }) // Populate do clientId, selecionando apenas o campo 'name'
+      .populate({ path: 'openedByEmployee', select: 'name' }) // Populate do funcionário que abriu a venda, selecionando o 'name'
+      .sort({ createdAt: -1 }) // Ordenando as vendas pela data de criação, do mais recente para o mais antigo
+      .exec();
 
-    console.log(sales);
     return sales;
   }
+
+  async updateInstallmentStatus(
+    saleId: string,
+    dto: InstallmentDto,
+  ): Promise<Sale> {
+    const sale = await this.saleModel.findById(saleId);
+    if (!sale) {
+      throw new NotFoundException('Venda não encontrada');
+    }
+
+    const installment = sale.installments.find(inst => inst._id.toString() === dto._id);
+    if (!installment) {
+      throw new NotFoundException('Parcela não encontrada');
+    }
+
+    installment.status = dto.status;
+    installment.paymentDate = dto.paymentDate;
+    installment.amount = dto.amount;
+    installment.paymentMethod = dto.paymentMethod;
+
+    await sale.save();
+    return sale;
+  }
+
 }

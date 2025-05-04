@@ -37,10 +37,8 @@ export class ProductService {
         ...createProductDto,
         code,
       });
-      console.log('antes de salvar: ', createdProduct);
-      await createdProduct.save();
-      console.log('depois de salvar: ', createdProduct);
 
+      await createdProduct.save();
       return createdProduct;
     } catch (error) {
       if (error.code === 11000) {

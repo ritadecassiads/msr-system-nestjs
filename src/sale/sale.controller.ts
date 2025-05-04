@@ -13,10 +13,11 @@ import { CreateSaleDto } from './dto/create-sale.dto';
 import { Sale } from './schemas/sale.schema';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ResponseDto } from '../common/dto/response.dto';
+import { InstallmentDto } from 'src/installment/dto/installment.dto';
 
 @Controller('sales')
 export class SaleController {
-  constructor(private readonly saleService: SaleService) {}
+  constructor(private readonly saleService: SaleService) { }
 
   @Post()
   @UseGuards(JwtAuthGuard)
@@ -46,6 +47,16 @@ export class SaleController {
   ): Promise<ResponseDto<Sale>> {
     const updatedSale = await this.saleService.update(id, updateSaleDto);
     return new ResponseDto('Venda atualizada com sucesso', updatedSale);
+  }
+
+  @Patch(':id/installment')
+  @UseGuards(JwtAuthGuard)
+  async updateInstallmentStatus(
+    @Param('id') saleId: string,
+    @Body() updateInstallmentDto: InstallmentDto,
+  ): Promise<ResponseDto<Sale>> {
+    const updatedSale = await this.saleService.updateInstallmentStatus(saleId, updateInstallmentDto);
+    return new ResponseDto('Parcela atualizada com sucesso', updatedSale);
   }
 
   @Delete(':id')

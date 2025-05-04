@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { Installment, InstallmentSchema } from './installment.schema';
+import { Installment, InstallmentSchema } from '../../installment/schemas/installment.schema';
 import { Schema as MongooseSchema } from 'mongoose';
 
 @Schema({ timestamps: true })
