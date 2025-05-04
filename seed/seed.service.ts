@@ -16,10 +16,10 @@ export class SeedService {
       return;
     }
 
-    // Limpe as coleções existentes
-    // await this.connection.dropDatabase();
+    // limpa as coleções existentes
+    await this.connection.dropDatabase();
 
-    // Popule as coleções com os dados de seed
+    // popula as coleções com os dados de seed
     for (const collectionName in seedData) {
       const collection = this.connection.collection(collectionName);
       await collection.insertMany(seedData[collectionName]);

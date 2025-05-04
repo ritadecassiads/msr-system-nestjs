@@ -31,10 +31,10 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type, Authorization',
   });
 
-  if (process.env.NODE_ENV !== 'production') {
+  // if (process.env.NODE_ENV !== 'production') {
     const seedService = app.get(SeedService);
     await seedService.seed();
-  }
+  // }
 
   const config = new DocumentBuilder()
     .setTitle('Documentação API MSR')

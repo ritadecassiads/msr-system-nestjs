@@ -152,7 +152,43 @@
         "state": "SP",
         "postalCode": "01001-000"
       }
-    }
+    },
+    {
+      "code": 3,
+      "name": "Luis Eduardo",
+      "username": "luiz",
+      "password": "$2b$12$ZSkiaEX8ZCZeDiMMmnWqmut9AybaW0IKcaG5SLwr4Ci7ec4kOF4y6",
+      "cpf": "076.031.634-12",
+      "email": "luiz@gmail.com",
+      "phone": "41997317647",
+      "isAdmin": true,
+      "address": {
+        "street": "123 Main St",
+        "number": "456",
+        "complement": "Apt 789",
+        "city": "São Paulo",
+        "state": "SP",
+        "postalCode": "01001-000"
+      }
+    },
+    {
+      "code": 4,
+      "name": "Banca TCC",
+      "username": "bancatcc",
+      "password": "$2b$12$ZSkiaEX8ZCZeDiMMmnWqmut9AybaW0IKcaG5SLwr4Ci7ec4kOF4y6",
+      "cpf": "014.840.870-20",
+      "email": "banca@gmail.com",
+      "phone": "41997317647",
+      "isAdmin": false,
+      "address": {
+        "street": "123 Main St",
+        "number": "456",
+        "complement": "Apt 789",
+        "city": "São Paulo",
+        "state": "SP",
+        "postalCode": "01001-000"
+      }
+    }    
   ],
   "suppliers": [
     {
@@ -306,7 +342,6 @@
       "issueDate": "2024-08-09T12:00:00.000Z",
       "dueDate": "2024-12-12T12:00:00.000Z",
       "amount": 1500.75,
-      "installments": 3,
       "notes": "This is a test invoice"
     },
     {
