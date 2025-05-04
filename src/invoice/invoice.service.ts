@@ -24,18 +24,14 @@ export class InvoiceService {
           createInvoiceDto.supplierId,
         );
       }
-
-      // Calcular os valores das parcelas
-      // const installmentAmounts = Array(createInvoiceDto.installments).fill(
-      //   createInvoiceDto.amount / createInvoiceDto.installments,
-      // );
-
+      
       const code = await CodeGeneratorUtil.generateCode(this.invoiceModel);
+      
       const createdInvoice = new this.invoiceModel({
         ...createInvoiceDto,
-        // installmentAmounts,
         code,
       });
+
       return createdInvoice.save();
     } catch (error) {
       if (error instanceof NotFoundException) {

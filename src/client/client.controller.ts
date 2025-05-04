@@ -13,10 +13,11 @@ import { CreateClientDto } from './dto/create-client.dto';
 import { Client } from './schemas/client.schema';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ResponseDto } from '../common/dto/response.dto';
+import { SaleService } from 'src/sale/sale.service';
 
 @Controller('clients')
 export class ClientController {
-  constructor(private readonly clientService: ClientService) {}
+  constructor(private readonly clientService: ClientService, private readonly saleService: SaleService) { }
 
   @UseGuards(JwtAuthGuard)
   @Post()
@@ -36,6 +37,11 @@ export class ClientController {
   async findById(@Param('id') id: string): Promise<Client> {
     const client = await this.clientService.findById(id);
     return client;
+  }
+
+  @Get(':id/installments')
+  async getClientInstallments(@Param('id') id: string) {
+    return this.saleService.findSalesByClient(id);
   }
 
   @Patch(':id')

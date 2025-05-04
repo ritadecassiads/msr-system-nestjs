@@ -20,12 +20,12 @@ export class Invoice extends Document {
   @Prop({ required: true })
   totalAmount: number;
 
-  @Prop({ type: [InstallmentSchema], _id: false })
+  @Prop({ type: [InstallmentSchema] })
   installments: Installment[];
 
   @Prop({
-    enum: ['unpaid', 'paid', 'overdue'],
-    default: 'unpaid',
+    enum: ['pending', 'paid', 'overdue'],
+    default: 'pending',
   })
   status: string;
 
