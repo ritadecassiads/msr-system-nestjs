@@ -16,7 +16,17 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: 'http://localhost:4200', // mapear o domínio do frontend 
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        'http://localhost:4200',
+        'https://msr-sys.netlify.app',
+      ];
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type, Authorization',
   });
