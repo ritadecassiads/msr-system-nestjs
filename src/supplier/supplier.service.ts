@@ -24,13 +24,13 @@ export class SupplierService {
     try {
       const code = await CodeGeneratorUtil.generateCode(this.supplierModel);
 
-      const isCnpjValid = await this.validationService.validateCnpj(
-        createSupplierDto.cnpj,
-      );
+      // const isCnpjValid = await this.validationService.validateCnpj(
+      //   createSupplierDto.cnpj,
+      // );
 
-      if (!isCnpjValid) {
-        throw new BadRequestException('CNPJ inválido');
-      }
+      // if (!isCnpjValid) {
+      //   throw new BadRequestException('CNPJ inválido');
+      // }
 
       const newSupplier = new this.supplierModel({
         ...createSupplierDto,
