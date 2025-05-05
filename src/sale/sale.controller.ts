@@ -14,6 +14,7 @@ import { Sale } from './schemas/sale.schema';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ResponseDto } from '../common/dto/response.dto';
 import { InstallmentDto } from 'src/installment/dto/installment.dto';
+import { Installment } from 'src/installment/schemas/installment.schema';
 
 @Controller('sales')
 export class SaleController {
@@ -54,7 +55,7 @@ export class SaleController {
   async updateInstallmentStatus(
     @Param('id') saleId: string,
     @Body() updateInstallmentDto: InstallmentDto,
-  ): Promise<ResponseDto<Sale>> {
+  ): Promise<ResponseDto<Installment[]>> {
     const updatedSale = await this.saleService.updateInstallmentStatus(saleId, updateInstallmentDto);
     return new ResponseDto('Parcela atualizada com sucesso', updatedSale);
   }

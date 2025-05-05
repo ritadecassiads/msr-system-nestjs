@@ -12,6 +12,7 @@ import { CodeGeneratorUtil } from '../common/utils/code-generator.util';
 import { ValidationService } from '../validation/validation.service';
 import { Product } from 'src/product/schemas/product.schema';
 import { InstallmentDto } from 'src/installment/dto/installment.dto';
+import { Installment } from 'src/installment/schemas/installment.schema';
 
 @Injectable()
 export class SaleService {
@@ -155,7 +156,7 @@ export class SaleService {
   async updateInstallmentStatus(
     saleId: string,
     dto: InstallmentDto,
-  ): Promise<Sale> {
+  ): Promise<Installment[]> {
     const sale = await this.saleModel.findById(saleId);
     if (!sale) {
       throw new NotFoundException('Venda não encontrada');
@@ -172,7 +173,7 @@ export class SaleService {
     installment.paymentMethod = dto.paymentMethod;
 
     await sale.save();
-    return sale;
+    return sale.installments;
   }
 
 }

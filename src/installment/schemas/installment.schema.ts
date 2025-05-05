@@ -21,12 +21,12 @@ export class Installment extends Document {
   @Prop({
     type: String,
     enum: [
-      'credit-card',
-      'debit-card',
+      'credit',
+      'debit',
       'cash',
       'cash',
       'pix',
-      'bank-transfer'
+      'bankTransfer'
     ],
   })
   paymentMethod: string;
