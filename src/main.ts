@@ -16,18 +16,18 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    // origin: (origin, callback) => {
-    //   const allowedOrigins = [
-    //     'http://localhost:4200',
-    //     'https://msr-sys.netlify.app',
-    //   ];
-    //   if (!origin || allowedOrigins.includes(origin)) {
-    //     callback(null, true);
-    //   } else {
-    //     callback(new Error('Not allowed by CORS'));
-    //   }
-    // },
-    origin: '*',
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        'http://localhost:4200',
+        'https://msr-sys.netlify.app',
+      ];
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    // origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type, Authorization',
   });
