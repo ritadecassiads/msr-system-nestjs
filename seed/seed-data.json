@@ -179,7 +179,7 @@
       "cpf": "014.840.870-20",
       "email": "banca@gmail.com",
       "phone": "41997317647",
-      "isAdmin": false,
+      "isAdmin": true,
       "address": {
         "street": "123 Main St",
         "number": "456",
@@ -188,7 +188,7 @@
         "state": "SP",
         "postalCode": "01001-000"
       }
-    }    
+    }
   ],
   "suppliers": [
     {
@@ -266,14 +266,14 @@
       "name": "Sandalia Feminina",
       "description": "Sandalia da modare",
       "price": 99.9,
-      "stock": 10
+      "stock": 20
     },
     {
       "code": 2,
       "name": "Tênis Esportivo",
       "description": "Tênis para corrida",
       "price": 199.9,
-      "stock": 15
+      "stock": 25
     },
     {
       "code": 3,
@@ -287,7 +287,7 @@
       "name": "Calça Jeans",
       "description": "Calça jeans azul",
       "price": 129.9,
-      "stock": 20
+      "stock": 25
     },
     {
       "code": 5,
@@ -313,10 +313,58 @@
     {
       "code": 8,
       "name": "Fita de cetim",
-      "description": "",
+      "description": "Fita decorativa para costura e artesanato",
       "price": 5.99,
-      "category": 1,
       "stock": 50
+    },
+    {
+      "code": 9,
+      "name": "Meia Social Masculina",
+      "description": "Par de meias pretas tamanho único",
+      "price": 14.9,
+      "stock": 40
+    },
+    {
+      "code": 10,
+      "name": "Blusa de Frio",
+      "description": "Blusa de moletom com capuz",
+      "price": 89.9,
+      "stock": 18
+    },
+    {
+      "code": 11,
+      "name": "Saia Jeans",
+      "description": "Saia jeans cintura alta",
+      "price": 79.9,
+      "stock": 15
+    },
+    {
+      "code": 12,
+      "name": "Touca de Lã",
+      "description": "Touca unissex para inverno",
+      "price": 29.9,
+      "stock": 22
+    },
+    {
+      "code": 13,
+      "name": "Cinto de Couro",
+      "description": "Cinto masculino preto",
+      "price": 39.9,
+      "stock": 35
+    },
+    {
+      "code": 14,
+      "name": "Vestido Floral",
+      "description": "Vestido leve com estampa floral",
+      "price": 119.9,
+      "stock": 10
+    },
+    {
+      "code": 15,
+      "name": "Camisa Polo",
+      "description": "Camisa polo masculina",
+      "price": 59.9,
+      "stock": 20
     }
   ],
   "categories": [
@@ -334,47 +382,21 @@
       "code": 3,
       "name": "Roupas",
       "description": "Categoria para roupas"
-    }
-  ],
-  "invoices": [
-    {
-      "code": 1,
-      "issueDate": "2024-08-09T12:00:00.000Z",
-      "dueDate": "2024-12-12T12:00:00.000Z",
-      "amount": 1500.75,
-      "notes": "This is a test invoice"
     },
     {
-      "code": 2,
-      "supplierId": "675da0b1a7b3414b1f12773c",
-      "issueDate": "2024-12-01T00:00:00.000Z",
-      "dueDate": "2024-12-31T00:00:00.000Z",
-      "totalAmount": 1500.0,
-      "installments": [
-        {
-          "dueDate": "2025-01-10T00:00:00.000Z",
-          "amount": 500.0,
-          "status": "pending"
-        },
-        {
-          "dueDate": "2025-02-10T00:00:00.000Z",
-          "amount": 500.0,
-          "status": "pending"
-        },
-        {
-          "dueDate": "2025-03-30T00:00:00.000Z",
-          "amount": 500.0,
-          "status": "pending"
-        }
-      ],
-      "status": "pending",
-      "notes": "Conta referente ao fornecimento de materiais de aviamento",
-      "description": "Compra para estoque de aviamento"
+      "code": 4,
+      "name": "Bolsas",
+      "description": "Categoria para bolsas"
     },
     {
-      "dueDate": "2025-01-31T00:00:00.000Z",
-      "totalAmount": 423.0,
-      "description": "Conta de água"
+      "code": 5,
+      "name": "Malas",
+      "description": "Categoria para Malas"
+    },
+    {
+      "code": 6,
+      "name": "Acessórios",
+      "description": "Categoria para acessórios"
     }
   ]
 }
